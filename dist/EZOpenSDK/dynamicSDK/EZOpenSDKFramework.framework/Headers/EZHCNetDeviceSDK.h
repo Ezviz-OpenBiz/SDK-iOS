@@ -119,4 +119,25 @@ typedef NS_ENUM(int, EZEncryptType) {
  */
 + (BOOL) setEncryptType:(EZEncryptType) encryptType;
 
+/**
+ AP配网接口
+
+ @param ssid WiFi的ssid
+ @param password WiFi的密码
+ @param deviceSerial 设备序列号
+ @param verifyCode 设备验证码
+ @param callback 结果回调
+ @return 成功或失败
+ */
++ (BOOL)startAPConfigWifiWithSsid:(NSString *) ssid
+                         password:(NSString *) password
+                     deviceSerial:(NSString *) deviceSerial
+                       verifyCode:(NSString *) verifyCode
+                           result:(void (^)(BOOL ret)) callback;
+
+/**
+ 停止AP配网
+ */
++ (void)stopAPConfigWifi;
+
 @end

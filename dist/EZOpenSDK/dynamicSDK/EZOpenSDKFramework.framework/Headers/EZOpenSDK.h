@@ -363,12 +363,14 @@
  *  尝试查询设备信息，设备Wifi配置前查询一次设备的信息
  *
  *  @param deviceSerial 设备序列号
+ *  @param deviceType 设备型号，无法获取到设备型号则可传nil
  *  @param completion   回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
  *  @see 全新的设备是没有注册到平台的，所以会出现设备不存在的情况，设备wifi配置成功以后会上报数据到萤石云平台，以后每次查询就不会出现设备不存在的情况了。
  *
  *  @return operation
  */
-+ (NSOperation *)probeDeviceInfo:(NSString *)deviceSerial
++ (NSOperation *)probeDeviceInfo:(NSString *) deviceSerial
+                      deviceType:(NSString *) deviceType
                       completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
 
 /**
@@ -724,5 +726,27 @@
            deviceSerial:(NSString *) deviceSerial
                    mode:(NSInteger) mode
            deviceStatus:(void (^)(EZWifiConfigStatus status,NSString *deviceSerial))statusBlock;
+    
+#pragma mark - V4.8.4
+/**
+ AP配网接口
+ 
+ @param ssid WiFi的ssid
+ @param password WiFi的密码
+ @param deviceSerial 设备序列号
+ @param verifyCode 设备验证码
+ @param callback 结果回调
+ @return 成功或失败
+ */
++ (BOOL)startAPConfigWifiWithSsid:(NSString *) ssid
+                         password:(NSString *) password
+                     deviceSerial:(NSString *) deviceSerial
+                       verifyCode:(NSString *) verifyCode
+                           result:(void (^)(BOOL ret)) callback;
+    
+/**
+ 停止AP配网
+ */
++ (void)stopAPConfigWifi;
 
 @end

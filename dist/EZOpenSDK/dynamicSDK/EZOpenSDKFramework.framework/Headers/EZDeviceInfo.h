@@ -45,6 +45,8 @@
 @property (nonatomic) BOOL isSupportAudioOnOff;
 /// 是否支持镜像翻转
 @property (nonatomic) BOOL isSupportMirrorCenter;
+/// 是否支持声波配网
+@property (nonatomic) BOOL isSupportSoundWave;
 /// 设备大类
 @property (nonatomic,copy) NSString *category;
 /// 添加时间

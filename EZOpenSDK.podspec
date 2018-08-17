@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'EZOpenSDK'
-  s.version  = '4.8.3'
+  s.version  = '4.8.4'
   s.license  = 'MIT'
   s.summary  = 'A EZVIZ SDK'
   s.homepage = 'https://github.com/Hikvision-Ezviz/SDK-iOS'

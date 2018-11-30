@@ -36,6 +36,31 @@ typedef NS_ENUM(NSInteger, EZMessageCode) {
     PLAYER_NO_NETWORK = 22,           //播放器检测到无网络
 };
 
+
+/**
+ *  SD卡回放速率
+ */
+typedef NS_ENUM(NSInteger, EZPlaybackRate) {
+    EZ_PLAYBACK_RATE_1 = 1,         // 1倍速
+    EZ_PLAYBACK_RATE_2,             // 2倍速
+    EZ_PLAYBACK_RATE_2_1,           // 1/2倍速
+    EZ_PLAYBACK_RATE_4,             // 4倍速
+    EZ_PLAYBACK_RATE_4_1,           // 1/4倍速
+    EZ_PLAYBACK_RATE_8,             // 8倍速
+    EZ_PLAYBACK_RATE_8_1,           // 1/8倍速
+};
+
+/**
+ *  云存储回放速率
+ */
+typedef NS_ENUM(NSInteger, EZCloudPlaybackRate) {
+    EZ_CLOUD_PLAYBACK_RATE_1 = 1,               // 1倍速
+    EZ_CLOUD_PLAYBACK_RATE_4 = 4,               // 4倍速
+    EZ_CLOUD_PLAYBACK_RATE_8 = 6,               // 8倍速
+    EZ_CLOUD_PLAYBACK_RATE_16 = 8,              // 16倍速
+    EZ_CLOUD_PLAYBACK_RATE_32 = 10,             // 32倍速
+};
+
 /// 萤石播放器delegate方法
 @protocol EZPlayerDelegate <NSObject>
 
@@ -266,6 +291,28 @@ typedef NS_ENUM(NSInteger, EZMessageCode) {
  */
 - (UIImage *)capturePicture:(NSInteger)quality;
 
+/**
+ 获取内部播放器句柄。建议每次使用播放器句柄时均调用此方法获取，并进行有效性判断。
+
+ @return 小于0为无效值，大于等于0为有效值
+ */
+- (int) getPlayPort;
+
+/**
+ SD卡回放专用接口，倍数回放
+
+ @param rate 回放倍率，见EZPlaybackRate,目前设备存储回放支持1、2、4、8、1/2、1/4、1/8倍数
+ @return YES/NO
+ */
+- (BOOL) setPlaybackRate:(EZPlaybackRate) rate;
+
+/**
+ 云存储回放专用接口，倍数回放
+ 
+ @param rate 回放倍率，见EZCloudPlaybackRate,目前云存储支持1、4、8、16、32倍数
+ @return YES/NO
+ */
+- (BOOL) setCloudPlaybackRate:(EZCloudPlaybackRate) rate;
 
 @end
 

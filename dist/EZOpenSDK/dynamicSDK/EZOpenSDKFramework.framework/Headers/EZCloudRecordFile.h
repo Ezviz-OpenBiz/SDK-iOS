@@ -11,6 +11,10 @@
 /// 此类为云存储录像文件对象
 @interface EZCloudRecordFile : NSObject
 
+/// 设备序列号
+@property (nonatomic, copy) NSString *deviceSerial;
+/// 设备通道号
+@property (nonatomic, assign) NSInteger cameraNo;
 /// 云存储录像文件Id
 @property (nonatomic, copy) NSString *fileId;
 /// 云存储录像文件开始时间

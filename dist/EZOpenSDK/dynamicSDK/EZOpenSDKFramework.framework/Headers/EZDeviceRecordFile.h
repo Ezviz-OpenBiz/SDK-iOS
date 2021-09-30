@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 15/9/17.
-//  Copyright (c) 2015年 Hikvision. All rights reserved.
+//  Copyright (c) 2015年 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,5 +15,9 @@
 @property (nonatomic, strong) NSDate *startTime;
 /// 设备录像文件的结束时间
 @property (nonatomic, strong) NSDate *stopTime;
+
+@property (nonatomic, assign) int type;
+@property (nonatomic, copy) NSString *channelType;
+
 
 @end

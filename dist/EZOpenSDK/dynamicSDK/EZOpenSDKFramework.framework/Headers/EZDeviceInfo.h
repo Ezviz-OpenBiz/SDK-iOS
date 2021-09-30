@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 15/9/16.
-//  Copyright (c) 2015年 Hikvision. All rights reserved.
+//  Copyright (c) 2015年 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -35,7 +35,7 @@
 @property (nonatomic) BOOL isEncrypt;
 /// 设备状态，1-在线，2-不在线
 @property (nonatomic) NSInteger status;
-/// 是否支持对讲 0-不支持对讲，1-支持全双工对讲，3-支持半双工对讲
+/// 是否支持对讲 0-不支持对讲，1-支持全双工对讲，3-支持半双工对讲，4-同时支持全双工和半双工
 @property (nonatomic) NSInteger isSupportTalk;
 /// 是否支持云台控制
 @property (nonatomic) BOOL isSupportPTZ;
@@ -43,10 +43,12 @@
 @property (nonatomic) BOOL isSupportZoom;
 ///是否支持提示音开关
 @property (nonatomic) BOOL isSupportAudioOnOff;
-/// 是否支持镜像翻转
+/// 是否支持中心镜像翻转
 @property (nonatomic) BOOL isSupportMirrorCenter;
 /// 是否支持声波配网
 @property (nonatomic) BOOL isSupportSoundWave;
+/// 是否支持倍数回放
+@property (nonatomic) BOOL isSupportPlaybackRate;
 /// 设备大类
 @property (nonatomic,copy) NSString *category;
 /// 添加时间

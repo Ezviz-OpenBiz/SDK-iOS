@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 16/1/12.
-//  Copyright © 2016年 Hikvision. All rights reserved.
+//  Copyright © 2016年 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

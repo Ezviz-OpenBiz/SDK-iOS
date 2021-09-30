@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 15/9/17.
-//  Copyright (c) 2015年 Hikvision. All rights reserved.
+//  Copyright (c) 2015年 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,5 +27,8 @@
 @property (nonatomic, copy) NSString *downloadPath;
 /// 云存储图片加密密码，如果是[NSNull null]或者nil指针则图片不加密
 @property (nonatomic, copy) NSString *encryption;
+
+@property (nonatomic, assign) int32_t istorageVersion; //云存储类别:1 单文件存储模式；2 连续存储模式；3 待定
+@property (nonatomic, assign) int32_t videoType;//云存储录像类型，默认为0，表示不属于云存储录像
 
 @end

@@ -3,7 +3,7 @@
 //  EzvizOpenSDK
 //
 //  Created by DeJohn Dong on 15/9/15.
-//  Copyright (c) 2015年 Hikvision. All rights reserved.
+//  Copyright (c) 2015年 Ezviz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -23,7 +23,13 @@
 @property (nonatomic, copy) NSString *cameraCover;
 /// 视频质量，0-流畅，1-均衡，2-高清，3-超清
 @property (nonatomic) NSInteger videoLevel;
+//权限
+@property (nonatomic) NSInteger permission;
 /// 通道支持的清晰度信息列表，EZVideoQualityInfo对象列表
 @property (nonatomic, strong) NSArray *videoQualityInfos;
 
+/// 设备是否开启加密
+@property (nonatomic) BOOL isEncrypt;
+/// 设备状态，1-在线，2-不在线
+@property (nonatomic) NSInteger status;
 @end

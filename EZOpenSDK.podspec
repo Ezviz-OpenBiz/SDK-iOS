@@ -9,4 +9,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.platform = :ios,'8.0'
   s.vendored_frameworks = 'dist/EZOpenSDK/dynamicSDK/*'
+  s.frameworks = 'AudioToolbox', 'CoreMedia', 'ExternalAccessory', 'GLKit', 'MobileCoreServices', 'Network', 'NetworkExtension', 'OpenAL', 'SystemConfiguration', 'VideoToolbox'
+  s.libraries = 'bz2', 'c++', 'iconv.2.4.0', 'sqlite3.0', 'z'
+  s.xcconfig = { "OTHER_LDFLAGS" => "-ObjC", "ENABLE_BITCODE" => "NO"}
+
+
 end

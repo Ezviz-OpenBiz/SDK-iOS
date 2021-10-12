@@ -10,4 +10,7 @@ EZOpenSDK-iOS
   ```
 3.关闭目标target的bitcode功能
   Build Settings->Enable Bitcode设置为NO
+  
 4.安装完成
+
+

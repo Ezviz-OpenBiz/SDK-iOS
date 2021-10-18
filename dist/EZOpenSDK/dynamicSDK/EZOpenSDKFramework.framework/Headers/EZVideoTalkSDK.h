@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "EZRTCMediaSessionDefines.h"
 #import "EZBAVParam.h"
 
 
@@ -31,6 +32,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)videoTalk:(id)client didReceivedMessage:(int32_t)messageCode msg:(id)msg;
 
+/// 画面显示回调
+/// @param client client
+/// @param width 画面的宽 像素单位
+/// @param height 画面的高 像素单位
+/// @param userID 用户id
+- (void)videoTalk:(id)client didDisplayWidth:(int32_t)width height:(int32_t)height ofRemoteClient:(NSString *)userID;
+
 @end
 
 @interface EZVideoTalkSDK : NSObject
@@ -38,17 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<EZVideoTalkSDKDelegate> delegate;
 
 /// 加入的房间号
-- (int32_t)roomID;
+@property (nonatomic, assign, readonly) int32_t roomID;
 
 /**
  对讲时，强制采用扬声器播放声音，默认为YES
  */
 @property (nonatomic, assign) BOOL forceToSpeaker;
 
-
-/// 初始化视频通话SDK对象
-/// @param videoParam 视频通话中视频的参数
-- (instancetype)initWithVideoParam:(EZMediaSessionVideoParam *)videoParam;
+- (instancetype)init;
 
 
 /// 设置本地的预览窗口
@@ -117,15 +122,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface EZConfOpenSDK : NSObject
+@interface EZRTCClient : NSObject
 
 @property (nonatomic, weak) id<EZVideoTalkSDKDelegate> delegate;
 
 /// 加入的房间号
-- (int32_t)roomID;
-
-/// 自己的clientID
-- (int32_t)clientID;
+@property (nonatomic, assign, readonly) int32_t roomID;
 
 /**
  对讲时，强制采用扬声器播放声音，默认为YES
@@ -134,56 +136,62 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 初始化视频通话SDK对象
-/// @param videoParam 视频通话中视频的参数
-- (instancetype)initWithVideoParam:(EZMediaSessionVideoParam *)videoParam;
+- (instancetype)init;
 
 
 /// 加入会议（新接口）
 /// @param roomId 房间号
 /// @param password 密码
-/// @param customId 自定义的customid
-- (void)enterRoom:(int32_t)roomId withPassword:(NSString *)password withCustomId:(NSString *)customId;
+/// @param userID 用户自定义ID
+- (void)enterRoom:(int32_t)roomId withPassword:(NSString *)password withUserID:(NSString *)userID;
 
 
 /// 退出会议
-- (int32_t)leaveRoom;
+- (NSInteger)exitRoom;
+
 
 /// 解散会议，解散后，其他与会者会收到会议被解散消息
 - (void)dissolveRoom;
 
 /// 本地摄像头开启/关闭接口.
 /// @param enable 是否开启摄像头
-- (NSInteger)enableVideoCapture:(BOOL)enable;
+- (NSInteger)enableLocalVideo:(BOOL)enable;
 
+/// 设置本地的预览窗口
+/// @param localWin 窗口window
+- (void)setLocalView:(EZVideoTalkView *)localWin;
+
+/// 是否开启辅流，辅流分辨率更低、码率更小
+/// @param enable 是否开启
+- (NSInteger)enableLocalSmallVideo:(BOOL)enable;
 
 /// 本地麦克风开启/关闭接口
 /// @param enable 是否开启麦克风
 /// @param block 主线程回调结果
-- (void)enableAudioCatpure:(BOOL)enable withResultBlock:(EZAudioOpenResultBlock)block;
+- (void)enableLocalAudio:(BOOL)enable withResultBlock:(EZAudioOpenResultBlock)block;
 
-/// 是否开启辅流，辅流分辨率更低、码率更小
-/// @param enable 是否开启
-- (NSInteger)enableThumbnailCatpure:(BOOL)enable;
+/// 开启屏幕共享
+/// @param name 共享名称
+/// @param resultBlock 屏幕共享结果回调
+/// @param didFinishBlock 屏幕共享结束回调，在正常的屏幕共享结束结束后回调
+- (void)startScreenShareWithName:(NSString *)name
+                 withResultBlock:(EZScreenShareResultBlock)resultBlock
+                   andEndedBlock:(dispatch_block_t)didFinishBlock;
 
-/// 是否开启屏幕共享
-/// @param enable 是否开启
-/// @param name 可选的分享的名称
-/// @param block 主线程回调结果
-- (void)enableScreenShare:(BOOL)enable andName:(NSString *)name withResultBlock:(EZScreenShareResultBlock)block;
 
-/// 设置本地的预览窗口
-/// @param localWin 窗口window
-- (void)setLocalWindow:(EZVideoTalkView *)localWin;
+/// 结束屏幕共享
+- (void)stopScreenShare;
 
-/// 设置远程窗口，1.必须在拿到远端客户端加入的消息后设置，2.如果设置非空对象view，必须在主线程调用
+
+/// 设置远程窗口，1.必须在拿到远端客户端加入的消息后设置，2.必须在主线程调用
 /// @param window 播放窗口
 /// @param clientID 加入的客户端的ID
 /// @param streamType 1视频 2音频 4小流
-- (int32_t)setRemoteWindow:(UIView *)window ofClient:(int32_t)clientID withStream:(NSInteger)streamType;
+- (int32_t)setRemoteView:(nullable UIView *)window ofUser:(NSString *)userID withStream:(NSInteger)streamType;
 
-/// 设置观看屏幕共享的窗口
-/// @param window 窗口
-- (int32_t)setWindowForScreenShare:(UIView *)window;
+/// 设置观看屏幕共享的窗口,必须在主线程调用
+/// @param view 窗口
+- (int32_t)setScreenShareView:(UIView *_Nullable)view;
 
 /// 切换对讲时使用的摄像头，默认采用前置 同步接口
 /// @param backCameraSelected YES:选择后置，NO:选择前置

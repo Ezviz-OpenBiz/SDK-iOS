@@ -232,6 +232,13 @@ typedef NS_ENUM(NSInteger, EZWiFiConfigMode)
     EZWiFiConfigWave         = 1 << 1,  //声波配网
 };
 
+/* 录像类型 */
+typedef NS_ENUM(NSUInteger, EZVideoRecordType) {
+    EZVideoRecordTypeAll,     // 所有类型
+    EZVideoRecordTypeCMR,     // 定时录像
+    EZVideoRecordTypeEvent    // 事件类型
+};
+
 ///需要进行重新登录的通知，该通知触发频率为5年一次，需在SDK初始化监听
 extern const NSNotificationName EZNeedReloginNotification;
 

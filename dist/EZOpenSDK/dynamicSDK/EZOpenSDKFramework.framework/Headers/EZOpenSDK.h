@@ -534,6 +534,26 @@
                                           completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
 
 /**
+ *  @since 4.18.0
+ *  查询远程SD卡存储录像信息列表接口
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param beginTime    查询时间范围开始时间
+ *  @param endTime      查询时间范围结束时间
+ *  @param videoRecordType      录像类型
+ *  @param completion   回调block，正常时返回EZDeviceRecordFile的对象数组，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFileFromDevice:(NSString *)deviceSerial
+                                            cameraNo:(NSInteger)cameraNo
+                                           beginTime:(NSDate *)beginTime
+                                             endTime:(NSDate *)endTime
+                                     videoRecordType:(EZVideoRecordType)videoRecordType
+                                          completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
+
+/**
  *  @since 4.2.0
  *  根据设备序列号获取告警信息列表，设备序列号为nil时查询整个账户下的告警信息列表
  *
@@ -837,4 +857,17 @@
 + (void)requestCalledMeetingInfo:(NSString *)roomId
                         customId:(NSInteger)customId
                        completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid ,NSInteger customId, NSString *controlServerAddress,NSError *error))completion;
+
+#pragma mark - v4.18.0
+
+/**
+ *  刷新设备详细信息
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param completion   回调block
+ */
++ (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
+                       cameraNo:(NSInteger)cameraNo
+                     completion:(void (^)(NSError *error))completion;
 @end

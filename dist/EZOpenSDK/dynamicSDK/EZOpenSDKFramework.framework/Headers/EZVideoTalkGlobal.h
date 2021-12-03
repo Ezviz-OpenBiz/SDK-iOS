@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EZRTCMediaSessionDefines.h"
 
 @class EZRTCVideoEncodeParam;
 @class EZRTCCameraParam;
@@ -53,5 +54,10 @@
 /// @param encodeParam 编码参数
 + (void)setSmallVideoEncodeParam:(EZRTCVideoEncodeParam *)encodeParam;
 
+
++ (EZRTCAudioEncodeType)audioEncodeType;
+
+/// 设置编码类型，在视频通话发起前设置有效
++ (void)setAudioEncodeType:(EZRTCAudioEncodeType)type;
 
 @end

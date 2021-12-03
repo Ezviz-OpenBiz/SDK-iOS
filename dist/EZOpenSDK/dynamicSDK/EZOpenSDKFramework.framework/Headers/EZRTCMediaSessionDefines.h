@@ -68,11 +68,11 @@ typedef NS_ENUM(NSUInteger, EZMediaCaptureError) {
     EZMediaCaptureErrorUnsupport,
 };
 
-typedef NS_ENUM(NSUInteger, EZAudioAACEncoderError) {
-    EZAudioAACEncoderErrorUnknown = EZMediaSessionErrorBaseAudioEncode,
-    EZAudioAACEncoderErrorFailToInitConverter = 30100,
-    EZAudioAACEncoderErrorFailToGetDataBuffer,
-    EZAudioAACEncoderErrorFailToEncodeBuffer,
+typedef NS_ENUM(NSUInteger, EZAudioEncoderError) {
+    EZAudioEncoderErrorUnknown = EZMediaSessionErrorBaseAudioEncode,
+    EZAudioEncoderErrorFailToInitConverter = 30100,
+    EZAudioEncoderErrorFailToGetDataBuffer,
+    EZAudioEncoderErrorFailToEncodeBuffer,
 };
 
 typedef NS_ENUM(NSUInteger, EZVideoH264EncoderError) {
@@ -93,6 +93,13 @@ typedef NS_ENUM(NSUInteger, EZBAVStreamClientError) {
     EZBAVStreamClientErrorShareEnableNotAllowed,
 
 };
+
+
+typedef NS_ENUM(NSUInteger, EZRTCAudioEncodeType) {
+    EZRTCAudioEncodeType_AAC,
+    EZRTCAudioEncodeType_Opus,
+};
+
 
 @interface EZRTCMediaSessionDefines : NSObject
 @end

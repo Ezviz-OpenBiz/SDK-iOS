@@ -916,13 +916,12 @@ sourceApplication annotation:(id) annotation
 #pragma mark - v4.18.0
 
 /**
- *  刷新设备详细信息
+ *  刷新设备详细信息，不宜频繁调用。最多保存16个设备详情信息，超过16个，最先获取到的数据会被移除
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
  *  @param completion   回调block
  *
- *  @return operation
  */
 + (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
                        cameraNo:(NSInteger)cameraNo

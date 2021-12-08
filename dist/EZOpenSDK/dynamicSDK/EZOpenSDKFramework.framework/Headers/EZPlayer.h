@@ -365,7 +365,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 /**
  获取当前取流方式：
 
- @return 
+ @return 当前取流类型
  */
 - (int) getStreamFetchType;
 

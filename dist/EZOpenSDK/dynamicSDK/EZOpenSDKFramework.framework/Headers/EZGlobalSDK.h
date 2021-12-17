@@ -212,6 +212,18 @@
 + (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial
                                   cameraNo:(NSInteger)cameraNo;
 
+/**
+ *  @since 4.19.2
+ *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     虚拟通道
+ *  @param useSubStream   是否使用子码流
+ *
+ *  @return EZPlayer对象
+ */
++ (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo useSubStream:(BOOL)useSubStream;
+
 
 /**
  *  @since 1.0.0

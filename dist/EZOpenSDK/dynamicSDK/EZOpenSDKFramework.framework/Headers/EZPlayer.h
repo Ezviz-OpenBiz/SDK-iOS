@@ -148,7 +148,19 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  @param streamType 码流类型 1:主码流 2:子码流
  @return EZPlayer对象
  */
-+ (instancetype)createPlayerWithUserId:(NSInteger) userId cameraNo:(NSInteger) cameraNo streamType:(NSInteger) streamType;
++ (instancetype)createPlayerWithUserId:(NSInteger)userId cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
+
+/**
+ *  @since 4.19.2
+ *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     虚拟通道
+ *  @param useSubStream   是否使用子码流
+ *
+ *  @return EZPlayer对象
+ */
++ (instancetype)createPlayerWithDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo useSubStream:(BOOL)useSubStream;
 
 /**
  *  销毁EZPlayer
@@ -162,21 +174,21 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *
  *  @param HDPriority 是否硬解优先
  */
--(void)setHDPriority:(BOOL)HDPriority;
+- (void)setHDPriority:(BOOL)HDPriority;
 
 /**
  获取当前的软硬解情况，在码流正常播放后调用
  
  @return 1：软解 2：硬解 0：出错
  */
-- (int) getHDPriorityStatus;
+- (int)getHDPriorityStatus;
 
 /**
  *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
  *
  *  @param bizType 类型       国标为 bizType='GB28181'
  */
--(void)setBizType:(NSString *)bizType;
+- (void)setBizType:(NSString *)bizType;
 
 /**
  *  平台id 国标设备使用
@@ -232,7 +244,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  
  @return 播放库的port,可能为-1（无效值）
  */
-- (int) getInnerPlayerPort;
+- (int)getInnerPlayerPort;
 
 /**
  获取当前已播放的总流量，单位字节
@@ -244,7 +256,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  
  @return 流量值
  */
-- (NSInteger) getStreamFlow;
+- (NSInteger)getStreamFlow;
 
 /**
  *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
@@ -360,14 +372,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 
  @return 小于0为无效值，大于等于0为有效值
  */
-- (int) getPlayPort;
+- (int)getPlayPort;
 
 /**
  获取当前取流方式：
 
  @return 当前取流类型
  */
-- (int) getStreamFetchType;
+- (int)getStreamFetchType;
 
 /**
 sd卡及云存储倍速回放接口
@@ -384,18 +396,18 @@ sd卡及云存储倍速回放接口
 @param mode 回放时的抽帧控制，当前仅云存储支持。0： 4倍速全帧，8倍速以上抽帧   1：抽帧   2：全帧  （如设备回放当前不支持，传入0即可）
 @return YES/NO
  */
-- (BOOL) setPlaybackRate:(EZPlaybackRate) rate mode:(NSUInteger)mode;
+- (BOOL)setPlaybackRate:(EZPlaybackRate) rate mode:(NSUInteger)mode;
 
 /**
  设置全双工对讲时的模式,对讲成功后调用
  
  @param routeToSpeaker YES:使用扬声器 NO:使用听筒
  */
-- (void) changeTalkingRouteMode:(BOOL) routeToSpeaker;
+- (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
 
 /// //扩展参数 UIKit专用
 /// @param exParamInfo EZPlayerExParamInfo
-- (void) setExParamInfo:(EZPlayerExParamInfo *) exParamInfo;
+- (void)setExParamInfo:(EZPlayerExParamInfo *)exParamInfo;
 
 @end
 

@@ -95,7 +95,7 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)deleteAlarm:(NSArray *)alarmIds
-                  completion:(void (^)(NSError *error))completion;
+                           completion:(void (^)(NSError *error))completion;
 
 /**
  *  @since 3.0.0
@@ -108,8 +108,8 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)setAlarmStatus:(NSArray *)alarmIds
-                    alarmStatus:(EZMessageStatus)status
-                     completion:(void (^)(NSError *error))completion;
+                             alarmStatus:(EZMessageStatus)status
+                              completion:(void (^)(NSError *error))completion;
 
 
 /**
@@ -123,7 +123,7 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)deleteDevice:(NSString *)deviceSerial
-                   completion:(void (^)(NSError *error))completion;
+                            completion:(void (^)(NSError *error))completion;
 
 /**
  *  @since 3.0.0
@@ -196,6 +196,18 @@
                                   cameraNo:(NSInteger)cameraNo;
 
 + (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial strCameraNo:(NSString *)strCameraNo;
+
+/**
+ *  @since 4.19.2
+ *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     虚拟通道
+ *  @param useSubStream   是否使用子码流
+ *
+ *  @return EZPlayer对象
+ */
++ (EZPlayer *)createPlayerWithDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo useSubStream:(BOOL)useSubStream;
 
 /**
  *  @since 3.0.0
@@ -584,8 +596,8 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)addDevice:(NSString *)deviceSerial
-                verifyCode:(NSString *)verifyCode
-                completion:(void (^)(NSError *error))completion;
+                         verifyCode:(NSString *)verifyCode
+                         completion:(void (^)(NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -600,8 +612,8 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)captureCamera:(NSString *)deviceSerial
-                      cameraNo:(NSInteger)cameraNo
-                    completion:(void (^)(NSString *url, NSError *error))completion;
+                               cameraNo:(NSInteger)cameraNo
+                             completion:(void (^)(NSString *url, NSError *error))completion;
 
 /**
  *  @since 4.2.0
@@ -616,9 +628,9 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)setVideoLevel:(NSString *)deviceSerial
-                      cameraNo:(NSInteger)cameraNo
-                    videoLevel:(EZVideoLevelType)videoLevel
-                    completion:(void (^)(NSError *error))completion;
+                               cameraNo:(NSInteger)cameraNo
+                             videoLevel:(EZVideoLevelType)videoLevel
+                             completion:(void (^)(NSError *error))completion;
 
 
 /**
@@ -632,8 +644,8 @@
  *  @return operation
  */
 + (NSURLSessionDataTask *)setDefence:(EZDefenceStatus)defence
-               deviceSerial:(NSString *)deviceSerial
-                 completion:(void (^)(NSError *error))completion;
+                        deviceSerial:(NSString *)deviceSerial
+                          completion:(void (^)(NSError *error))completion;
 
 #pragma mark - V4.3 新增加接口
 
@@ -655,7 +667,7 @@
  *
  *  @return 终端唯一识别码
  */
-+ (NSString *) getTerminalId;
++ (NSString *)getTerminalId;
 
 #pragma mark - V4.4 新增加接口
 
@@ -663,14 +675,14 @@
  *  @since 4.4.0
  *  push初始化接口，不需要push服务则无需调用
  */
-+ (void) initPushService;
++ (void)initPushService;
 
 #pragma mark - V4.5 新增加接口
 
 /**
  清除取流时的缓存数据
  */
-+ (void) clearStreamInfoCache;
++ (void)clearStreamInfoCache;
 
 #pragma mark - V4.8.2 新增加接口
 
@@ -679,14 +691,14 @@
 
  @return YES：已经登录；NO：未登录
  */
-+ (BOOL) isLogin;
++ (BOOL)isLogin;
 
 /**
  获取当前accessToken
 
  @return accessToken
  */
-+ (NSString *) getAccesstoken;
++ (NSString *)getAccesstoken;
 
 /**
  根据应用类型判断是否安装了对应的应用
@@ -694,7 +706,7 @@
  @param appType 应用类型
  @return YES:已安装，NO:没有安装或安装的萤石APP版本过低
  */
-+ (BOOL) isEzvizAppInstalledWithType:(EZAppType) appType;
++ (BOOL)isEzvizAppInstalledWithType:(EZAppType)appType;
 
 
 /**
@@ -703,7 +715,7 @@
  @param appType 萤石APP类型
  @return 跳转结果
  */
-+ (BOOL) ezvizLoginWithAppType:(EZAppType) appType;
++ (BOOL)ezvizLoginWithAppType:(EZAppType)appType;
 
 /**
  跳转到指定APP的指定界面
@@ -712,7 +724,7 @@
  @param appType APP类型
  @return 跳转结果
  */
-+ (BOOL) gotoEzvizAppPage:(EZAppPageType) pageType appType:(EZAppType) appType;
++ (BOOL)gotoEzvizAppPage:(EZAppPageType)pageType appType:(EZAppType)appType;
 
 /**
  外部跳转处理方法，适用于iOS9以上，包括iOS9
@@ -722,7 +734,7 @@
  @param delegate 委托
  @return 结果
  */
-+ (BOOL) handleOpenUrl:(NSURL *) url options:(NSDictionary *) opetions delegate:(id<EZOpenSDKDelegate>) delegate;
++ (BOOL)handleOpenUrl:(NSURL *)url options:(NSDictionary *)opetions delegate:(id<EZOpenSDKDelegate>)delegate;
 
 /**
  外部跳转处理方法，适用于iOS8以下,包括iOS8
@@ -731,7 +743,7 @@
  @param delegate 委托
  @return 结果
  */
-+ (BOOL) handleOpenUrl:(NSURL *) url delegate:(id<EZOpenSDKDelegate>) delegate;
++ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<EZOpenSDKDelegate>)delegate;
 
 /**
  外部跳转处理方法，适用于iOS8以下,包括iOS8
@@ -742,10 +754,10 @@
  @param delegate 委托
  @return 结果
  */
-+ (BOOL) handleOpenUrl:(NSURL *) url
-     sourceApplication:(NSString *) sourceApplication
-            annotation:(id) annotation
-              delegate:(id<EZOpenSDKDelegate>) delegate;
++ (BOOL)handleOpenUrl:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication
+           annotation:(id)annotation
+             delegate:(id<EZOpenSDKDelegate>)delegate;
 
 #pragma mark - V4.8.3 新增加接口
 
@@ -761,10 +773,10 @@
  *
  *  @return YES/NO
  */
-+ (BOOL)startConfigWifi:(NSString *) ssid
-               password:(NSString *) password
-           deviceSerial:(NSString *) deviceSerial
-                   mode:(NSInteger) mode
++ (BOOL)startConfigWifi:(NSString *)ssid
+               password:(NSString *)password
+           deviceSerial:(NSString *)deviceSerial
+                   mode:(NSInteger)mode
            deviceStatus:(void (^)(EZWifiConfigStatus status,NSString *deviceSerial))statusBlock;
     
 #pragma mark - V4.8.4
@@ -778,11 +790,11 @@
  @param callback 结果回调
  @return 成功或失败
  */
-+ (BOOL)startAPConfigWifiWithSsid:(NSString *) ssid
-                         password:(NSString *) password
-                     deviceSerial:(NSString *) deviceSerial
-                       verifyCode:(NSString *) verifyCode
-                           result:(void (^)(BOOL ret)) callback;
++ (BOOL)startAPConfigWifiWithSsid:(NSString *)ssid
+                         password:(NSString *)password
+                     deviceSerial:(NSString *)deviceSerial
+                       verifyCode:(NSString *)verifyCode
+                           result:(void (^)(BOOL ret))callback;
     
 /**
  停止AP配网
@@ -830,11 +842,11 @@
  *
  *  @return operation
  */
-+ (NSURLSessionDataTask *)searchRecordFile:(NSString *) deviceSerial
-                                  cameraNo:(NSString *) cameraNo
-                                 beginTime:(NSDate *) beginTime
-                                   endTime:(NSDate *) endTime
-                                   recType:(NSInteger) rectype
++ (NSURLSessionDataTask *)searchRecordFile:(NSString *)deviceSerial
+                                  cameraNo:(NSString *)cameraNo
+                                 beginTime:(NSDate *)beginTime
+                                   endTime:(NSDate *)endTime
+                                   recType:(NSInteger)rectype
                                    bizType:(NSString *)bizType
                                 platFormId:(NSString *)platFormId
                                 completion:(void (^)(id records, NSError *error))completion;
@@ -856,7 +868,7 @@
 /// @param completion operation
 + (void)requestCalledMeetingInfo:(NSString *)roomId
                         customId:(NSInteger)customId
-                       completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid ,NSInteger customId, NSString *controlServerAddress,NSError *error))completion;
+                      completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid ,NSInteger customId, NSString *controlServerAddress,NSError *error))completion;
 
 #pragma mark - v4.18.0
 

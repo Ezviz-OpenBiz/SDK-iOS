@@ -18,7 +18,7 @@
  
  @param result 是否成功
  */
-- (void) ezvizLoginResult:(BOOL) result;
+- (void)ezvizLoginResult:(BOOL)result;
 
 @end
 

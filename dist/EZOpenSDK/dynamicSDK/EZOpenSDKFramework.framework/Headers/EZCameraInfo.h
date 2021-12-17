@@ -25,7 +25,7 @@
 @property (nonatomic) NSInteger videoLevel;
 //权限
 @property (nonatomic) NSInteger permission;
-/// 通道支持的清晰度信息列表，EZVideoQualityInfo对象列表
+/// 通道支持的清晰度信息列表，EZVideoQualityInfo对象列表。(/api/device/list 返回的"videoQualityInfos" 有误，以/api/device/detail 接口返回为准)
 @property (nonatomic, strong) NSArray *videoQualityInfos;
 
 /// 设备是否开启加密

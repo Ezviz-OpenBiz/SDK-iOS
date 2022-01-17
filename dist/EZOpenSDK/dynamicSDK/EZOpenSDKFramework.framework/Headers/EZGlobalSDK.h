@@ -19,6 +19,7 @@
 @class EZDeviceUpgradeStatus;
 @class EZLeaveMessage;
 @class EZHiddnsDeviceInfo;
+@class EZDeviceCloudServiceInfo;
 
 /// 此类为EZGlobalSDK接口类 特别说明：110001（参数错误）、110002（AccessToken过期）、149999、150000（服务端异常）是所有http接口（返回值是NSOperation对象的大部分是http接口）都会返回的通用错误码，400002为接口参数错误的通用错误码
 @interface EZGlobalSDK : NSObject
@@ -938,5 +939,121 @@ sourceApplication annotation:(id) annotation
 + (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
                        cameraNo:(NSInteger)cameraNo
                      completion:(void (^)(NSError *error))completion;
+
+
+#pragma mark - V4.19.4 新增接口
+
+/**
+ *  检查国家是否支持云存储服务
+ *
+ *  @param completion 回调
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)isSupportCloundService:(void (^)(BOOL isSupport, NSError *error))completion;
+
+/**
+ *  查询云存储设备通道套餐信息
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getCloundDevicePackageInfo:(NSString *)deviceSerial
+                                           channelNo:(NSInteger)channelNo
+                                          completion:(void (^)(EZDeviceCloudServiceInfo *serviceInfo, NSError *error))completion;
+
+/**
+ *  云存储功能暂停恢复
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param enable                   NO-禁用，YES-启用
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)setCloundServiceActive:(NSString *)deviceSerial
+                                       channelNo:(NSInteger)channelNo
+                                          enable:(BOOL)enable
+                                      completion:(void (^)(NSError *error))completion;
+
+/**
+ *  查询某月中有视频文件的天(日期)
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param month                     查询某月具有云存储的日期，格式为yyyyMM
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getCloudVideoDays:(NSString *)deviceSerial
+                                  channelNo:(NSInteger)channelNo
+                                      month:(NSString *)month
+                                 completion:(void (^)(NSArray<NSString *> *dayArray, NSError *error))completion;
+
+/**
+ *  按设备通道删除所有云存储录像片段
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)deleteAllCloudVideo:(NSString *)deviceSerial
+                                    channelNo:(NSInteger)channelNo
+                                   completion:(void (^)(NSError *error))completion;
+
+/**
+ *  删除云存储录像片段
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param videos                   视频数组（限制30个以内）
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)deleteCloudVideoFragment:(NSString *)deviceSerial
+                                         channelNo:(NSInteger)channelNo
+                                            videos:(NSArray *)videos
+                                        completion:(void (^)(NSError *error))completion;
+
+/**
+ *  按天增量查询云存储录像列表接口(概要信息)
+ *
+ *  @param deviceSerial     设备序列号
+ *  @param channelNo            通道号
+ *  @param videoType            录像类型videoType
+ *  @param searchDate          查找文件日期yyyy-MM-dd
+ *  @param maxCreateTime   查找文件的起始时间yyyy-MM-dd HH:mm:ss，要保证和searchDate是同一天，否则报错。默认从 yyyy-MM-dd 00:00:00开始，非必填，可传nil
+ *  @param completion          回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getIncrCloudVideos:(NSString *)deviceSerial
+                                   channelNo:(NSInteger)channelNo
+                                   videoType:(EZCloudVideoType)videoType
+                                  searchDate:(NSString *)searchDate
+                               maxCreateTime:(NSString *)maxCreateTime
+                                  completion:(void (^)(NSArray *abstractvideos, NSError *error))completion;
+
+/**
+ *  根据文件id批量查询详情信息接口
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param channelNo        通道号
+ *  @param videos               录像概要信息数组
+ *  @param completion      回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getCloudVideoDetails:(NSString *)deviceSerial
+                                     channelNo:(NSInteger)channelNo
+                                        videos:(NSArray *)videos
+                                    completion:(void (^)(NSArray *couldRecords, NSError *error))completion;
 
 @end

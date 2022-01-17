@@ -102,6 +102,7 @@ typedef NS_ENUM(NSInteger, EZErrorCode) {
     EZ_HTTPS_OPERATE_LEAVE_MSG_FAIL = 120202,         //操作留言消息失败
     EZ_HTTPS_SERVER_DATA_ERROR = 149999,              //数据异常
     EZ_HTTPS_SERVER_ERROR = 150000,                   //服务器异常
+    EZ_HTTPS_CLOUD_DELETE_ALL_EXCEPT_LAST = 150002,   //云存储视频删除完成，除了最后一个在录制的视频无法删除
     EZ_HTTPS_DEVICE_PTZ_NOT_SUPPORT = 160000,         //设备不支持云台控制
     EZ_HTTPS_DEVICE_PTZ_NO_PERMISSION = 160001,       //用户没有权限操作云台控制
     EZ_HTTPS_DEVICE_PTZ_UPPER_LIMIT = 160002,         //云台达到上限位（顶部）
@@ -237,6 +238,13 @@ typedef NS_ENUM(NSUInteger, EZVideoRecordType) {
     EZVideoRecordTypeAll,     // 所有类型
     EZVideoRecordTypeCMR,     // 定时录像
     EZVideoRecordTypeEvent    // 事件类型
+};
+
+/* 云存储录像类型 */
+typedef NS_ENUM(NSInteger, EZCloudVideoType) {
+    EZCloudVideoTypeAll = -1,   // 全部录像
+    EZCloudVideoTypeSeries = 1, // 连续录像
+    EZCloudVideoTypeAct = 2     // 活动录像
 };
 
 ///需要进行重新登录的通知，该通知触发频率为5年一次，需在SDK初始化监听

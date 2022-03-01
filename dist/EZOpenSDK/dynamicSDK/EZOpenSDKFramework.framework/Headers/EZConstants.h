@@ -149,7 +149,7 @@ typedef NS_ENUM(NSInteger, EZWifiConfigStatus) {
     DEVICE_ACCOUNT_BINDED = 4     //设备已经绑定账户  (已废弃 v4.16.0)
 };
 
-/* 设备ptz命令 */
+/* 设备ptz命令，定义的值与Android定义的不一样，SDK会在内部会做一层转换 */
 typedef NS_OPTIONS(NSUInteger, EZPTZCommand) {
     EZPTZCommandLeft            = 1 << 0, //向左旋转
     EZPTZCommandRight           = 1 << 1, //向右旋转

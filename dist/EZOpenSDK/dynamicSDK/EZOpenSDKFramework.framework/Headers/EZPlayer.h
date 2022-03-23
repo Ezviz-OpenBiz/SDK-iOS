@@ -212,6 +212,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)startRealPlay;
 
 /**
+ *  @since 4.19.6
+ *  开始静默播放，不开启声音，异步接口，返回值只是表示操作成功，不代表播放成功
+ *
+ *  @return YES/NO
+ */
+- (BOOL)startSilenceRealPlay;
+
+/**
  *  停止播放，异步接口，返回值只是表示操作成功
  *
  *  @return YES/NO

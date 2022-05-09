@@ -46,7 +46,6 @@
  */
 - (void)bavClient:(EZConferenceClient *)client didReceivedMessage:(int32_t)messageCode msg:(id)msg;
 
-
 @optional
 
 ///**
@@ -81,6 +80,39 @@
  @param delayTimeStat 卡顿时间
  */
 - (void)bavClient:(EZConferenceClient *)client playDelayTimeStatistics:(double)delayTimeStat ofRemoteClient:(int)clientID;
+
+/**
+ 本地视频数据回调
+ 
+ @param localVideoStatistics 视频相关参数
+ @param width    宽度
+ @param height  高度
+ */
+- (void)onLocalVideoStats:(EZRTCLocalStatistics *)localVideoStatistics width:(int)width height:(int)height;
+
+/**
+ 本地音频数据回调
+ 
+ @param localAudioStatistics 音频相关参数
+ */
+- (void)onLocalAudioStats:(EZRTCLocalStatistics *)localAudioStatistics;
+
+/**
+ 远端视频数据回调
+ 
+ @param remoteVideoStatistics 视频相关参数
+ @param width    宽度
+ @param height  高度
+ */
+- (void)onRemoteVideoStats:(EZRTCRemoteStatistics *)remoteVideoStatistics width:(int)width height:(int)height;
+
+/**
+ 远端音频数据回调
+ 
+ @param remoteAudioStatistics 音频相关参数
+ */
+- (void)onRemoteAudioStats:(EZRTCRemoteStatistics *)remoteAudioStatistics;
+
 
 @end
 

@@ -143,7 +143,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param roomId 房间号
 /// @param password 密码
 /// @param userID 用户自定义ID
-- (void)enterRoom:(int32_t)roomId withPassword:(NSString *)password withUserID:(NSString *)userID;
+- (void)enterRoom:(int32_t)roomId
+     withPassword:(NSString *)password
+       withUserID:(NSString *)userID
+       withAppId:(NSString *)appId;
 
 
 /// 退出会议

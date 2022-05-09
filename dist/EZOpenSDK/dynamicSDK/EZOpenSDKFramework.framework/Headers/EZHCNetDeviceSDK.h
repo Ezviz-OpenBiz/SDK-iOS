@@ -61,9 +61,14 @@ typedef NS_ENUM(int, EZEncryptType) {
 + (BOOL) stopLocalSearch;
 
 /**
- 清楚结果，重新搜索，前提是之前开启过搜索
+ 清除结果，重新搜索，前提是之前开启过搜索
  */
 + (void) research;
+
+/**
+ 获取SADP版本号
+ */
++ (int)getSadpVersion;
 
 /**
  激活设备，调用stopLocalSearch后将无法激活设备

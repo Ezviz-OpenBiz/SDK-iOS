@@ -106,6 +106,7 @@
 @property (nonatomic, assign) uint32_t m_uClientId;
 @property (nonatomic, strong) NSString *m_sCustomId;
 @property (nonatomic, strong) NSString *m_szUserName;
+@property (nonatomic, assign) uint8_t m_iCltType; //用以区分是否是设备 111:设备 
 @property (nonatomic, assign) int8_t audioState;// 声音启用状态 0-关闭 1-启用
 @property (nonatomic, assign) int8_t videoState;// 视频启用状态 0-关闭 1-主流 5-主子流
 @property (nonatomic, assign) int8_t shareState;// 屏幕共享启用状态 0-关闭 1-启用
@@ -127,6 +128,43 @@
 @property (nonatomic, strong) NSDictionary *statisticInfo;
 @end
 
+///本地的音视频统计
+@interface EZRTCLocalStatistics : NSObject
+///视频指标参数
+@property (nonatomic, assign) uint32_t videoSentBitrate; //视频传输码率(上行)
+@property (nonatomic, assign) uint32_t videoSentFrameRate; //帧率大小
+@property (nonatomic, assign) uint16_t videoPacketLossRate; //视频丢包率
+@property (nonatomic, assign) uint16_t videoStreamType; //流类型
+///音频指标参数
+@property (nonatomic, assign) uint32_t audioSentBitrate;//音频传输码率
+@property (nonatomic, assign) uint16_t audioPacketLossRate;//音频丢包率
+@end
+
+///远端的音视频统计
+@interface  EZRTCRemoteStatistics : NSObject
+///视频指标参数
+@property (nonatomic, assign) uint32_t videoClientId; //远端视频clientId
+@property (nonatomic, assign) uint32_t videoReceivedBitrate;//远端视频传输码率（下行）
+@property (nonatomic, assign) uint32_t videoReceivedFrameRate;//远端帧率大小
+@property (nonatomic, assign) uint16_t videoPacketLossRate;//远端视频丢包率(下行)
+@property (nonatomic, assign) uint16_t videoTotalFrozenTime;//远端视频总的卡顿时长
+@property (nonatomic, assign) uint16_t videoFrozenRate; //远端视频卡顿比
+@property (nonatomic, assign) uint16_t streamType; //远端流类型
+///音频指标参数
+@property (nonatomic, assign) uint32_t audioClientId; //远端音频clientId
+@property (nonatomic, assign) uint32_t audioReceivedBitrate;//远端音频传输码率（下行）
+@property (nonatomic, assign) uint16_t audioPacketLossRate;//远端音频丢包率(下行)
+@property (nonatomic, assign) uint16_t audioTotalFrozenTime;//远端音频总的卡顿时长
+@property (nonatomic, assign) uint16_t audioFrozenRate; //远端音频卡顿比
+
+@end
+
+@interface EZRTCVideoSize : NSObject
+
+@property (nonatomic, assign) int width;//宽
+@property (nonatomic, assign) int height;//高
+
+@end
 
 extern int32_t const EZBAVMessageRoomCreated;
 extern int32_t const EZBAVMessagePeerEnteredRoom;
@@ -148,6 +186,10 @@ extern int32_t const EZBAVForcedQuitReasonRepeatJoin;//已在其他地方加入�
 extern int32_t const EZBAVForcedQuitReasonMovedOut;//被管理员移出房间
 extern int32_t const EZBAVForcedQuitReasonRoomDissolved;//房间解散
 
+extern int32_t const  EZBAVMessageLocalVideoStats;//统计本地视频实时数据
+extern int32_t const  EZBAVMessageLocalAudioStats;//统计本地音频实时数据
+extern int32_t const  EZBAVMessageRemoteVideoStats;//统计远端视频实时数据
+extern int32_t const  EZBAVMessageRemoteAudioStats;//统计远端音频实时数据
 
 
 

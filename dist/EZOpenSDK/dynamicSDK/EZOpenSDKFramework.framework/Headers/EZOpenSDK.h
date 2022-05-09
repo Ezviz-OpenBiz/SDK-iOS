@@ -18,6 +18,7 @@
 @class EZProbeDeviceInfo;
 @class EZDeviceUpgradeStatus;
 @class EZLeaveMessage;
+@class EZWiFiItemInfo, EZAPDevInfo, EZConfigTokenInfo;
 
 /// 此类为EZOpenSDK接口类 特别说明：110001（参数错误）、110002（AccessToken过期）、149999、150000（服务端异常）是所有http接口（返回值是NSOperation对象的大部分是http接口）都会返回的通用错误码，400002为接口参数错误的通用错误码
 @interface EZOpenSDK : NSObject
@@ -400,9 +401,26 @@
  *
  *  @return operation
  */
-+ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *) deviceSerial
-                      deviceType:(NSString *) deviceType
-                      completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
++ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *)deviceSerial
+                               deviceType:(NSString *)deviceType
+                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+
+/**
+ *  @since 4.19.6
+ *  尝试查询设备信息，设备Wifi配置前查询一次设备的信息
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param deviceType 设备型号，无法获取到设备型号则可传nil
+ *  @param apiUrl 指定去哪个平台查询
+ *  @param completion   回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
+ *  @see 全新的设备是没有注册到平台的，所以会出现设备不存在的情况，设备wifi配置成功以后会上报数据到萤石云平台，以后每次查询就不会出现设备不存在的情况了。
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *)deviceSerial
+                               deviceType:(NSString *)deviceType
+                                   apiUrl:(NSString *)apiUrl
+                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
 
 /**
  *  @since 3.2.0
@@ -778,6 +796,28 @@
            deviceSerial:(NSString *)deviceSerial
                    mode:(NSInteger)mode
            deviceStatus:(void (^)(EZWifiConfigStatus status,NSString *deviceSerial))statusBlock;
+
+#pragma mark - V4.19.8 新增加接口
+
+/**
+ *  @since 4.19.8
+ *  WiFi配置开始接口
+ *
+ *  @param ssid         连接WiFi SSID
+ *  @param password     连接WiFi 密码
+ *  @param deviceSerial 连接WiFi的设备的设备序列号,批量配置时填nil
+ *  @param mode         配网的方式，EZWiFiConfigMode中列举的模式进行任意组合,例如:EZWiFiConfigSmart|EZWiFiConfigWave
+ *  @param apiUrl    指定去哪个平台查询
+ *  @param statusBlock  返回设备序列号以及当前连接状态
+ *
+ *  @return YES/NO
+ */
++ (BOOL)startConfigWifi:(NSString *)ssid
+               password:(NSString *)password
+           deviceSerial:(NSString *)deviceSerial
+                   mode:(NSInteger)mode
+                 apiUrl:(NSString *)apiUrl
+           deviceStatus:(void (^)(EZWifiConfigStatus status,NSString *deviceSerial))statusBlock;
     
 #pragma mark - V4.8.4
 /**
@@ -787,7 +827,7 @@
  @param password WiFi的密码
  @param deviceSerial 设备序列号
  @param verifyCode 设备验证码
- @param callback 结果回调
+ @param callback 结果回调，注意：返回YES仅仅代表成功将WiFi信息发送给设备，不代表设备配网成功
  @return 成功或失败
  */
 + (BOOL)startAPConfigWifiWithSsid:(NSString *)ssid
@@ -801,6 +841,61 @@
  */
 + (void)stopAPConfigWifi;
 
+#pragma mark - V4.19.6新增接口 接触式配网 New AP Config
+
+/**
+ 获取接触式AP配网token
+ 
+ @param completion 回调
+ 
+ @return operation
+ */
++ (NSURLSessionDataTask *)getNewApConfigToken:(void(^)(EZConfigTokenInfo *tokenInfo, NSError *error))completion;
+
+/**
+ 开始NewAP配网（需连接设备热点）
+ @param token 配网token
+ @param ssid WiFi ssid
+ @param password WiFi 密码
+ @param lbsDomain lbs 域名
+ @param handler 回调
+ 
+ @return 成功或失败
+*/
++ (BOOL)startNewApConfigWithToken:(NSString *)token
+                             ssid:(NSString *)ssid
+                         password:(NSString *)password
+                        lbsDomain:(NSString *)lbsDomain
+                completionHandler:(void(^)(EZNewAPConfigStatus status, NSError *error))handler;
+
+/**
+ 获取设备状态（需连接设备热点）
+ 
+ @param handler 回调
+ */
++ (void)getAccessDeviceInfo:(void(^)(EZAPDevInfo *devInfo, NSError *error))handler;
+
+/**
+ 获取设备当前周边WiFi列表，上限20个（需连接设备热点）
+ 
+ @param handler 回调
+*/
++ (void)getAccessDeviceWifiList:(void(^)(NSArray<EZWiFiItemInfo*> *wifiList, NSError *error))handler;
+
+/**
+ 查询设备绑定状态
+ @param deviceSerial 设备序列号
+ @param completion 回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
+ 
+ @return 成功或失败
+*/
++ (NSURLSessionDataTask *)queryPlatformBindStatus:(NSString *)deviceSerial
+                                       completion:(void(^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+
+
+/// 设置配网设备网关地址 可选
+/// @param devRouteDomain 设备网关地址
++ (void)setDevRouteDomain:(NSString *)devRouteDomain;
 
 #pragma mark - v4.10
 
@@ -882,4 +977,76 @@
 + (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
                        cameraNo:(NSInteger)cameraNo
                      completion:(void (^)(NSError *error))completion;
+
+#pragma mark -V4.19.7 新增接口
+/**
+ *  邀请设备进入房间
+ *  @param roomId                                房间号
+ *  @param deviceSerial                   设备序列号
+ *  @param channelNo                         通道号
+ *  @param streamType                       主子码流 1-主码流，2-子码流，mode为2时可不传
+ *  @param mode                                    加入模式 1-双向音视频模式（默认），2-对讲模式
+ *  @param maxActiveSeconds         入会最长时间（秒）
+ *  @param completion      回调block
+ *
+ *  @return operation
+ * **/
++ (NSURLSessionDataTask *)inviteDeviceEnterMeeting:(NSString *)roomId
+                                      deviceSerial:(NSString *)deviceSerial
+                                         channelNo:(NSInteger)channelNo
+                                        streamType:(NSInteger)streamType
+                                              mode:(NSInteger)mode
+                                  maxActiveSeconds:(NSInteger)maxActiveSeconds
+                                        completion:(void (^)(NSError *error))completion;
+
+/**
+ *  强制设备退出房间
+ *  @param roomId                                房间号
+ *  @param deviceSerial                   设备序列号
+ *  @param channelNo                         通道号
+ *  @param completion      回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)kickoutDeviceMoveOutRoom:(NSString *)roomId
+                                      deviceSerial:(NSString *)deviceSerial
+                                         channelNo:(NSInteger)channelNo
+                                        completion:(void (^)(NSError *error))completion;
+
+#pragma mark - v4.19.6
+
+/**
+ *  @since 4.19.6
+ *  获取所有的p2p预连接设备序列号（包括正在进行预操作的以及预操作完成的）
+ *
+ *  @return 设备序列号数组
+ */
++ (NSArray<NSString *> *)getAllProcessedPreconnectSerials;
+
+/**
+ *  @since 4.19.6
+ *  获取所有正在排队的p2p预连接设备序列号（指还没有进行预操作的）
+ *
+ *  @return 设备序列号数组
+ */
++ (NSArray<NSString *> *)getAllToDoPreconnectSerials;
+
+
+/**
+ *  @since 4.19.6
+ *  对某一设备进行p2p预连接操作
+ *
+ *  @param deviceSerial 设备序列号
+ */
++ (void)startP2PPreconnect:(NSString *)deviceSerial;
+
+
+/**
+ *  @since 4.19.6
+ *  对某一设备进行p2p预连接清除操作
+ *
+ *  @param deviceSerial 设备序列号
+ */
++ (void)clearP2PPreconnect:(NSString *)deviceSerial;
+
 @end

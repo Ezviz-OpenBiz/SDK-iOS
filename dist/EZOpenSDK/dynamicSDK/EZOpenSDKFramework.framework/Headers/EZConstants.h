@@ -149,6 +149,14 @@ typedef NS_ENUM(NSInteger, EZWifiConfigStatus) {
     DEVICE_ACCOUNT_BINDED = 4     //设备已经绑定账户  (已废弃 v4.16.0)
 };
 
+/* New AP配网设备状态 */
+typedef NS_ENUM(NSInteger, EZNewAPConfigStatus) {
+    EZNewAPConfigStatusConnectSuccess          = 104,    // 连接成功
+    EZNewAPConfigStatusUnknow                  = 105,    // 未知错误
+    EZNewAPConfigStatusPasswordError           = 106,    // 密码错误
+    EZNewAPConfigStatusNoAPFound               = 201,    // 未找到wifi热点
+};
+
 /* 设备ptz命令，定义的值与Android定义的不一样，SDK会在内部会做一层转换 */
 typedef NS_OPTIONS(NSUInteger, EZPTZCommand) {
     EZPTZCommandLeft            = 1 << 0, //向左旋转

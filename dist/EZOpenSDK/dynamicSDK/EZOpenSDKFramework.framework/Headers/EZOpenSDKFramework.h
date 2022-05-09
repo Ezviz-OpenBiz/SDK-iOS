@@ -26,14 +26,19 @@
 #include <EZOpenSDKFramework/EZProbeDeviceInfo.h>
 #include <EZOpenSDKFramework/EZRecordDownloader.h>
 #include <EZOpenSDKFramework/EZRecordDownloadTask.h>
-#include <EZOpenSDKFramework/EZSADPDeviceInfo.h>
 #include <EZOpenSDKFramework/EZStorageInfo.h>
 #include <EZOpenSDKFramework/EZTokenKit.h>
 #include <EZOpenSDKFramework/EZUserInfo.h>
 #include <EZOpenSDKFramework/EZVideoQualityInfo.h>
 #include <EZOpenSDKFramework/EZVideoTransformer.h>
+#include <EZOpenSDKFramework/EZDevicePtzAngleInfo.h>
 #include <EZOpenSDKFramework/EzvizRecordFileInfo.h>
 #include <EZOpenSDKFramework/EzvizWatchServerInfo.h>
+
+#include <EZOpenSDKFramework/EZSADPDeviceInfo.h>
+#include <EZOpenSDKFramework/EZAPDevInfo.h>
+#include <EZOpenSDKFramework/EZConfigTokenInfo.h>
+#include <EZOpenSDKFramework/EZWiFiItemInfo.h>
 
 #include <EZOpenSDKFramework/EZConstants.h>
 #include <EZOpenSDKFramework/EZGlobalSDK.h>

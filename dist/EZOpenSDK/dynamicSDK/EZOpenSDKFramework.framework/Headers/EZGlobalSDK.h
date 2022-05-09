@@ -20,6 +20,7 @@
 @class EZLeaveMessage;
 @class EZHiddnsDeviceInfo;
 @class EZDeviceCloudServiceInfo;
+@class EZWiFiItemInfo, EZAPDevInfo, EZConfigTokenInfo;
 
 /// 此类为EZGlobalSDK接口类 特别说明：110001（参数错误）、110002（AccessToken过期）、149999、150000（服务端异常）是所有http接口（返回值是NSOperation对象的大部分是http接口）都会返回的通用错误码，400002为接口参数错误的通用错误码
 @interface EZGlobalSDK : NSObject
@@ -418,9 +419,26 @@
  *
  *  @return operation
  */
-+ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *) deviceSerial
-                      deviceType:(NSString *) deviceType
-                      completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
++ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *)deviceSerial
+                               deviceType:(NSString *)deviceType
+                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+
+/**
+ *  @since 4.19.6
+ *  尝试查询设备信息，设备Wifi配置前查询一次设备的信息
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param deviceType 设备型号，无法获取到设备型号则可传nil
+ *  @param apiUrl 指定去哪个平台查询
+ *  @param completion   回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
+ *  @see 全新的设备是没有注册到平台的，所以会出现设备不存在的情况，设备wifi配置成功以后会上报数据到萤石云平台，以后每次查询就不会出现设备不存在的情况了。
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)probeDeviceInfo:(NSString *)deviceSerial
+                               deviceType:(NSString *)deviceType
+                                   apiUrl:(NSString *)apiUrl
+                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
 
 /**
  *  @since 1.0.0
@@ -864,7 +882,7 @@ sourceApplication annotation:(id) annotation
  @param password WiFi的密码
  @param deviceSerial 设备序列号
  @param verifyCode 设备验证码
- @param callback 结果回调
+ @param callback 结果回调，注意：返回YES仅仅代表成功将WiFi信息发送给设备，不代表设备配网成功
  @return 成功或失败
  */
 + (BOOL)startAPConfigWifiWithSsid:(NSString *) ssid
@@ -877,6 +895,62 @@ sourceApplication annotation:(id) annotation
  停止AP配网
  */
 + (void)stopAPConfigWifi;
+
+#pragma mark - V4.19.6新增接口 接触式配网 New AP Config
+
+/**
+ 获取接触式AP配网token
+ 
+ @param completion 回调
+ 
+ @return operation
+ */
++ (NSURLSessionDataTask *)getNewApConfigToken:(void(^)(EZConfigTokenInfo *tokenInfo, NSError *error))completion;
+
+/**
+ 开始NewAP配网（需连接设备热点）
+ @param token 配网token
+ @param ssid WiFi ssid
+ @param password WiFi 密码
+ @param lbsDomain lbs 域名
+ @param handler 回调
+ 
+ @return 成功或失败
+*/
++ (BOOL)startNewApConfigWithToken:(NSString *)token
+                              ssid:(NSString *)ssid
+                          password:(NSString *)password
+                         lbsDomain:(NSString *)lbsDomain
+                 completionHandler:(void(^)(EZNewAPConfigStatus status, NSError *error))handler;
+
+/**
+ 获取设备状态（需连接设备热点）
+ 
+ @param handler 回调
+ */
++ (void)getAccessDeviceInfo:(void(^)(EZAPDevInfo *devInfo, NSError *error))handler;
+
+/**
+ 获取设备当前周边WiFi列表，上限20个（需连接设备热点）
+ 
+ @param handler 回调
+*/
++ (void)getAccessDeviceWifiList:(void(^)(NSArray<EZWiFiItemInfo*> *wifiList, NSError *error))handler;
+
+/**
+ 查询设备绑定状态
+ @param deviceSerial 设备序列号
+ @param completion 回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
+ 
+ @return 成功或失败
+*/
++ (NSURLSessionDataTask *)queryPlatformBindStatus:(NSString *)deviceSerial
+                                       completion:(void(^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+
+
+/// 设置配网设备网关地址 可选
+/// @param devRouteDomain 设备网关地址
++ (void)setDevRouteDomain:(NSString *)devRouteDomain;
 
 #pragma mark - v4.10
 

@@ -12,6 +12,7 @@
 @class EZCloudRecordFile;
 @class EZPlayer;
 @class EZPlayerExParamInfo;
+@class EZDevicePtzAngleInfo;
 
 /**
  *  预览清晰度
@@ -95,6 +96,13 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (void)player:(EZPlayer *)player didReceivedDisplayHeight:(NSInteger)height displayWidth:(NSInteger)width;
 
+/**
+ 设备云台角度数据回调
+
+ @param player 播放器对象
+ @param info 私有数据
+ */
+- (void)player:(EZPlayer *)player didReceivedDevicePtzAngleInfo:(EZDevicePtzAngleInfo *)info;
 
 /**
  播放过程中 回调解码数据
@@ -117,7 +125,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 @property (nonatomic, weak) id<EZPlayerDelegate> delegate;
 
 /// 是否让播放器处理进入后台,YES:自动处理;NO:不处理,默认为YES
-@property (nonatomic) BOOL backgroundModeByPlayer;
+@property (nonatomic, assign) BOOL backgroundModeByPlayer;
 
 /**
  *  根据设备序列号和通道号创建EZPlayer对象
@@ -205,19 +213,18 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (void)setPlayerView:(UIView *)playerView;
 
 /**
+ *  是否静音播放，startRealPlay之前调用
+ *
+ *  @param isSilencePlay 是否静音播放
+ */
+- (void)setSilencePlay:(BOOL)isSilencePlay;
+
+/**
  *  开始播放，异步接口，返回值只是表示操作成功，不代表播放成功
  *
  *  @return YES/NO
  */
 - (BOOL)startRealPlay;
-
-/**
- *  @since 4.19.6
- *  开始静默播放，不开启声音，异步接口，返回值只是表示操作成功，不代表播放成功
- *
- *  @return YES/NO
- */
-- (BOOL)startSilenceRealPlay;
 
 /**
  *  停止播放，异步接口，返回值只是表示操作成功

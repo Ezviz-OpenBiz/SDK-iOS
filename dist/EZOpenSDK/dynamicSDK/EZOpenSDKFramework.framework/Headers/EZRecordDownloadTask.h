@@ -36,7 +36,7 @@ typedef enum : NSUInteger {
 /**
  本地存放路径
  */
-@property (nonatomic,strong) NSString *saveFilePath;
+@property (nonatomic, strong) NSString *saveFilePath;
 
 /**
  结束回调
@@ -47,6 +47,11 @@ typedef enum : NSUInteger {
  失败回调
  */
 @property (nonatomic, copy) void(^failed)(NSError *error);
+
+/**
+ 已下载文件大小回调
+ */
+@property (nonatomic, copy) void(^downloading)(NSUInteger downloadSize);
 
 /**
  开始下载
@@ -66,8 +71,16 @@ typedef enum : NSUInteger {
  @param finshed 结束回调
  @param failed 失败回调
  */
-- (void) setDownloadCallBackWithFinshed:(void(^)(EZRecordDownloaderStatus statusCode))finshed
-                                 failed:(void(^)(NSError *error))failed;
+- (void)setDownloadCallBackWithFinshed:(void(^)(EZRecordDownloaderStatus statusCode))finshed
+                                failed:(void(^)(NSError *error))failed;
+
+/**
+ 设置下载进度回调
+ 
+ @param downloading 下载文件大小回调
+ */
+- (void)setDownloadCallBackWithDownloadSize:(void(^)(NSUInteger downloadSize))downloading;
+
 @end
 
 NS_ASSUME_NONNULL_END

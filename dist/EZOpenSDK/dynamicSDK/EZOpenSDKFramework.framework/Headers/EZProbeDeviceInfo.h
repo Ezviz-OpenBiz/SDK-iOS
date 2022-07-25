@@ -27,7 +27,7 @@
 @property (nonatomic, copy) NSString *defaultPicPath;
 /// 是否支持wifi，0-不支持，1-支持，2-支持带userId的新的wifi配置方式，3-支持smartwifi
 @property (nonatomic) NSInteger supportWifi;
-/// 是否支持AP配网，2-支持AP，其他值为不支持AP配网
+/// 是否支持AP配网，1-smartconfig+声波失败后，支持AP配网 2-支持AP，其他值为不支持AP配网
 @property (nonatomic) NSInteger supportAP;
 /// 是否支持声波配置,0-不支持，1-支持
 @property (nonatomic) NSInteger supportSoundWave;

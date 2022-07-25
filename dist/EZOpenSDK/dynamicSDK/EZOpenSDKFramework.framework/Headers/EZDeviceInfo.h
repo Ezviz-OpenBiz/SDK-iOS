@@ -31,6 +31,8 @@
 @property (nonatomic, copy) NSString *deviceType;
 /// 设备版本号
 @property (nonatomic, copy) NSString *deviceVersion;
+/// 设备协议版本号类型  0:非国标 6:国标
+@property (nonatomic) NSInteger devProtoEnum;
 /// 设备是否开启加密
 @property (nonatomic) BOOL isEncrypt;
 /// 设备状态，1-在线，2-不在线

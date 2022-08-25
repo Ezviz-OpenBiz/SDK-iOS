@@ -424,5 +424,14 @@ sd卡及云存储倍速回放接口
 /// @param exParamInfo EZPlayerExParamInfo
 - (void)setExParamInfo:(EZPlayerExParamInfo *)exParamInfo;
 
+/**
+ * 设置打开播放库的智能分析，当前温感相机的框框使用了该智能分析数据，预览成功后调用，在播放过程中随时开关
+ *
+ * @param enable YES：开  NO：关
+ * 
+ * @return 返回状态
+ */
+- (BOOL)setIntelAnalysis:(BOOL)enable;
+
 @end
 

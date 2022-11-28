@@ -37,6 +37,4 @@
 ///是否是萤石设备
 @property (nonatomic,assign) BOOL isEzvizDevice;
 
-
-
 @end

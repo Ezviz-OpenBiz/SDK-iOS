@@ -1,24 +1,23 @@
 //
 //  EZVideoTalkComponent.h
-//  EZOpenSDKFramework
+//  EZOpenSDK
 //
-//  Created by JuneCheng on 2021/10/20.
-//  Copyright © 2021 Hikvision. All rights reserved.
+//  Created by JuneCheng on 2022/7/23.
 //
 
 #ifndef EZVideoTalkComponent_h
 #define EZVideoTalkComponent_h
 
-#include <EZOpenSDKFramework/EZBAVParam.h>
-#include <EZOpenSDKFramework/EZConferenceClient.h>
-#include <EZOpenSDKFramework/EZRTCCameraParam.h>
-#include <EZOpenSDKFramework/EZRTCMediaSessionDefines.h>
-#include <EZOpenSDKFramework/EZRTCSampleHandleManager.h>
-#include <EZOpenSDKFramework/EZRTCVideoEncodeParam.h>
-#include <EZOpenSDKFramework/EZVideoTalk.h>
-#include <EZOpenSDKFramework/EZVideoTalkGlobal.h>
-#include <EZOpenSDKFramework/EZVideoTalkSDK.h>
-#include <EZOpenSDKFramework/EZVideoTalkSDKDefines.h>
-#include <EZOpenSDKFramework/EZVideoTalkView.h>
+#import <EZOpenSDKFramework/EZBAVParam.h>
+#import <EZOpenSDKFramework/EZConferenceClient.h>
+#import <EZOpenSDKFramework/EZRTCCameraParam.h>
+#import <EZOpenSDKFramework/EZRTCMediaSessionDefines.h>
+#import <EZOpenSDKFramework/EZRTCSampleHandleManager.h>
+#import <EZOpenSDKFramework/EZRTCVideoEncodeParam.h>
+#import <EZOpenSDKFramework/EZVideoTalk.h>
+#import <EZOpenSDKFramework/EZVideoTalkGlobal.h>
+#import <EZOpenSDKFramework/EZVideoTalkSDK.h>
+#import <EZOpenSDKFramework/EZVideoTalkSDKDefines.h>
+#import <EZOpenSDKFramework/EZVideoTalkView.h>
 
 #endif /* EZVideoTalkComponent_h */

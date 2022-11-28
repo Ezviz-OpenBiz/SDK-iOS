@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, EZErrorCode) {
     EZ_DEVICE_TTS_INTER_ERROR = 360004,               //TTS内部发生错误
     EZ_DEVICE_TTS_SEND_ERROR = 360005,                //客户端发送的消息错误
     EZ_DEVICE_TTS_RECEIVE_ERROR = 360006,             //客户端接收发生错误
-    EZ_DEVICE_TTS_CLOSE_CONNECT = 360007,             // TTS关闭了与客户端的连接
+    EZ_DEVICE_TTS_CLOSE_CONNECT = 360007,             //TTS关闭了与客户端的连接
     EZ_DEVICE_TTS_TALKING = 360010,                   //设备正在对讲中
     EZ_DEVICE_TTS_PRIVACY_PROTECT = 360013,           //设备开启了隐私保护
     EZ_DEVICE_TTS_INIT_ERROR = 360102,                //TTS初始化失败
@@ -133,28 +133,12 @@ typedef NS_ENUM(NSInteger, EZErrorCode) {
     EZ_NPC_CLIENT_MEMORY_ERROR = 500003,              //分配内存失败
     EZ_NPC_CLIENT_BUFFER_OVERFLOW_ERROR = 500004,     //缓冲区溢出
     EZ_NPC_CLIENT_SYSTEM_NO_SUPPORT_ERROR = 500005,   //系统不支持
-    EZ_NPC_CLIENT_INVALID_PORT_ERROR = 500006,         //无效端口
+    EZ_NPC_CLIENT_INVALID_PORT_ERROR = 500006,        //无效端口
     EZ_NPC_CLIENT_STREAM_CLOSE_ERROR = 500101,        //流关闭
     EZ_NPC_CLIENT_TRACK_CLOSE_ERROR = 500102,         //TRACK_CLOSE
     EZ_NPC_CLIENT_NPCCREATE_ERROR = 500103,           //创建失败
     EZ_NPC_CLIENT_TRSCREATE_ERROR = 500104,           //TRSCREATE_ERROR
     EZ_NPC_CLIENT_FAIL_UNKNOWN_ERROR = 509999,        //FAIL_UNKNOWN
-};
-
-/* WiFi配置设备状态 */
-typedef NS_ENUM(NSInteger, EZWifiConfigStatus) {
-    DEVICE_WIFI_CONNECTING = 1,   //设备正在连接WiFi
-    DEVICE_WIFI_CONNECTED = 2,    //设备连接WiFi成功  (已废弃 v4.16.0)
-    DEVICE_PLATFORM_REGISTED = 3, //设备注册平台成功
-    DEVICE_ACCOUNT_BINDED = 4     //设备已经绑定账户  (已废弃 v4.16.0)
-};
-
-/* New AP配网设备状态 */
-typedef NS_ENUM(NSInteger, EZNewAPConfigStatus) {
-    EZNewAPConfigStatusConnectSuccess          = 104,    // 连接成功
-    EZNewAPConfigStatusUnknow                  = 105,    // 未知错误
-    EZNewAPConfigStatusPasswordError           = 106,    // 密码错误
-    EZNewAPConfigStatusNoAPFound               = 201,    // 未找到wifi热点
 };
 
 /* 设备ptz命令，定义的值与Android定义的不一样，SDK会在内部会做一层转换 */
@@ -211,34 +195,11 @@ typedef NS_ENUM(NSInteger, EZDefenceStatus) {
 };
 
 /* 通道清晰度，请注意不是所有设备都有这些清晰度的，请根据实际场景使用 */
-typedef NS_ENUM(NSInteger, EZVideoLevelType)
-{
+typedef NS_ENUM(NSInteger, EZVideoLevelType) {
     EZVideoLevelLow       = 0,  //流畅
     EZVideoLevelMiddle    = 1,  //均衡
     EZVideoLevelHigh      = 2,  //高清
     EZVideoLevelSuperHigh = 3   //超清
-};
-
-/* 萤石研发的APP */
-typedef NS_ENUM(NSInteger, EZAppType)
-{
-    EZEzviz                 = 0,  //萤石云视频国内版
-    EZEzvizInternational    = 1,  //萤石云视频海外版
-    EZHIKConnect            = 2,  //HIK-Connect
-};
-
-/* 萤石负责研发的APP */
-typedef NS_ENUM(NSInteger, EZAppPageType)
-{
-    EZPageDeviceList        = 0,  //设备列表页面
-    EZPageAlarmList         = 1,  //告警消息列表页面
-};
-
-/* 配网方式 */
-typedef NS_ENUM(NSInteger, EZWiFiConfigMode)
-{
-    EZWiFiConfigSmart        = 1 << 0,  //smart config
-    EZWiFiConfigWave         = 1 << 1,  //声波配网
 };
 
 /* 录像类型 */
@@ -254,15 +215,6 @@ typedef NS_ENUM(NSInteger, EZCloudVideoType) {
     EZCloudVideoTypeSeries = 1, // 连续录像
     EZCloudVideoTypeAct = 2     // 活动录像
 };
-
-///需要进行重新登录的通知，该通知触发频率为5年一次，需在SDK初始化监听
-extern const NSNotificationName EZNeedReloginNotification;
-
-///错误解决方案KEY
-extern const NSString *EZErrorSolutionKey;
-
-///错误模块错误码KEY
-extern const NSString *EZErrorModuleCodeKey;
 
 /// 开放平台常量类
 @interface EZConstants : NSObject

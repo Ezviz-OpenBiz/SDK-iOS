@@ -13,6 +13,7 @@
 @class EZPlayer;
 @class EZPlayerExParamInfo;
 @class EZDevicePtzAngleInfo;
+@class EZPMPlayPrivateTokenInfo;
 
 /**
  *  预览清晰度
@@ -97,22 +98,22 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (void)player:(EZPlayer *)player didReceivedDisplayHeight:(NSInteger)height displayWidth:(NSInteger)width;
 
 /**
- 设备云台角度数据回调
-
- @param player 播放器对象
- @param info 私有数据
+ * 设备云台角度数据回调
+ *
+ * @param player 播放器对象
+ * @param info 私有数据
  */
 - (void)player:(EZPlayer *)player didReceivedDevicePtzAngleInfo:(EZDevicePtzAngleInfo *)info;
 
 /**
- 播放过程中 回调解码数据
- 重要：该回调会比较频繁(一秒若干次)，同时直接由播放库线程回调上来，请勿在方法中做耗时操作
- 重要：回调的数据的内存是由播放库内部分配并管理的，在使用时，请同步处理回调的data；如需异步处理，请拷贝该数据
- 
- @param player 播放器对象
- @param data 播放库解码出的数据
- @param width 视频宽度
- @param height 视频高度
+ * 播放过程中 回调解码数据
+ * 重要：该回调会比较频繁(一秒若干次)，同时直接由播放库线程回调上来，请勿在方法中做耗时操作
+ * 重要：回调的数据的内存是由播放库内部分配并管理的，在使用时，请同步处理回调的data；如需异步处理，请拷贝该数据
+ *
+ * @param player 播放器对象
+ * @param data 播放库解码出的数据
+ * @param width 视频宽度
+ * @param height 视频高度
  */
 - (void)player:(EZPlayer *)player didDecodedData:(NSData *)data width:(NSInteger)width height:(NSInteger)height;
 
@@ -428,7 +429,7 @@ sd卡及云存储倍速回放接口
  * 设置打开播放库的智能分析，当前温感相机的框框使用了该智能分析数据，预览成功后调用，在播放过程中随时开关
  *
  * @param enable YES：开  NO：关
- * 
+ *
  * @return 返回状态
  */
 - (BOOL)setIntelAnalysis:(BOOL)enable;

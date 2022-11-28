@@ -43,7 +43,7 @@ typedef enum : NSUInteger {
  *  播放器消息回调
  *
  *  @param player      播放器对象
- *  @param messageCode 播放器消息码
+ *  @param msgType 播放器消息码
  */
 - (void)streamPlayer:(EZStreamPlayer *)player didReceivedMessage:(EZStreamPlayerMsgType)msgType;
 
@@ -51,7 +51,9 @@ typedef enum : NSUInteger {
  *  码流回调
  *
  *  @param player     播放器对象
- *  @param dataq       码流数据
+ *  @param dataType  数据类型
+ *  @param data        码流数据
+ *  @param dataLength  长度
  */
 - (void)streamPlayer:(EZStreamPlayer *)player didReceivedData:(EZStreamDataType)dataType data:(int8_t *)data length:(int)dataLength;
 
@@ -109,7 +111,7 @@ typedef enum : NSUInteger {
 
 /// 设置设备验证码，播放前设置
 /// @param verifyCode 设备验证码
-- (void) setVerifyCode:(NSString *)verifyCode;
+- (void)setVerifyCode:(NSString *)verifyCode;
 
 @end
 

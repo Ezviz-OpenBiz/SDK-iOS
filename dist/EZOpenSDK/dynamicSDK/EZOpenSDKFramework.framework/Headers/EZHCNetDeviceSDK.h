@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class EZHCNetDeviceInfo,EZSADPDeviceInfo;
+@class EZHCNetDeviceInfo, EZSADPDeviceInfo;
 
 typedef NS_ENUM(int, EZPTZCommandType) {
     EZPTZCommandType_ZOOM_IN = 11,     /* 焦距变大(倍率变大) */
@@ -39,11 +39,10 @@ typedef NS_ENUM(int, EZEncryptType) {
 
 @interface EZHCNetDeviceSDK : NSObject
 
-
 /**
  初始化SDK
  */
-+ (void) initSDK;
++ (void)initSDK;
 
 /**
  开始搜索局域网设备
@@ -51,19 +50,19 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param searchCallback 搜索结果回调，每搜到一个设备都会回调一次，设备信息EZSADPDeviceInfo
  @return 成功或失败
  */
-+ (BOOL) startLocalSearch:(void(^)(EZSADPDeviceInfo *device,NSError *error)) searchCallback;
++ (BOOL)startLocalSearch:(void(^)(EZSADPDeviceInfo *device,NSError *error))searchCallback;
 
 /**
  停止搜索
 
  @return 成功或失败
  */
-+ (BOOL) stopLocalSearch;
++ (BOOL)stopLocalSearch;
 
 /**
  清除结果，重新搜索，前提是之前开启过搜索
  */
-+ (void) research;
++ (void)research;
 
 /**
  获取SADP版本号
@@ -77,7 +76,7 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param pwd 激活密码
  @return 成功或失败
  */
-+ (BOOL) activeDeviceWithSerial:(NSString *) serial pwd:(NSString *) pwd;
++ (BOOL)activeDeviceWithSerial:(NSString *)serial pwd:(NSString *)pwd;
 
 /**
  登录局域网设备
@@ -88,10 +87,10 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param port 设备端口号
  @return 登录错误时返回nil
  */
-+ (EZHCNetDeviceInfo*) loginDeviceWithUerName:(NSString *) userName
-                                          pwd:(NSString *) pwd
-                                       ipAddr:(NSString *) ipAddr
-                                         port:(NSInteger) port;
++ (EZHCNetDeviceInfo *)loginDeviceWithUerName:(NSString *)userName
+                                          pwd:(NSString *)pwd
+                                       ipAddr:(NSString *)ipAddr
+                                         port:(NSInteger)port;
 
 /**
  登出局域网设备
@@ -99,7 +98,7 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param userId 用户id
  @return 成功或失败
  */
-+ (BOOL)logoutDeviceWithUserId:(NSInteger) userId;
++ (BOOL)logoutDeviceWithUserId:(NSInteger)userId;
 
 /**
  局域网设备云台控制接口
@@ -110,11 +109,10 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param action 动作类型 EZPTZActionType
  @return 成功或失败
  */
-+ (BOOL) ptzControlWithUserId:(NSInteger) userId
-                    channelNo:(NSInteger) channelNo
-                      command:(EZPTZCommandType) command
-                       action:(EZPTZActionType) action;
-
++ (BOOL)ptzControlWithUserId:(NSInteger)userId
+                   channelNo:(NSInteger)channelNo
+                     command:(EZPTZCommandType)command
+                      action:(EZPTZActionType)action;
 
 /**
  设置加密方式
@@ -122,7 +120,7 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param encryptType 加密方式
  @return 成功或失败
  */
-+ (BOOL) setEncryptType:(EZEncryptType) encryptType;
++ (BOOL)setEncryptType:(EZEncryptType)encryptType;
 
 /**
  AP配网接口
@@ -134,11 +132,11 @@ typedef NS_ENUM(int, EZEncryptType) {
  @param callback 结果回调
  @return 成功或失败
  */
-+ (BOOL)startAPConfigWifiWithSsid:(NSString *) ssid
-                         password:(NSString *) password
-                     deviceSerial:(NSString *) deviceSerial
-                       verifyCode:(NSString *) verifyCode
-                           result:(void (^)(BOOL ret)) callback;
++ (BOOL)startAPConfigWifiWithSsid:(NSString *)ssid
+                         password:(NSString *)password
+                     deviceSerial:(NSString *)deviceSerial
+                       verifyCode:(NSString *)verifyCode
+                           result:(void (^)(BOOL ret))callback;
 
 /**
  停止AP配网

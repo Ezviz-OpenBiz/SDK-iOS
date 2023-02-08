@@ -20,4 +20,7 @@
 @property (nonatomic, copy) NSString *channelType;
 
 
+@property (nonatomic, assign) int seq;
+@property (nonatomic, strong) NSData *imageData;///< 
+
 @end

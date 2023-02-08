@@ -117,6 +117,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (void)player:(EZPlayer *)player didDecodedData:(NSData *)data width:(NSInteger)width height:(NSInteger)height;
 
+/**
+ * 取流数据中获取开门token回调
+ *
+ * @param player 播放器对象
+ * @param tokenInfo token对象
+ */
+- (void)player:(EZPlayer *)player playPrivateTokenInfo:(EZPMPlayPrivateTokenInfo *)tokenInfo;
+
 @end
 
 /// 此类为萤石播放器类

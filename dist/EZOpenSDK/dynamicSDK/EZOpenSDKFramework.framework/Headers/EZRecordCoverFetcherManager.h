@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 /**
- * 与设备建立链接
+ * 与设备建立链接（国内支持，海外不支持）
  *
  * @param   deviceSerial 设备序列号
  * @param   cameraNo 设备通道号
@@ -53,13 +53,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * 断开与设备的链接
+ * 断开与设备的链接（国内支持，海外不支持）
  */
 - (void)stopFetcher;
 
 
 /**
- * 跟设备请求SD卡录像封面
+ * 跟设备请求SD卡录像封面（国内支持，海外不支持）
  */
 - (void)requestRecordCover:(NSArray<EZDeviceRecordFile *> *)recordFiles;
 

@@ -124,6 +124,7 @@ typedef NS_ENUM(NSInteger, EZErrorCode) {
     EZ_SDK_DECODE_TIMEOUT = 400041,                   //解码超时，可能是验证码错误
     EZ_SDK_STREAM_TIMEOUT = 400015,                   //取流超时,请检查手机网络
     EZ_SDK_PLAYBACK_STREAM_TIMEOUT = 400409,          //回放取流超时,请检查手机网络
+    EZ_SDK_STREAM_NO_PERMISSION = 400907,             //取流无权限，设备拥有者、设备托管者、设备分享者 3个权限都没有时，禁止取流
     
     /**
      *  NPC取流错误码

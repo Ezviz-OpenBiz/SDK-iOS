@@ -460,6 +460,17 @@ NS_ASSUME_NONNULL_BEGIN
                         deviceSerial:(NSString *)deviceSerial
                           completion:(void (^)(NSError *error))completion;
 
+/**
+ *  刷新设备详细缓存信息（修改验证码后调用）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param completion   回调block
+ */
++ (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
+                       cameraNo:(NSInteger)cameraNo
+                     completion:(void (^)(NSError *error))completion;
+
 #pragma mark - 云台控制Api
 
 /**

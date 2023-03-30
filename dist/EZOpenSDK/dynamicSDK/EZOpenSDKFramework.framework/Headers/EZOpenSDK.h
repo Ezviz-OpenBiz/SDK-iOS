@@ -199,7 +199,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 取流相关Api
 
 /**
- *  设置p2p功能是否开启接口，默认不开启p2p，用户自己选择是否开启
+ *  设置是否支持P2P取流，默认是不支持的
+ *  P2P取流可以降低转发取流的比例，但是在多人同时观看时对设备端的带宽要求也更高，设备端带宽不够的情况下，影响播放体验
+ *  对于可能多人同时观看的场景，建议不支持
+ *  对于家用监控类的场景，建议支持P2P
  *
  *  @param enable p2p是否开启
  */
@@ -514,6 +517,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURLSessionDataTask *)setDefence:(EZDefenceStatus)defence
                         deviceSerial:(NSString *)deviceSerial
                           completion:(void (^)(NSError *error))completion;
+
+/**
+ *  刷新设备详细缓存信息（修改验证码后调用）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param completion   回调block
+ */
++ (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
+                       cameraNo:(NSInteger)cameraNo
+                     completion:(void (^)(NSError *error))completion;
 
 #pragma mark - 云台控制Api
 

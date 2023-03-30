@@ -51,6 +51,8 @@
 @property (nonatomic) BOOL isSupportSoundWave;
 /// 是否支持倍数回放
 @property (nonatomic) BOOL isSupportPlaybackRate;
+/// 是否支持SD卡录像下载
+@property (nonatomic) BOOL isSupportSDRecordDownload;
 /// 设备大类
 @property (nonatomic,copy) NSString *category;
 /// 添加时间

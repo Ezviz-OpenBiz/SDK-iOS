@@ -221,6 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  获取所有的p2p预连接设备序列号（包括正在进行预操作的以及预操作完成的）
+ *  需要在子线程中调用
  *
  *  @return 设备序列号数组
  */
@@ -228,6 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  获取所有正在排队的p2p预连接设备序列号（指还没有进行预操作的）
+ *  需要在子线程中调用
  *
  *  @return 设备序列号数组
  */
@@ -549,6 +551,25 @@ NS_ASSUME_NONNULL_BEGIN
                               action:(EZPTZAction)action
                                speed:(NSInteger)speed
                               result:(void (^)(NSError *error))resultBlock;
+
+/**
+ *  PTZ 控制接口，支持8档速率，更细化
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param command       ptz控制命令
+ *  @param action         控制启动/停止
+ *  @param newSpeed     云台速度：分为0-7共8档，数值越大，转速越快
+ *  @param resultBlock  回调block，当error为空时表示操作成功
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)controlPTZEx:(NSString *)deviceSerial
+                              cameraNo:(NSInteger)cameraNo
+                               command:(EZPTZCommand)command
+                                action:(EZPTZAction)action
+                              newSpeed:(NSInteger)newSpeed
+                                result:(void (^)(NSError *error))resultBlock;
 
 /**
  *  摄像头显示控制接口

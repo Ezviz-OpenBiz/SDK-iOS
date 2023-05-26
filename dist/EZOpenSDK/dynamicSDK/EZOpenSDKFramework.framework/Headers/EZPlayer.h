@@ -442,5 +442,10 @@ sd卡及云存储倍速回放接口
  */
 - (BOOL)setIntelAnalysis:(BOOL)enable;
 
+/**
+ * 全局p2p开启的情况下，该播放器禁用p2p取流。startRealPlay之前调用
+ */
+- (void)setPlayerDisableP2P;
+
 @end
 

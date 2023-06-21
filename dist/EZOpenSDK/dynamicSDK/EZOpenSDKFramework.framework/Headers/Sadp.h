@@ -44,6 +44,7 @@
 #define SADP_SET_USER_MAILBOX               20  //设置用户邮箱
 #define SADP_GET_QR_CODES                   21  //获取二维码数据
 #define SADP_GET_PASSWORD_RESET_TYPE        27  //获取重置密码方式参数
+#define SADP_SET_EZVIZ_USER_TOKEN           28  //配置萤石用户token
 
 
 
@@ -65,6 +66,7 @@
 #define MAX_ANSWER_LEN                  256  //最大答案长度
 #define MAX_UNLOCK_CODE_RANDOM_LEN      256  //解禁码随机串
 #define MAX_FILE_PATH_LEN               260  //文件最大路径长度
+#define MAX_TOKEN_LEN                   16   //萤石用户token最大长度
 
 
 
@@ -106,7 +108,13 @@
 #define SADP_EXTED_MAX_BIND_NUM         (SADP_ERROR_BASE+35)  // 超过最大绑定个数
 #define SADP_MAILBOX_NOT_EXIST          (SADP_ERROR_BASE+36)  // 邮箱不存在
 #define SADP_MAILBOX_NOT_SET            (SADP_ERROR_BASE+38)  // [add] <2019/01/08> by yangzheng 邮箱重置密码未设置邮箱
-#define SADP_INVALID_RESET_CODE         (SADP_ERROR_BASE+39)    // 重置密码  重置口令错误
+#define SADP_INVALID_RESET_CODE         (SADP_ERROR_BASE+39)  // 重置密码  重置口令错误
+#define SADP_NO_PERMISSION              (SADP_ERROR_BASE+40)  // 没有权限： 1.Win&Linux下没有管理员权限操作网卡 2.Android IOS没有多播权限
+#define SADP_GET_EXCHANGE_CODE_ERROR    (SADP_ERROR_BASE+41)  // 获取加密用的交换码失败
+#define SADP_CREATE_RSA_KEY_ERROR       (SADP_ERROR_BASE+42)  // 生成RSA公私钥失败
+#define SADP_BASE64_ENCODE_ERROR        (SADP_ERROR_BASE+43)  // BASE64编码错误
+#define SADP_BASE64_DECODE_ERROR        (SADP_ERROR_BASE+44)  // BASE64解码错误
+#define SADP_AES_ENCRYPT_ERROR          (SADP_ERROR_BASE+45)  // AES加密失败
 
 
 //SADP设备过滤规则类型
@@ -226,7 +234,12 @@ typedef struct tagSADP_DEVICE_INFO_V40
     unsigned char   bySupportPasswordResetType; //是否支持获取密码重置方式参数  0-不支持 1-支持
     unsigned char   byEZVIZBindStatus; //设备萤石云绑定状态,0-未知,1-已绑定,2-未绑定
     char            szPhysicalAccessVerification[16]; //设备支持的物理接触式添加方式,1#AP配网传递,2#用户令牌（用户token）绑定,3#物理按键接触,4#扫码绑定（设备token）
-    unsigned char   byRes[411];
+    unsigned short  wHttpsPort; // Https 端口
+    unsigned char   bySupportEzvizUserToken; //是否支持萤石用户token配置  0-不支持 1-支持
+    char            szDevDescEx[64];         //是对SADP_DEVICE_INFO结构体中的szDevDesc字段扩展
+    char            szSerialNOEx[128];        //是对SADP_DEVICE_INFO结构体中的szSerialNO字段扩展
+    char            szManufacturer[32];     //设备厂商信息
+    unsigned char   byRes[184];
 }SADP_DEVICE_INFO_V40, *LPSADP_DEVICE_INFO_V40;
 
 //待修改的设备网络参数
@@ -253,17 +266,6 @@ typedef struct tagSADP_DEV_RET_NET_PARAM
     unsigned char   bySurplusLockTime;  //剩余时间，单位：分钟，用户锁定时此参数有效
     unsigned char   byRes[126];
 }SADP_DEV_RET_NET_PARAM, *LPSADP_DEV_RET_NET_PARAM;
-
-// CMS参数
-typedef struct tagSADP_CMS_PARAM
-{
-    char            szPUID[32];         // 预分配的PUID
-    char            szPassword[16];     // 设置的登录密码
-    char            szCmsIPv4[16];      // CMS服务器IPv4地址
-    char            szCmsIPv6[128];     // CMS服务器IPv6地址
-    unsigned short  wCmsPort;           // CMS服务器监听端口
-    unsigned char   byRes[30];
-}SADP_CMS_PARAM, *LPSADP_CMS_PARAM;
 
 //设备安全码，对应配置命令SADP_GET_DEVICE_CODE，接口SADP_GetDeviceConfig
 typedef struct tagSADP_SAFE_CODE
@@ -514,42 +516,67 @@ typedef struct tagSADP_PASSWORD_RESET_TYPE_PARAM
     unsigned char   byRes[64];
 }SADP_PASSWORD_RESET_TYPE_PARAM, *LPSADP_PASSWORD_RESET_TYPE_PARAM;
 
+//配置萤石用户token结构体
+typedef struct tagSADP_EZVIZ_USER_TOKEN_PARAM
+{
+    unsigned int    dwSize;
+    char            szToken[MAX_TOKEN_LEN]; //token，8-16字节
+    char            szPassword[MAX_PASS_LEN]; //password，8-16字节
+    unsigned char   byRes[256];
+}SADP_EZVIZ_USER_TOKEN_PARAM, *LPSADP_EZVIZ_USER_TOKEN_PARAM;
 
-// 接口
+
+//-----------------------------------------------------------------接口-----------------------------------------------------------------
+
+//回调函数
 typedef void (CALLBACK *PDEVICE_FIND_CALLBACK)(const SADP_DEVICE_INFO *lpDeviceInfo, void *pUserData);
-CSADP_API BOOL CALLBACK SADP_Start_V30(PDEVICE_FIND_CALLBACK pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
 typedef void (CALLBACK *PDEVICE_FIND_CALLBACK_V40)(const SADP_DEVICE_INFO_V40 *lpDeviceInfo, void *pUserData);
-CSADP_API BOOL CALLBACK SADP_Start_V40(PDEVICE_FIND_CALLBACK_V40 pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
-CSADP_API BOOL CALLBACK SADP_SendInquiry(void);
-CSADP_API BOOL CALLBACK SADP_Stop(void);
-CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam);
-CSADP_API unsigned int CALLBACK SADP_GetSadpVersion(void);
-CSADP_API BOOL CALLBACK SADP_SetLogToFile(int nLogLevel=0, char const *strLogDir = NULL, int bAutoDel = 1);		
-CSADP_API unsigned int CALLBACK SADP_GetLastError(void);
-CSADP_API BOOL CALLBACK SADP_ResetDefaultPasswd(const char* sDevSerialNO, const char* sCommand);
-CSADP_API BOOL CALLBACK SADP_SetCMSInfo(const char* sMac, const SADP_CMS_PARAM *lpCmsParam);
-CSADP_API BOOL CALLBACK SADP_Clearup(void);
-CSADP_API void CALLBACK SADP_SetAutoRequestInterval(unsigned int dwInterval); //设置自动搜索时间间隔(单位秒，为0则不自动请求，默认60s)
 
-CSADP_API BOOL CALLBACK SADP_GetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
-CSADP_API BOOL CALLBACK SADP_SetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwInBuffSize, void* lpOutBuffer, unsigned int  dwOutBuffSize);
-CSADP_API BOOL CALLBACK SADP_GetDeviceConfigByMAC(const char* sDevMAC, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
+//启动sadp服务
+CSADP_API BOOL CALLBACK SADP_Start_V30(PDEVICE_FIND_CALLBACK pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
+CSADP_API BOOL CALLBACK SADP_Start_V40(PDEVICE_FIND_CALLBACK_V40 pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
+
+//停止sadp服务
+CSADP_API BOOL CALLBACK SADP_Stop(void);
+
 //激活设备
 CSADP_API BOOL CALLBACK SADP_ActivateDevice(const char* sDevSerialNO, const char* sCommand);
 
-//重置密码接口，兼容之前的恢复默认密码接口
+//修改网络参数 （优先使用SADP_ModifyDeviceNetParam_V40）
+CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam);
+CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam_V40(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam, SADP_DEV_RET_NET_PARAM *lpRetNetParam, unsigned int  dwOutBuffSize);
+
+//重置密码 （优先使用SADP_ResetPasswd_V40）
+CSADP_API BOOL CALLBACK SADP_ResetDefaultPasswd(const char* sDevSerialNO, const char* sCommand);
 CSADP_API BOOL CALLBACK SADP_ResetPasswd(const char* sDevSerialNO, const SADP_RESET_PARAM *pResetParam);
-//重置密码接口V40，兼容之前的SADP_ResetPasswd
 CSADP_API BOOL CALLBACK SADP_ResetPasswd_V40(const char* sDevSerialNO, const SADP_RESET_PARAM_V40 *pResetParam, SADP_RET_RESET_PARAM_V40 *pRetResetParam);
 
+//参数配置
+CSADP_API BOOL CALLBACK SADP_GetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
+CSADP_API BOOL CALLBACK SADP_SetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwInBuffSize, void* lpOutBuffer, unsigned int  dwOutBuffSize);
+CSADP_API BOOL CALLBACK SADP_GetDeviceConfigByMAC(const char* sDevMAC, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
+
+//设置SDK内部自动搜索间隔
+CSADP_API void CALLBACK SADP_SetAutoRequestInterval(unsigned int dwInterval); //设置自动搜索时间间隔(单位秒，为0则不自动请求，默认60s)
+
+//触发一次局域网搜索
+CSADP_API BOOL CALLBACK SADP_SendInquiry(void);
+
+//清理SDK内部设备缓存列表
+CSADP_API BOOL CALLBACK SADP_Clearup(void);
 
 //设置设备过滤规则
 //dwFilterRule,按位表示，为1表示过滤，全0表示不过滤;0x01:过滤萤石设备;0x02:过滤OEM设备;0x03:过滤萤和OEM设备;0xfffffffe:仅显示萤石设备;0xfffffffd:仅显示OEM设备
 CSADP_API BOOL CALLBACK SADP_SetDeviceFilterRule( unsigned int dwFilterRule, const void *lpInBuff, unsigned int dwInBuffLen);
-//修改网络参数V40
-CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam_V40(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam, SADP_DEV_RET_NET_PARAM *lpRetNetParam, unsigned int  dwOutBuffSize);
-//点灯
-CSADP_API BOOL CALLBACK SADP_SendLamp(const char* sMAC, unsigned int dwCommand);
+
+//获取SDK版本
+CSADP_API unsigned int CALLBACK SADP_GetSadpVersion(void);
+
+//开启SDK日志
+CSADP_API BOOL CALLBACK SADP_SetLogToFile(int nLogLevel=0, char const *strLogDir = NULL, int bAutoDel = 1);
+
+//获取错误码
+CSADP_API unsigned int CALLBACK SADP_GetLastError(void);
 #endif
 
 

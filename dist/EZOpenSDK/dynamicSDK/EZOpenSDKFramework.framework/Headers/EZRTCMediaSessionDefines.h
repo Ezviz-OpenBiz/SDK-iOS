@@ -16,13 +16,22 @@
 #define EZMediaSessionSmallStreamHeight (320)
 
 #define EZMediaSessionDefaultStreamWidth (480)
-#define EZMediaSessionDefaultStreamHeight (480)
+#define EZMediaSessionDefaultStreamHeight (640)
 
+#define EZMediaSessionDstVideoAverageBitRate640x480 (5 * 128 * 1024)//单位 bps  //averageBPS
 #define EZMediaSessionDstVideoAverageBitRate480x480 (4 * 128 * 1024)//单位 bps  //averageBPS
 #define EZMediaSessionDstVideoDataRateLimits480x480 (6 * 128 * 1024)//单位 bps  //maxBPS
 #define EZMediaSessionDstVideoAverageBitRate320x320 (4 * 128 * 1024 * 5 / 8)//单位 bps  //averageBPS
 #define EZMediaSessionDstVideoDataRateLimits320x320 (6 * 128 * 1024 * 5 / 8)//单位 bps  //maxBPS
 
+#define EZMediaSessionDstVideoAverageBitRate160x120 (64 * 1024)//单位 bps  //averageBPS
+#define EZMediaSessionDstSmallVideoFPS (7)
+
+#define EZPixelBlockSize (16)
+#define EZPixelStandard(pixelSize) (ceil((double)(pixelSize)/EZPixelBlockSize)*EZPixelBlockSize)
+#define EZMediaSessionScreenShareHeight (1280)
+#define EZMediaSessionScreenShareWidth  EZPixelStandard((1280*(UIScreen.mainScreen.bounds.size.width / UIScreen.mainScreen.bounds.size.height)))
+#define EZMediaSessionScreenShareFPS (10)
 
 typedef NS_OPTIONS(NSUInteger, EZMediaCaptureSessionType) {
     EZMediaSessionCaptureNone = 1 << 0,
@@ -38,6 +47,7 @@ typedef NS_ENUM(NSUInteger, EZMediaSessionErrorBase) {
     EZMediaSessionErrorNotReadyToSendData,
     EZMediaSessionErrorCallSeqError,
     EZMediaSessionErrorDuplicated,
+    EZMediaSessionErrorParamError,
     EZMediaSessionErrorBaseAudioCapture = 10000,
     EZMediaSessionErrorBaseVideoCapture = 20000,
     EZMediaSessionErrorBaseAudioEncode = 30000,
@@ -96,8 +106,8 @@ typedef NS_ENUM(NSUInteger, EZBAVStreamClientError) {
 
 
 typedef NS_ENUM(NSUInteger, EZRTCAudioEncodeType) {
-    EZRTCAudioEncodeType_AAC,
-    EZRTCAudioEncodeType_Opus,
+    EZRTCAudioEncodeType_AAC = 0,//该枚举值不能轻易修改
+    EZRTCAudioEncodeType_Opus = 1,
 };
 
 
@@ -105,3 +115,10 @@ typedef NS_ENUM(NSUInteger, EZRTCAudioEncodeType) {
 @end
 
 typedef void(^EZScreenShareResultBlock)(NSInteger ret);
+
+///拉伸填充模式
+extern int32_t const EZRTCVideoScaleType_Fill;
+///保持宽高比 缩放模式 可能有黑边
+extern int32_t const EZRTCVideoScaleType_ResizeAspectFit;
+///保持宽高比 填充模式 可能画面被裁剪
+extern int32_t const EZRTCVideoScaleType_ResizeAspectFill;

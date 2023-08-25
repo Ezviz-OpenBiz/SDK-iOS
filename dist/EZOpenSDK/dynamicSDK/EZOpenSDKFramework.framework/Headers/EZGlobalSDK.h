@@ -860,6 +860,30 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)stopAPConfigWifi;
 
+#pragma mark - EZLink配网相关Api
+
+/**
+ * EZLink配网接口
+ *
+ * @param ssid WiFi的ssid
+ * @param password WiFi的密码
+ * @param deviceSerial 设备序列号
+ * @param verifyCode 设备验证码
+ * @param statusBlock 结果回调，返回配网过程中的各种状态
+ *
+ * @return 成功或失败
+ */
++ (BOOL)startAPLinkConfigWifiWithSsid:(NSString *)ssid
+                             password:(NSString *)password
+                         deviceSerial:(NSString *)deviceSerial
+                           verifyCode:(NSString *)verifyCode
+                         deviceStatus:(void (^)(EZWifiConfigStatus status, NSString *deviceSerial))statusBlock;
+
+/**
+ * 停止EZLink配网
+ */
++ (void)stopAPLinkConfigWifi;
+
 #pragma mark - 接触式配网 New AP Config
 
 /**

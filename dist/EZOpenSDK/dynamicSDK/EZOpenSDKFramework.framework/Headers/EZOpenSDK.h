@@ -266,7 +266,7 @@ NS_ASSUME_NONNULL_BEGIN
                                            cameraNo:(NSInteger)cameraNo
                                           beginTime:(NSDate *)beginTime
                                             endTime:(NSDate *)endTime
-                                         completion:(void (^)(NSArray *couldRecords, NSError *error))completion;
+                                         completion:(void (^)(NSArray *couldRecords, NSError * __nullable error))completion;
 
 /**
  *  查询远程SD卡存储录像信息列表接口
@@ -283,7 +283,7 @@ NS_ASSUME_NONNULL_BEGIN
                                             cameraNo:(NSInteger)cameraNo
                                            beginTime:(NSDate *)beginTime
                                              endTime:(NSDate *)endTime
-                                          completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
+                                          completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
  *  查询远程SD卡存储录像信息列表接口，同一个录像可以同时是定时录像和事件录像
@@ -302,7 +302,7 @@ NS_ASSUME_NONNULL_BEGIN
                                            beginTime:(NSDate *)beginTime
                                              endTime:(NSDate *)endTime
                                      videoRecordType:(EZVideoRecordType)videoRecordType
-                                          completion:(void (^)(NSArray *deviceRecords, NSError *error))completion;
+                                          completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
  *  获取指定时间内的所有录像文件
@@ -325,7 +325,7 @@ NS_ASSUME_NONNULL_BEGIN
                                    recType:(NSInteger)rectype
                                    bizType:(NSString *)bizType
                                 platFormId:(NSString *)platFormId
-                                completion:(void (^)(id records, NSError *error))completion;
+                                completion:(void (^)(id records, NSError * __nullable error))completion;
 
 #pragma mark - 设备相关Api
 
@@ -340,7 +340,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)addDevice:(NSString *)deviceSerial
                          verifyCode:(NSString *)verifyCode
-                         completion:(void (^)(NSError *error))completion;
+                         completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  获取用户所有的设备列表
@@ -353,7 +353,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)getDeviceList:(NSInteger)pageIndex
                                pageSize:(NSInteger)pageSize
-                             completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
+                             completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError * __nullable error))completion;
 
 /**
  *  获取分享给用户的设备列表接口
@@ -366,7 +366,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)getSharedDeviceList:(NSInteger)pageIndex
                                      pageSize:(NSInteger)pageSize
-                                   completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError *error))completion;
+                                   completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError * __nullable error))completion;
 
 /**
  *  根据序列号获取设备信息
@@ -377,7 +377,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)getDeviceInfo:(NSString *)deviceSerial
-                             completion:(void (^)(EZDeviceInfo *deviceInfo, NSError *error))completion;
+                             completion:(void (^)(EZDeviceInfo *deviceInfo, NSError * __nullable error))completion;
 
 /**
  *  获取设备的版本信息接口
@@ -388,7 +388,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)getDeviceVersion:(NSString *)deviceSerial
-                                completion:(void (^)(EZDeviceVersion *version, NSError *error))completion;
+                                completion:(void (^)(EZDeviceVersion *version, NSError * __nullable error))completion;
 
 /**
  *  通过设备验证码开关视频图片加密接口
@@ -403,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURLSessionDataTask *)setDeviceEncryptStatus:(NSString *)deviceSerial
                                       verifyCode:(NSString *)verifyCode
                                          encrypt:(BOOL)isEncrypt
-                                      completion:(void (^)(NSError *error))completion;
+                                      completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号修改设备名称接口
@@ -416,7 +416,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)setDeviceName:(NSString *)deviceName
                            deviceSerial:(NSString *)deviceSerial
-                             completion:(void (^)(NSError *error))completion;
+                             completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号删除当前账号的设备接口
@@ -428,7 +428,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)deleteDevice:(NSString *)deviceSerial
-                            completion:(void (^)(NSError *error))completion;
+                            completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号获取存储介质状态(如是否初始化，格式化进度等)
@@ -439,7 +439,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)getStorageStatus:(NSString *)deviceSerial
-                                completion:(void (^)(NSArray *storageStatus, NSError *error))completion;
+                                completion:(void (^)(NSArray *storageStatus, NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号和分区编号格式化分区（SD卡）
@@ -452,7 +452,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)formatStorage:(NSString *)deviceSerial
                            storageIndex:(NSInteger)storageIndex
-                             completion:(void (^)(NSError *error))completion;
+                             completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号获取设备升级时的进度状态
@@ -463,7 +463,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)getDeviceUpgradeStatus:(NSString *)deviceSerial
-                                      completion:(void (^)(EZDeviceUpgradeStatus *status, NSError *error))completion;
+                                      completion:(void (^)(EZDeviceUpgradeStatus *status, NSError * __nullable error))completion;
 
 /**
  *  通过设备序列号对设备进行升级操作，前提是该设备有更新软件的提示
@@ -474,7 +474,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)upgradeDevice:(NSString *)deviceSerial
-                             completion:(void (^)(NSError *error))completion;
+                             completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  获取抓取摄像头图片的url接口
@@ -489,7 +489,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)captureCamera:(NSString *)deviceSerial
                                cameraNo:(NSInteger)cameraNo
-                             completion:(void (^)(NSString *url, NSError *error))completion;
+                             completion:(void (^)(NSString *url, NSError * __nullable error))completion;
 
 /**
  *  设置设备通道的清晰度
@@ -505,7 +505,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURLSessionDataTask *)setVideoLevel:(NSString *)deviceSerial
                                cameraNo:(NSInteger)cameraNo
                              videoLevel:(EZVideoLevelType)videoLevel
-                             completion:(void (^)(NSError *error))completion;
+                             completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  设备设置布防状态，兼容A1和IPC设备的布防
@@ -518,7 +518,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)setDefence:(EZDefenceStatus)defence
                         deviceSerial:(NSString *)deviceSerial
-                          completion:(void (^)(NSError *error))completion;
+                          completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  刷新设备详细缓存信息（修改验证码后调用）
@@ -529,7 +529,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)refreshDeviceDetailInfo:(NSString *)deviceSerial
                        cameraNo:(NSInteger)cameraNo
-                     completion:(void (^)(NSError *error))completion;
+                     completion:(void (^)(NSError * __nullable error))completion;
 
 #pragma mark - 云台控制Api
 
@@ -550,7 +550,7 @@ NS_ASSUME_NONNULL_BEGIN
                              command:(EZPTZCommand)command
                               action:(EZPTZAction)action
                                speed:(NSInteger)speed
-                              result:(void (^)(NSError *error))resultBlock;
+                              result:(void (^)(NSError * __nullable error))resultBlock;
 
 /**
  *  PTZ 控制接口，支持8档速率，更细化
@@ -569,7 +569,7 @@ NS_ASSUME_NONNULL_BEGIN
                                command:(EZPTZCommand)command
                                 action:(EZPTZAction)action
                               newSpeed:(NSInteger)newSpeed
-                                result:(void (^)(NSError *error))resultBlock;
+                                result:(void (^)(NSError * __nullable error))resultBlock;
 
 /**
  *  摄像头显示控制接口
@@ -582,7 +582,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)controlVideoFlip:(NSString *)deviceSerial
                 cameraNo:(NSInteger)cameraNo
                  command:(EZDisplayCommand)command
-                  result:(void (^)(NSError *error))resultBlock;
+                  result:(void (^)(NSError * __nullable error))resultBlock;
 
 #pragma mark - 告警相关Api
 
@@ -603,7 +603,7 @@ NS_ASSUME_NONNULL_BEGIN
                               pageSize:(NSInteger)pageSize
                              beginTime:(NSDate *)beginTime
                                endTime:(NSDate *)endTime
-                            completion:(void (^)(NSArray *alarmList, NSInteger totalCount, NSError *error))completion;
+                            completion:(void (^)(NSArray *alarmList, NSInteger totalCount, NSError * __nullable error))completion;
 
 /**
  *  告警图片解密方法，设备加密
@@ -637,7 +637,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)setAlarmStatus:(NSArray *)alarmIds
                              alarmStatus:(EZMessageStatus)status
-                              completion:(void (^)(NSError *error))completion;
+                              completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据alarmId删除告警信息接口
@@ -648,7 +648,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)deleteAlarm:(NSArray *)alarmIds
-                           completion:(void (^)(NSError *error))completion;
+                           completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据设备序列号获取未读消息数，设备序列号为空时获取所有设备的未读消息数
@@ -661,7 +661,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)getUnreadMessageCount:(NSString *)deviceSerial
                                     messageType:(EZMessageType)type
-                                     completion:(void (^)(NSInteger count, NSError *error))completion;
+                                     completion:(void (^)(NSInteger count, NSError * __nullable error))completion;
 
 #pragma mark - 语音留言消息数据Api
 
@@ -682,7 +682,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      pageSize:(NSInteger)pageSize
                                     beginTime:(NSDate *)beginTime
                                       endTime:(NSDate *)endTime
-                                   completion:(void (^)(NSArray *leaveMessageList, NSInteger totalCount, NSError *error))completion;
+                                   completion:(void (^)(NSArray *leaveMessageList, NSInteger totalCount, NSError * __nullable error))completion;
 
 /**
  *  根据leaveId设置留言消息状态
@@ -695,7 +695,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)setLeaveMessageStatus:(NSArray *)leaveIds
                                   messageStatus:(EZMessageStatus)status
-                                     completion:(void (^)(NSError *error))completion;
+                                     completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据leaveId删除留言消息
@@ -706,7 +706,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return operation
  */
 + (NSURLSessionDataTask *)deleteLeaveMessage:(NSArray *)leaveIds
-                                  completion:(void (^)(NSError *error))completion;
+                                  completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  根据EZLeaveMessage对象信息获取语音留言消息数据接口
@@ -726,7 +726,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion operation
  */
 + (void)requestGetWatchServerInfo:(NSString *)deviceId
-                       completion:(void (^)(id watchServerInfo, NSError *error))completion;
+                       completion:(void (^)(id watchServerInfo, NSError * __nullable error))completion;
 
 /**
  * 创建会议信息
@@ -738,7 +738,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)requestCallingMeetingInfo:(NSString *)password
                          customId:(NSInteger)customId
                             limit:(NSInteger)limit
-                       completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSString *clientid, NSInteger customId, NSString *controlServerAddress, NSError *error))completion;
+                       completion:(void (^)(int32_t roomId, NSString *vtmAddress, NSString *clientid, NSInteger customId, NSString *controlServerAddress, NSError * __nullable error))completion;
 
 /**
  * 加入方获取会议信息
@@ -748,7 +748,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)requestCalledMeetingInfo:(NSString *)roomId
                         customId:(NSInteger)customId
-                      completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid, NSInteger customId, NSString *controlServerAddress, NSError *error))completion;
+                      completion:(void (^)(int32_t roomId, NSString *vtmAddress,NSString *clientid, NSInteger customId, NSString *controlServerAddress, NSError * __nullable error))completion;
 
 /**
  *  邀请设备进入房间
@@ -768,7 +768,7 @@ NS_ASSUME_NONNULL_BEGIN
                                         streamType:(NSInteger)streamType
                                               mode:(NSInteger)mode
                                   maxActiveSeconds:(NSInteger)maxActiveSeconds
-                                        completion:(void (^)(NSError *error))completion;
+                                        completion:(void (^)(NSError * __nullable error))completion;
 
 /**
  *  强制设备退出房间
@@ -782,7 +782,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURLSessionDataTask *)kickoutDeviceMoveOutRoom:(NSString *)roomId
                                       deviceSerial:(NSString *)deviceSerial
                                          channelNo:(NSInteger)channelNo
-                                        completion:(void (^)(NSError *error))completion;
+                                        completion:(void (^)(NSError * __nullable error))completion;
 
 #pragma mark - WiFi配网相关Api
 
@@ -798,7 +798,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)probeDeviceInfo:(NSString *)deviceSerial
                                deviceType:(NSString *)deviceType
-                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+                               completion:(void (^)(EZProbeDeviceInfo *deviceInfo, NSError * __nullable error))completion;
 
 /**
  *  WiFi配置开始接口
@@ -932,7 +932,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return operation
  */
-+ (NSURLSessionDataTask *)getNewApConfigToken:(void(^)(EZConfigTokenInfo *tokenInfo, NSError *error))completion;
++ (NSURLSessionDataTask *)getNewApConfigToken:(void(^)(EZConfigTokenInfo *tokenInfo, NSError * __nullable error))completion;
 
 /**
  * 开始NewAP配网（需连接设备热点）
@@ -948,31 +948,31 @@ NS_ASSUME_NONNULL_BEGIN
                              ssid:(NSString *)ssid
                          password:(NSString *)password
                         lbsDomain:(NSString *)lbsDomain
-                completionHandler:(void(^)(EZNewAPConfigStatus status, NSError *error))handler;
+                completionHandler:(void(^)(EZNewAPConfigStatus status, NSError * __nullable error))handler;
 
 /**
- * 获取设备状态（需连接设备热点）
+ * 获取设备信息（需连接设备热点）
  *
  * @param handler 回调
  */
-+ (void)getAccessDeviceInfo:(void(^)(EZAPDevInfo *devInfo, NSError *error))handler;
++ (void)getAccessDeviceInfo:(void(^)(EZAPDevInfo *devInfo, NSError * __nullable error))handler;
 
 /**
  * 获取设备当前周边WiFi列表，上限20个（需连接设备热点）
  *
  * @param handler 回调
  */
-+ (void)getAccessDeviceWifiList:(void(^)(NSArray<EZWiFiItemInfo*> *wifiList, NSError *error))handler;
++ (void)getAccessDeviceWifiList:(void(^)(NSArray<EZWiFiItemInfo*> *wifiList, NSError * __nullable error))handler;
 
 /**
  * 查询设备绑定状态
  * @param deviceSerial 设备序列号
- * @param completion 回调block，正常时返回EZProbeDeviceInfo对象，错误码返回错误码
+ * @param completion 回调block，正常时返回isBindSuccess，错误码返回错误码
  *
  * @return 成功或失败
  */
 + (NSURLSessionDataTask *)queryPlatformBindStatus:(NSString *)deviceSerial
-                                       completion:(void(^)(EZProbeDeviceInfo *deviceInfo, NSError *error))completion;
+                                       completion:(void(^)(BOOL isBindSuccess, NSError * __nullable error))completion;
 
 /**
  * 设置配网设备网关地址 可选
@@ -989,7 +989,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return operation
  */
-+ (NSURLSessionDataTask *)getUserInfo:(void (^)(EZUserInfo *userInfo, NSError *error))completion;
++ (NSURLSessionDataTask *)getUserInfo:(void (^)(EZUserInfo *userInfo, NSError * __nullable error))completion;
 
 #pragma mark - 其他Api
 

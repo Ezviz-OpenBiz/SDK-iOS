@@ -217,6 +217,33 @@ typedef NS_ENUM(NSInteger, EZCloudVideoType) {
     EZCloudVideoTypeAct = 2     // 活动录像
 };
 
+/* 鱼眼设备矫正模式 */
+typedef NS_ENUM(NSInteger, EZFecCorrectType) {
+    EZFecCorrectTypeNone            = 0,
+    EZFecCorrectType4PTZ            = 1,            // 4分屏                  1
+    EZFecCorrectType180             = 1<<1,         // 180°全景               2
+    EZFecCorrectType360             = 1<<2,         // 360°全景               4
+    EZFecCorrectTypeFish            = 1<<3,         // 支持鱼眼（原始码流）      8
+    EZFecCorrectTypeLAT             = 1<<4,         // 水平-维度拉伸           16
+    EZFecCorrectTypeARC_Hor         = 1<<5,         // 水平ARC                32
+    EZFecCorrectTypeARC_Ver         = 1<<6,         // 垂直ARC                64
+//    EZFecCorrectTypePicInPic        = 1<<7        // 画中画                 128
+    EZFecCorrectTypeFull5PTZ        = 1<<8,         // 全景5分屏               256
+    EZFecCorrectType5PTZ            = 1<<9,         // 5分屏                  512
+    EZFecCorrectTypeCYC             = 1<<10,        // 圆柱显示（桶形）         1024
+    EZFecCorrectTypeWideAngle       = 1<<11,        // 广角                   2048
+//    EZFecCorrectTypeTiled           = 1<<12,        // 平铺                   4096
+//    EZFecCorrectTypeListeningRecognition = 1<<13    // 辅助画中画听声辩位模式
+};
+
+/* 鱼眼设备矫正模式 */
+typedef NS_ENUM(NSInteger, EZFecPlaceType) {
+    EZFecPlaceTypeNone = 0,   // 不矫正
+    EZFecPlaceTypeWall = 1,   // 壁装
+    EZFecPlaceTypeFloor = 2,  // 底装/桌面
+    EZFecPlaceTypeCeiling = 3 // 顶装
+};
+
 /// 开放平台常量类
 @interface EZConstants : NSObject
 

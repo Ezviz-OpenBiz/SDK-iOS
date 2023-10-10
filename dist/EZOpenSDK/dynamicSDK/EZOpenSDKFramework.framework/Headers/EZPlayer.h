@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EZConstants.h"
 
 @class EZDeviceRecordFile;
 @class EZCloudRecordFile;
@@ -446,6 +447,46 @@ sd卡及云存储倍速回放接口
  * 全局p2p开启的情况下，该播放器禁用p2p取流。startRealPlay之前调用
  */
 - (void)setPlayerDisableP2P;
+
+#pragma mark - 鱼眼矫正模式
+
+/**
+ * 设置鱼眼播放视图
+ */
+- (void)setFecPlayViews:(NSArray<UIView *> *)fecPlayViews;
+
+/**
+ * 打开鱼眼矫正
+ *
+ * @param fecCorrectType 矫正模式
+ * @param fecPlaceType     安装模式
+ */
+- (void)openFecCorrect:(EZFecCorrectType)fecCorrectType fecPlaceType:(EZFecPlaceType)fecPlaceType;
+
+/**
+ * 鱼眼设备 - 移动手势操作
+ *
+ * @param state 手势状态
+ * @param point 坐标
+ * @param gestureRecognizer 手势
+ */
+- (void)panGestureWith:(UIGestureRecognizerState)state point:(CGPoint)point gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer;
+
+/**
+ * 鱼眼设备 - 缩放手势操作
+ * 
+ * @param state 手势状态
+ * @param zoomAccuracy 缩放精度
+ * @param gestureRecognizer 手势
+ */
+- (void)pinGestureWith:(UIGestureRecognizerState)state zoom:(float)zoomAccuracy gestureRecognizer:(UIPinchGestureRecognizer *)gestureRecognizer;
+
+/**
+ * 鱼眼设备 - 点击手势操作
+ *
+ * @param gestureRecognizer 手势
+ */
+- (BOOL)tapGestureWith:(UITapGestureRecognizer *)gestureRecognizer;
 
 @end
 

@@ -319,6 +319,8 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (BOOL)startLocalRecordWithPathExt:(NSString *)path;
 
+/** 测试排查问题用，开发者勿使用 */
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
 
 /**
  结束本地录像预录制，并生成mp4录制文件，异步方法

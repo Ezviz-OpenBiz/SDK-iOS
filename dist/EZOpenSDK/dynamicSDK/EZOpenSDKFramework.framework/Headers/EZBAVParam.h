@@ -115,8 +115,8 @@
 @property (nonatomic, assign) int8_t audioState;// 声音启用状态 0-关闭 1-启用
 @property (nonatomic, assign) int8_t videoState;// 视频启用状态 0-关闭 1-主流 5-主子流
 @property (nonatomic, assign) int8_t shareState;// 屏幕共享启用状态 0-关闭 1-启用
-@property (nonatomic, assign) int8_t upNetState;//网络状态
-@property (nonatomic, assign) int8_t downNetState;//网络状态
+@property (nonatomic, assign) int8_t upNetState;//网络状态 0:网络状态未知  1:网络非常好 2:网络好 3:网络一般 4:网络差 5:网络非常差 6:网络不可用
+@property (nonatomic, assign) int8_t downNetState;//网络状态 0:网络状态未知  1:网络非常好 2:网络好 3:网络一般 4:网络差 5:网络非常差 6:网络不可用
 
 @end
 
@@ -147,40 +147,40 @@
 ///本地的音视频统计
 @interface EZRTCLocalStatistics : NSObject
 ///视频指标参数
-@property (nonatomic, assign) uint32_t videoSentBitrate; //视频传输码率(上行)
-@property (nonatomic, assign) uint32_t videoSentFrameRate; //帧率大小
-@property (nonatomic, assign) uint16_t videoPacketLossRate; //视频丢包率
-@property (nonatomic, assign) uint16_t videoStreamType; //流类型
-@property (nonatomic, assign) uint32_t videoPacketCount;//发视频总包数
-@property (nonatomic, assign) uint16_t videoCompensateLossRate;//补偿后丢包率,单位%
+@property (nonatomic, assign) int32_t videoSentBitrate; //视频传输码率(上行)
+@property (nonatomic, assign) int32_t videoSentFrameRate; //帧率大小
+@property (nonatomic, assign) int32_t videoPacketLossRate; //视频丢包率
+@property (nonatomic, assign) int32_t videoStreamType; //流类型
+@property (nonatomic, assign) int32_t videoPacketCount;//发视频总包数
+@property (nonatomic, assign) int32_t videoCompensateLossRate;//补偿后丢包率,单位%
 ///音频指标参数
-@property (nonatomic, assign) uint32_t audioSentBitrate;//音频传输码率
-@property (nonatomic, assign) uint16_t audioPacketLossRate;//音频丢包率
-@property (nonatomic, assign) uint32_t audioPacketCount;//发音频总包数
+@property (nonatomic, assign) int32_t audioSentBitrate;//音频传输码率
+@property (nonatomic, assign) int32_t audioPacketLossRate;//音频丢包率
+@property (nonatomic, assign) int32_t audioPacketCount;//发音频总包数
 @end
 
 ///远端的音视频统计
 @interface  EZRTCRemoteStatistics : NSObject
 ///视频指标参数
-@property (nonatomic, assign) uint32_t videoClientId; //远端视频clientId
-@property (nonatomic, assign) uint32_t videoReceivedBitrate;//远端视频传输码率（下行）
-@property (nonatomic, assign) uint32_t videoReceivedFrameRate;//远端帧率大小
-@property (nonatomic, assign) uint16_t videoPacketLossRate;//远端视频丢包率(下行)
-@property (nonatomic, assign) uint16_t videoTotalFrozenTime;//远端视频总的卡顿时长
-@property (nonatomic, assign) uint16_t videoFrozenRate; //远端视频卡顿比
-@property (nonatomic, assign) uint16_t streamType; //远端流类型
-@property (nonatomic, assign) uint32_t videoPacketCount;//接收视频总包数
-@property (nonatomic, assign) uint16_t videoUncompensateLoss;//视频补偿前丢包率（％）
+@property (nonatomic, assign) int32_t videoClientId; //远端视频clientId
+@property (nonatomic, assign) int32_t videoReceivedBitrate;//远端视频传输码率（下行）
+@property (nonatomic, assign) int32_t videoReceivedFrameRate;//远端帧率大小
+@property (nonatomic, assign) int32_t videoPacketLossRate;//远端视频丢包率(下行)
+@property (nonatomic, assign) int32_t videoTotalFrozenTime;//远端视频总的卡顿时长
+@property (nonatomic, assign) int32_t videoFrozenRate; //远端视频卡顿比
+@property (nonatomic, assign) int32_t streamType; //远端流类型
+@property (nonatomic, assign) int32_t videoPacketCount;//接收视频总包数
+@property (nonatomic, assign) int32_t videoUncompensateLoss;//视频补偿前丢包率（％）
 ///音频指标参数
-@property (nonatomic, assign) uint32_t audioClientId; //远端音频clientId
-@property (nonatomic, assign) uint32_t audioReceivedBitrate;//远端音频传输码率（下行）
-@property (nonatomic, assign) uint16_t audioPacketLossRate;//远端音频丢包率(下行)
-@property (nonatomic, assign) uint16_t audioTotalFrozenTime;//远端音频总的卡顿时长
-@property (nonatomic, assign) uint16_t audioFrozenRate; //远端音频卡顿比
-@property (nonatomic, assign) uint32_t audioPacketCount;//接收音频总包数
-@property (nonatomic, assign) uint32_t audioPlcPacketCount;//音频帧补偿数量
-@property (nonatomic, assign) uint16_t audioUncompensateLoss;//音频补偿前丢包率（％）
-@property (nonatomic, assign) uint32_t audioTotalTime;//播放音频总时间
+@property (nonatomic, assign) int32_t audioClientId; //远端音频clientId
+@property (nonatomic, assign) int32_t audioReceivedBitrate;//远端音频传输码率（下行）
+@property (nonatomic, assign) int32_t audioPacketLossRate;//远端音频丢包率(下行)
+@property (nonatomic, assign) int32_t audioTotalFrozenTime;//远端音频总的卡顿时长
+@property (nonatomic, assign) int32_t audioFrozenRate; //远端音频卡顿比
+@property (nonatomic, assign) int32_t audioPacketCount;//接收音频总包数
+@property (nonatomic, assign) int32_t audioPlcPacketCount;//音频帧补偿数量
+@property (nonatomic, assign) int32_t audioUncompensateLoss;//音频补偿前丢包率（％）
+@property (nonatomic, assign) int32_t audioTotalTime;//播放音频总时间
 @end
 
 ///视频大小
@@ -202,6 +202,7 @@
 @property (nonatomic, assign) int32_t m_expectedDownBandwidth;//下行带宽
 @property (nonatomic,strong) NSString *m_szPassword;//房间密码
 @property (nonatomic, assign) int32_t testInterval;//必填  统计间隔（毫秒）,取值范围1000ms~60000ms
+@property (nonatomic,strong) NSString *m_szExtensionParas;//扩展字段
 @end
 
 ///网速测试回调结果
@@ -246,8 +247,9 @@ extern int32_t const EZBAVForcedQuitReasonRepeatJoin;//已在其他地方加入�
 extern int32_t const EZBAVForcedQuitReasonMovedOut;//被管理员移出房间
 extern int32_t const EZBAVForcedQuitReasonRoomDissolved;//房间解散
 extern int32_t const EZBAVMessageSpeedTestResult;//网络测试
+extern int32_t const EZBAVMessageTransparent;//底层上抛的json消息
 
-
+extern int32_t const EZBAVMessageForcedQuitScreenShare;//（屏幕共享中）被强制关闭屏幕共享
 
 typedef void(^EZAudioOpenResultBlock)(NSInteger ret);
 

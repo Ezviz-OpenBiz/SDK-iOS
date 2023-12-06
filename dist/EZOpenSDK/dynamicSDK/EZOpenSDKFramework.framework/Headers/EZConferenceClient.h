@@ -42,6 +42,7 @@
     如果消息是EZBAVMessageJoinRoomOK ，msg是nil
     如果消息是EZBAVMessageForcedQuit ，msg是NSNumber，比如@(EZBAVForcedQuitReasonMovedOut)
     如果消息是EZBAVMessageStatistic，msg是EZRTCStatistic
+    如果消息是EZBAVMessageTransparent，msg是NSString 格式的json
  
  */
 - (void)bavClient:(EZConferenceClient *)client didReceivedMessage:(int32_t)messageCode msg:(id)msg;
@@ -267,6 +268,10 @@
 - (void)stopScreenShare;
 
 
+/// 强制结束其他用户当前的屏幕共享
+- (void)forceCloseOtherScreenShare;
+
+
 /// 订阅远端用户的码流，并设置远程窗口，1.必须在拿到远端客户端加入的消息后设置，2.必须在主线程调用
 /// 该接口同样可以用于订阅屏幕共享的码流，clientID传入0，streamType传入1
 /// 该接口与 【subscribe:to:withStream:(NSInteger)streamType  + setRemoteView:forSubscribedClient:withRegionID: 】的配套接口 冲突，要么使用此接口；要么使用配套接口
@@ -417,5 +422,9 @@
 - (int)sendCustomMsg:(NSData *_Nonnull)data;
 
 + (void)setBAVLogLevel:(NSInteger)level;
+
+///获取播放中的图片
+/// @param clientID 客户端的ID
+- (nullable NSData *)getJPEGOfClient:(int32_t)clientID;
 
 @end

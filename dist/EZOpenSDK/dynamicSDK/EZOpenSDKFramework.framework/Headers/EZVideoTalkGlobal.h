@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "EZRTCMediaSessionDefines.h"
 
+#define EZVideoTalkVersion @"v6.0.2.20231128"
+
 @class EZRTCVideoEncodeParam;
 @class EZRTCCameraParam;
 
@@ -24,12 +26,19 @@
 
 
 /**
- 打开对端码流抓取
+ 打开视频码流抓取（包括自身采集和接收到的）
 
  @param enble 是否打开
  */
-+(void)setDebugVideoLog:(BOOL)enble;
++(void)setDebugVideoStreamSave:(BOOL)enble;
 
+
+/**
+ 打开音频码流抓取（包括自身采集和接收到的）
+
+ @param enble 是否打开
+ */
++(void)setDebugAudioStreamSave:(BOOL)enble;
 
 /**
  获取sdk版本信息
@@ -65,6 +74,10 @@
 + (void)setHardDecodePriority:(BOOL)enalbe;
 
 + (void)setPlayerWriteFlag:(NSArray<NSNumber *> *)flags;
+
+/// 网络状态变化信息同步 0-切换 1-断开 2-恢复
+/// @param networkChange 网络状态变化信息同步 0-切换 1-断开 2-恢复
++ (void)setNetworkChange:(NSInteger)networkChange;
 
 #pragma mark - AGC
 /// 设置是否开启AGC编码

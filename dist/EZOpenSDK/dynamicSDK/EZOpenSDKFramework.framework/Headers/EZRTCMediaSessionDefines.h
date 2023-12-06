@@ -29,9 +29,10 @@
 
 #define EZPixelBlockSize (16)
 #define EZPixelStandard(pixelSize) (ceil((double)(pixelSize)/EZPixelBlockSize)*EZPixelBlockSize)
-#define EZMediaSessionScreenShareHeight (1280)
-#define EZMediaSessionScreenShareWidth  EZPixelStandard((1280*(UIScreen.mainScreen.bounds.size.width / UIScreen.mainScreen.bounds.size.height)))
+#define EZMediaSessionScreenShareHeight (1920)
+#define EZMediaSessionScreenShareWidth  EZPixelStandard((EZMediaSessionScreenShareHeight * UIScreen.mainScreen.bounds.size.width / UIScreen.mainScreen.bounds.size.height))
 #define EZMediaSessionScreenShareFPS (10)
+#define EZMediaSessionScreenShareAverageBitRate (8 * 128 * 1024)//单位 bps
 
 typedef NS_OPTIONS(NSUInteger, EZMediaCaptureSessionType) {
     EZMediaSessionCaptureNone = 1 << 0,

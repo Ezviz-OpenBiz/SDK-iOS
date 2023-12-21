@@ -21,6 +21,8 @@
 @property (nonatomic) NSInteger detectorNum;
 /// 设备关联的探测器信息
 @property (nonatomic, strong) NSArray *detectorInfo;
+/// 设备关联的子设备信息
+@property (nonatomic, strong) NSArray *subDeviceInfo;
 /// 设备图片
 @property (nonatomic, copy) NSString *deviceCover;
 /// 设备名称
@@ -55,10 +57,12 @@
 @property (nonatomic) BOOL isSupportDirectInnerRelaySpeed;
 /// 是否支持SD卡录像下载
 @property (nonatomic) BOOL isSupportSDRecordDownload;
+/// 是否支持SD卡录像封面
+@property (nonatomic) BOOL isSupportSdCover;
 /// 设备大类
-@property (nonatomic,copy) NSString *category;
+@property (nonatomic, copy) NSString *category;
 /// 添加时间
-@property (nonatomic,strong) NSDate *addTime;
+@property (nonatomic, strong) NSDate *addTime;
 
 /**
  * 根据位数获取设备能力集

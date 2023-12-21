@@ -319,7 +319,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (BOOL)startLocalRecordWithPathExt:(NSString *)path;
 
-/** 测试排查问题用，开发者勿使用 */
+/** 测试排查问题用，开发者勿使用，以后版本会删除 */
 - (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
 
 /**
@@ -355,6 +355,15 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  @return YES/NO
  */
 - (BOOL)startPlaybackFromDevice:(EZDeviceRecordFile *)deviceFile;
+
+/**
+ *  开始远程SD卡AI回放，异步接口，返回值只是表示操作成功，不代表播放成功（专供华住私有云，其他不支持）
+ *
+ *  @param deviceFile SD卡文件信息
+ *
+ *  @return YES/NO
+ */
+- (BOOL)startAIPlaybackFromDevice:(EZDeviceRecordFile *)deviceFile;
 
 /**
  *  暂停远程回放播放

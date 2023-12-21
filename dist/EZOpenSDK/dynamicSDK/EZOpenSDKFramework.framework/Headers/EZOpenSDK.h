@@ -356,6 +356,19 @@ NS_ASSUME_NONNULL_BEGIN
                              completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError * __nullable error))completion;
 
 /**
+ *  获取用户所有的设备列表（包含子设备）
+ *
+ *  @param pageIndex  分页当前页码（从0开始）
+ *  @param pageSize   分页每页数量（建议20以内）
+ *  @param completion 回调block，正常时返回EZDeviceInfo的对象数组和设备总数，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getDeviceListEx:(NSInteger)pageIndex
+                                 pageSize:(NSInteger)pageSize
+                               completion:(void (^)(NSArray *deviceList, NSInteger totalCount, NSError * __nullable error))completion;
+
+/**
  *  获取分享给用户的设备列表接口
  *
  *  @param pageIndex  分页当前页码（从0开始）
@@ -378,6 +391,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSURLSessionDataTask *)getDeviceInfo:(NSString *)deviceSerial
                              completion:(void (^)(EZDeviceInfo *deviceInfo, NSError * __nullable error))completion;
+
+/**
+ *  根据序列号获取设备信息（包含子设备）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param completion 回调block，正常时返回EZDeviceInfo的对象，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)getDeviceInfoEx:(NSString *)deviceSerial
+                               completion:(void (^)(EZDeviceInfo *deviceInfo, NSError * __nullable error))completion;
 
 /**
  *  获取设备的版本信息接口

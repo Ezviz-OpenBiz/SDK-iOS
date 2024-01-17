@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /// 此类为云存储录像文件对象
-@interface EZCloudRecordFile : NSObject
+@interface EZCloudRecordFile : NSObject<NSMutableCopying>
 
 /// 设备序列号
 @property (nonatomic, copy) NSString *deviceSerial;

@@ -239,7 +239,7 @@ extern int32_t const EZBAVMessageNetworkQuality;
 extern int32_t const EZBAVMessageClientShareAvailable;
 extern int32_t const EZBAVMessageJoinRoomOK;
 extern int32_t const EZBAVMessageForcedQuit;
-extern int32_t const EZBAVMessageStatistic;
+//extern int32_t const EZBAVMessageStatistic;
 extern int32_t const EZBAVMessageVolumeInfo;//会场的音量，里面包含所有开麦的与会者的音量信息
 
 

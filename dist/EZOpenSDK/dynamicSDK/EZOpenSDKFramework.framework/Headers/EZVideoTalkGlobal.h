@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "EZRTCMediaSessionDefines.h"
 
-#define EZVideoTalkVersion @"v6.0.2.20231128"
+#define EZVideoTalkVersion @"v6.4.0.20231225"
 
 @class EZRTCVideoEncodeParam;
 @class EZRTCCameraParam;

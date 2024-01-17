@@ -137,6 +137,8 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 /// 是否让播放器处理进入后台,YES:自动处理;NO:不处理,默认为YES
 @property (nonatomic, assign) BOOL backgroundModeByPlayer;
 
+#pragma mark - 播放器创建
+
 /**
  *  根据设备序列号和通道号创建EZPlayer对象
  *
@@ -159,17 +161,17 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 
 
 /**
- 局域网设备创建播放器接口
-
- @param userId 用户id，登录局域网设备后获取
- @param cameraNo 通道号
- @param streamType 码流类型 1:主码流 2:子码流
- @return EZPlayer对象
+ * 局域网设备创建播放器接口
+ *
+ * @param userId 用户id，登录局域网设备后获取
+ * @param cameraNo 通道号
+ * @param streamType 码流类型 1:主码流 2:子码流
+ *
+ * @return EZPlayer对象
  */
 + (instancetype)createPlayerWithUserId:(NSInteger)userId cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
 
 /**
- *  @since 4.19.2
  *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
  *
  *  @param deviceSerial 设备序列号
@@ -188,39 +190,13 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)destoryPlayer;
 
 /**
- *  设置使用硬件解码器优先，需在startRealPlay之前调用
- *
- *  @param HDPriority 是否硬解优先
- */
-- (void)setHDPriority:(BOOL)HDPriority;
-
-/**
- 获取当前的软硬解情况，在码流正常播放后调用
- 
- @return 1：软解 2：硬解 0：出错
- */
-- (int)getHDPriorityStatus;
-
-/**
- *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
- *
- *  @param bizType 类型       国标为 bizType='GB28181'
- */
-- (void)setBizType:(NSString *)bizType;
-
-/**
- *  平台id 国标设备使用
- *
- *  @param platformId 类型
-*/
--(void)setPlatformId:(NSString *)platformId;
-
-/**
  *  设置播放器的view
  *
  *  @param playerView 播放器view
  */
 - (void)setPlayerView:(UIView *)playerView;
+
+#pragma mark - 预览
 
 /**
  *  是否静音播放，startRealPlay之前调用
@@ -265,23 +241,25 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)closeSound;
 
 /**
- 获取播放组件内部的播放库的port
- 
- @return 播放库的port,可能为-1（无效值）
+ * 预览时开始本地录像预录制功能，异步方法
+ *
+ * @param path 文件存储路径
+ *
+ * @return YES/NO
  */
-- (int)getInnerPlayerPort;
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
+
+/** 测试排查问题用，开发者勿使用，以后版本会删除 */
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
 
 /**
- 获取当前已播放的总流量，单位字节
- eg.计算每秒的流量：
- NSInteger a = [self getStreamFlow];
- //1s后调用
- NSInteger b = [self getStreamFlow];
- NSInteger perSecondFlow = b - a;
- 
- @return 流量值
+ *结束本地录像预录制，并生成mp4录制文件，异步方法
+ *
+ * @param complete 操作是否成功 YES/NO
  */
-- (NSInteger)getStreamFlow;
+- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
+
+#pragma mark - 对讲
 
 /**
  *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
@@ -312,25 +290,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopVoiceTalk;
 
 /**
- 预览时开始本地录像预录制功能，异步方法
- 
- @param path 文件存储路径
- @return YES/NO
- */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
-
-/** 测试排查问题用，开发者勿使用，以后版本会删除 */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
-
-/**
- 结束本地录像预录制，并生成mp4录制文件，异步方法
- 
- @param complete 操作是否成功 YES/NO
- */
-- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
-
-
-/**
  *  半双工对讲专用接口，是否切换到听说状态
  *
  *  @param isPressed 是否只说状态
@@ -338,6 +297,15 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  @return YES/NO
  */
 - (BOOL)audioTalkPressed:(BOOL)isPressed;
+
+/**
+ *设置全双工对讲时的模式,对讲成功后调用
+ *
+ * @param routeToSpeaker YES:使用扬声器 NO:使用听筒
+ */
+- (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
+
+#pragma mark - 回放
 
 /**
  *  开始云存储远程回放，异步接口，返回值只是表示操作成功，不代表播放成功
@@ -395,29 +363,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopPlayback;
 
 /**
- *  直播画面抓图
- *
- *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
- *
- *  @return image
- */
-- (UIImage *)capturePicture:(NSInteger)quality;
-
-/**
- 获取内部播放器句柄。建议每次使用播放器句柄时均调用此方法获取，并进行有效性判断。
-
- @return 小于0为无效值，大于等于0为有效值
- */
-- (int)getPlayPort;
-
-/**
- 获取当前取流方式：
-
- @return 当前取流类型
- */
-- (int)getStreamFetchType;
-
-/**
 sd卡及云存储倍速回放接口
 1.支持抽帧快放的设备最高支持16倍速快放（所有取流方式，包括P2P）
 2.不支持抽帧快放的设备，仅支持内外网直连快放，最高支持8倍
@@ -434,15 +379,83 @@ sd卡及云存储倍速回放接口
  */
 - (BOOL)setPlaybackRate:(EZPlaybackRate) rate mode:(NSUInteger)mode;
 
-/**
- 设置全双工对讲时的模式,对讲成功后调用
- 
- @param routeToSpeaker YES:使用扬声器 NO:使用听筒
- */
-- (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
+#pragma mark - 其他方法
 
-/// //扩展参数 UIKit专用
-/// @param exParamInfo EZPlayerExParamInfo
+/**
+ *  设置使用硬件解码器优先，需在startRealPlay之前调用
+ *
+ *  @param HDPriority 是否硬解优先
+ */
+- (void)setHDPriority:(BOOL)HDPriority;
+
+/**
+ * 获取当前的软硬解情况，在码流正常播放后调用
+ *
+ * @return 1：软解 2：硬解 0：出错
+ */
+- (int)getHDPriorityStatus;
+
+/**
+ *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
+ *
+ *  @param bizType 类型       国标为 bizType='GB28181'
+ */
+- (void)setBizType:(NSString *)bizType;
+
+/**
+ *  平台id 国标设备使用
+ *
+ *  @param platformId 类型
+*/
+- (void)setPlatformId:(NSString *)platformId;
+
+/**
+ * 获取播放组件内部的播放库的port
+ *
+ * @return 播放库的port,可能为-1（无效值）
+ */
+- (int)getInnerPlayerPort;
+
+/**
+ * 获取内部播放器句柄。建议每次使用播放器句柄时均调用此方法获取，并进行有效性判断。
+ *
+ * @return 小于0为无效值，大于等于0为有效值
+ */
+- (int)getPlayPort;
+
+/**
+ *  直播画面抓图
+ *
+ *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
+ *
+ *  @return image
+ */
+- (UIImage *)capturePicture:(NSInteger)quality;
+
+/**
+ * 获取当前取流方式：
+ *
+ * @return 当前取流类型
+ */
+- (int)getStreamFetchType;
+
+/**
+ * 获取当前已播放的总流量，单位字节
+ eg.计算每秒的流量：
+ NSInteger a = [self getStreamFlow];
+ //1s后调用
+ NSInteger b = [self getStreamFlow];
+ NSInteger perSecondFlow = b - a;
+ *
+ * @return 流量值
+ */
+- (NSInteger)getStreamFlow;
+
+/**
+ * 扩展参数 UIKit专用
+ *
+ * @param exParamInfo EZPlayerExParamInfo
+ */
 - (void)setExParamInfo:(EZPlayerExParamInfo *)exParamInfo;
 
 /**

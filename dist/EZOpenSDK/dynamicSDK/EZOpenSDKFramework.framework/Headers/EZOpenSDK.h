@@ -596,6 +596,24 @@ NS_ASSUME_NONNULL_BEGIN
                                 result:(void (^)(NSError * __nullable error))resultBlock;
 
 /**
+ *  PTZ 控制接口，通过p2p服务+http双通道控制云台（推荐）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param command       ptz控制命令
+ *  @param action         控制启动/停止
+ *  @param newSpeed     云台速度：分为0-7共8档，数值越大，转速越快
+ *  @param resultBlock  回调block，当error为空时表示操作成功
+ *
+ */
++ (void)controlPTZMix:(NSString *)deviceSerial
+             cameraNo:(NSInteger)cameraNo
+              command:(EZPTZCommand)command
+               action:(EZPTZAction)action
+             newSpeed:(NSInteger)newSpeed
+               result:(void (^)(NSError * __nullable error))resultBlock;
+
+/**
  *  摄像头显示控制接口
  *
  *  @param deviceSerial 设备序列号

@@ -210,6 +210,18 @@ typedef NS_ENUM(NSUInteger, EZVideoRecordType) {
     EZVideoRecordTypeEvent    // 事件类型
 };
 
+/* 录像类型扩展 */
+typedef NS_ENUM(NSUInteger, EZVideoRecordTypeEx) {
+    EZVideoRecordTypeExNone = 0,        // 无效值
+    EZVideoRecordTypeExCMR ,            // 定时录像
+    EZVideoRecordTypeExEvent,           // 事件录像
+    EZVideoRecordTypeExCar,             // 智能-车录像
+    EZVideoRecordTypeExPerson,          // 智能-人型录像
+    EZVideoRecordTypeExComPressAuTo,    // 自动浓缩录像
+    EZVideoRecordTypeExComPressCMR,     // 定时浓缩录像
+    EZVideoRecordTypeExComPressManual   // 手动浓缩录像
+};
+
 /* 云存储录像类型 */
 typedef NS_ENUM(NSInteger, EZCloudVideoType) {
     EZCloudVideoTypeAll = -1,   // 全部录像

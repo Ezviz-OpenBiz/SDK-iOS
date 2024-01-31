@@ -305,6 +305,25 @@ NS_ASSUME_NONNULL_BEGIN
                                           completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
+ *  查询远程SD卡存储录像信息列表接口（接口支持获取浓缩录像）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param beginTime    查询时间范围开始时间
+ *  @param endTime      查询时间范围结束时间
+ *  @param videoRecordTypeEx      录像类型扩展
+ *  @param completion   回调block，正常时返回EZDeviceRecordFile的对象数组，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFileFromDeviceEx:(NSString *)deviceSerial
+                                              cameraNo:(NSInteger)cameraNo
+                                             beginTime:(NSDate *)beginTime
+                                               endTime:(NSDate *)endTime
+                                     videoRecordTypeEx:(EZVideoRecordTypeEx)videoRecordTypeEx
+                                            completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
+
+/**
  *  获取指定时间内的所有录像文件
  *
  *  @param deviceSerial 设备序列号

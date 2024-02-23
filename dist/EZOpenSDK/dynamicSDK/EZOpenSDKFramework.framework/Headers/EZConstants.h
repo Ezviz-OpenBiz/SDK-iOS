@@ -256,6 +256,13 @@ typedef NS_ENUM(NSInteger, EZFecPlaceType) {
     EZFecPlaceTypeCeiling = 3 // 顶装
 };
 
+/* 变声类型 */
+typedef NS_ENUM(NSInteger, EZVoiceChangeType) {
+    EZVoiceChangeTypeMan = -7,   // 大叔音
+    EZVoiceChangeTypeNormal = 0, // 原音
+    EZVoiceChangeTypeClown = 7   // 小丑音
+};
+
 /// 开放平台常量类
 @interface EZConstants : NSObject
 

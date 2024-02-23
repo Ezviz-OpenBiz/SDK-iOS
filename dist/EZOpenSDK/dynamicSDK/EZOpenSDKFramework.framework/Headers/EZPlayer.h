@@ -290,6 +290,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopVoiceTalk;
 
 /**
+ *  对讲变声，对讲成功后开启，需要设备开通变声服务后才生效（只支持国内，海外不支持）
+ *
+ *  @param voiceChangeType 变声类型
+ *  @param complete 操作是否成功
+ */
+- (void)startVoiceChange:(EZVoiceChangeType)voiceChangeType complete:(void (^)(BOOL ret, NSError *error))complete;
+
+/**
  *  半双工对讲专用接口，是否切换到听说状态
  *
  *  @param isPressed 是否只说状态

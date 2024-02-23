@@ -42,6 +42,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setCompressVideoRecordType:(EZVideoRecordTypeEx)videoRecordTypeEx frameInterval:(int)frameInterval;
 
+/**
+ * 设置客户Saas服务器的token，下载用
+ *
+ * @param saasToken  客户Saas服务器的token
+ */
+- (void)setStreamSaasToken:(NSString *)saasToken;
+
 @end
 
 NS_ASSUME_NONNULL_END

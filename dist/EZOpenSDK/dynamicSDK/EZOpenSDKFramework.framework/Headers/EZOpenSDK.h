@@ -220,6 +220,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)enableNationalStandard:(BOOL)enable;
 
 /**
+ *  取流是否使用用户自己Saas服务的token，在`initLibWithAppKey`前调用（此开关打开后，预览、对讲、SD卡录像回放、SD卡录像下载需设置自己的token）
+ *  `EZPlayer.setStreamSaasToken`
+ *  `EZDeviceRecordDownloadTask.initTaskWithID`
+ *
+ *  @param enable   是否使用自己Saas服务的token
+ */
++ (void)enableStreamWithSaasToken:(BOOL)enable;
+
+/**
  *  获取所有的p2p预连接设备序列号（包括正在进行预操作的以及预操作完成的）
  *  需要在子线程中调用
  *

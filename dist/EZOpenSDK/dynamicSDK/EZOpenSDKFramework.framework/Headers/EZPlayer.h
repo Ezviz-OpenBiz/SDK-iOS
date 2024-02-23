@@ -480,6 +480,13 @@ sd卡及云存储倍速回放接口
  */
 - (void)setPlayerDisableP2P;
 
+/**
+ * 设置客户Saas服务器的token，取流用
+ *
+ * @param saasToken  客户Saas服务器的token
+ */
+- (void)setStreamSaasToken:(NSString *)saasToken;
+
 #pragma mark - 鱼眼矫正模式
 
 /**

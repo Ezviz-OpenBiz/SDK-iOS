@@ -339,7 +339,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cameraNo     通道号，传入<=0的值则为默认值
  *  @param beginTime    开始时间，传入nil则为当天00:00:00
  *  @param endTime      结束时间，传入nil则为当天23:59:59
- *  @param rectype      回放源，0-系统自动选择，1-云存储，2-本地录像。非必选，默认为0，传入负值则为默认值
+ *  @param rectype      回放源，0-系统自动选择，1-云存储，2-本地录像，5-sdk。非必选，默认为0，传入负值则为默认值
  *  @param bizType       设备归属业务来源
  *  @param platFormId  平台ID
  *  @param completion   回调block records:EzvizRecordFileInfo的数组
@@ -622,6 +622,23 @@ NS_ASSUME_NONNULL_BEGIN
                                 action:(EZPTZAction)action
                               newSpeed:(NSInteger)newSpeed
                                 result:(void (^)(NSError * __nullable error))resultBlock;
+
+/**
+ *  PTZ 控制接口，http+p2p双通道，设备响应先到达的指令，响应更快（推荐）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param command       ptz控制命令
+ *  @param action         控制启动/停止
+ *  @param newSpeed     云台速度：分为0-7共8档，数值越大，转速越快
+ *  @param resultBlock  回调block，当error为空时表示操作成功
+ */
++ (NSURLSessionDataTask *)controlPTZMix:(NSString *)deviceSerial
+                               cameraNo:(NSInteger)cameraNo
+                                command:(EZPTZCommand)command
+                                 action:(EZPTZAction)action
+                               newSpeed:(NSInteger)newSpeed
+                                 result:(void (^)(NSError *error))resultBlock;
 
 /**
  *  PTZ 控制接口，通过p2p服务控制云台（需要设备支持）

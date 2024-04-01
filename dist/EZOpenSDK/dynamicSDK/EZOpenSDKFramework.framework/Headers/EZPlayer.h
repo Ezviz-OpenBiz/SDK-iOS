@@ -307,11 +307,18 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)audioTalkPressed:(BOOL)isPressed;
 
 /**
- *设置全双工对讲时的模式,对讲成功后调用
+ * 设置全双工对讲时的模式,对讲成功后调用
  *
  * @param routeToSpeaker YES:使用扬声器 NO:使用听筒
  */
 - (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
+
+/**
+ * 设置采集和播放的AGC放大的参数，在对讲发起前设置
+ * @param maxGain 最大db数，范围[5,90]，萤石当前默认值15
+ * @param gain 目标幅值，取值[0,30]，萤石当前默认值21
+ */
+- (void)setAGCParam:(NSInteger)maxGain gainLevel:(NSInteger)gain;
 
 #pragma mark - 回放
 
@@ -371,7 +378,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopPlayback;
 
 /**
-sd卡及云存储倍速回放接口
+sd卡及云存储倍速回放接口（不能在player:didReceivedMessage:方法中调用此方法，因为setPlaybackRate也会触发player:didReceivedMessage:方法，会陷入死循环导致回放卡顿）
 1.支持抽帧快放的设备最高支持16倍速快放（所有取流方式，包括P2P）
 2.不支持抽帧快放的设备，仅支持内外网直连快放，最高支持8倍
 3.HCNetSDK取流没有快放概念，全速推流，只改变播放库速率

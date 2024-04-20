@@ -333,6 +333,25 @@ NS_ASSUME_NONNULL_BEGIN
                                             completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
+ *  查询设备SDK云录制录像信息列表接口
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号，传入<=0的值则为默认值
+ *  @param beginTime    开始时间，传入nil则为当天00:00:00
+ *  @param endTime      结束时间，传入nil则为当天23:59:59
+ *  @param spaceId      录像空间
+ *  @param completion   回调block records:EzvizRecordFileInfo的数组
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFileFromSDKCloudRecord:(NSString *)deviceSerial
+                                                    cameraNo:(NSInteger)cameraNo
+                                                   beginTime:(NSDate *)beginTime
+                                                     endTime:(NSDate *)endTime
+                                                     spaceId:(NSString *)spaceId
+                                                  completion:(void (^)(id records, NSError * __nullable error))completion;
+
+/**
  *  获取指定时间内的所有录像文件
  *
  *  @param deviceSerial 设备序列号
@@ -1086,6 +1105,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return 终端唯一识别码
  */
 + (NSString *)getTerminalId;
+
+/**
+ *  上传SDK云录制图片
+ *
+ *  @param imageData 萤石APP类型
+ *  @param completion 回调block
+ */
++ (void)uploadSDKCloudRecordImage:(NSData *)imageData completion:(void (^)(NSString *storageId, NSError *error))completion;
 
 @end
 

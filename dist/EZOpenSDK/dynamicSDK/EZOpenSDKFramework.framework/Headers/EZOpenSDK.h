@@ -245,6 +245,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray<NSString *> *)getAllToDoPreconnectSerials;
 
 /**
+ *  某一设备p2p预连接是否成功
+ *
+ *  @param deviceSerial 设备序列号
+ */
++ (BOOL)isPreConnectionSucceed:(NSString *)deviceSerial;
+
+/**
  *  对某一设备进行p2p预连接操作
  *
  *  @param deviceSerial 设备序列号

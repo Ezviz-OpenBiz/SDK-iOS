@@ -253,7 +253,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
 
 /**
- *结束本地录像预录制，并生成mp4录制文件，异步方法
+ * 结束本地录像预录制，并生成mp4录制文件，异步方法
  *
  * @param complete 操作是否成功 YES/NO
  */
@@ -262,21 +262,21 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 #pragma mark - 对讲
 
 /**
- *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
+ *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
  *
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalk;
 
 /**
- *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
+ *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
  *  针对于NVR对讲使用
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalkNeedVoiceChannel:(BOOL)needVoiceChannel;
 
 /**
- *  开始Qos对讲，异步接口，返回值只是表示操作成功，不代表播放成功
+ *  开始Qos对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
  *
  *  @return YES/NO
  */

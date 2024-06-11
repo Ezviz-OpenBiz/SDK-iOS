@@ -209,6 +209,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)enableP2P:(BOOL)enable;
 
 /**
+ *  设置是否支持流媒体取流，默认是支持的
+ *  如果禁用，只能通过内网直连方式方式进行取流；若开启了支持p2p取流，会再尝试p2p取流；关闭后会严重影响取流成功率，慎用！
+ *
+ *  @param enable  流媒体是否开启
+ */
++ (void)enableVTDU:(BOOL)enable;
+
+/**
  *  清除取流时的缓存数据
  */
 + (void)clearStreamInfoCache;

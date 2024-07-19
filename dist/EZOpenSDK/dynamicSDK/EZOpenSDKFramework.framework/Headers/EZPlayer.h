@@ -159,6 +159,16 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 + (instancetype)createPlayerWithUrl:(NSString *)url;
 
+/**
+ *  门口机专用构建EZPlayer接口（for 4500）
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     虚拟通道号
+ *  @param streamType   码流类型：1-主码流，2-子码流
+ *
+ *  @return EZPlayer对象
+ */
++ (instancetype)createPlayerWithDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
 
 /**
  * 局域网设备创建播放器接口

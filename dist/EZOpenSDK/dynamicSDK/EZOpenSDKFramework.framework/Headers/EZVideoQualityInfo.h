@@ -14,7 +14,7 @@
 /// 清晰度名称，如超清、高清、均衡、流畅等
 @property (nonatomic,copy) NSString *videoQualityName;
 
-/// 视频质量，0-流畅，1-均衡，2-高清，3-超清，4-极清，5-3K，6-4K
+/// 视频质量，0-流畅，1-均衡，2-高清，3-超清
 @property (nonatomic,assign) NSInteger videoLevel;
 
 /// 该清晰度所使用的码流类型，1为主码流，2为子码流

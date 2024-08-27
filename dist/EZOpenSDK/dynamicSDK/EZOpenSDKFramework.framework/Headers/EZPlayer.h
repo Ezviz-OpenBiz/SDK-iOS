@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EZConstants.h"
 
 @class EZDeviceRecordFile;
 @class EZCloudRecordFile;
@@ -137,8 +136,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 /// 是否让播放器处理进入后台,YES:自动处理;NO:不处理,默认为YES
 @property (nonatomic, assign) BOOL backgroundModeByPlayer;
 
-#pragma mark - 播放器创建
-
 /**
  *  根据设备序列号和通道号创建EZPlayer对象
  *
@@ -159,29 +156,19 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 + (instancetype)createPlayerWithUrl:(NSString *)url;
 
-/**
- *  门口机专用构建EZPlayer接口（for 4500）
- *
- *  @param deviceSerial 设备序列号
- *  @param cameraNo     虚拟通道号
- *  @param streamType   码流类型：1-主码流，2-子码流
- *
- *  @return EZPlayer对象
- */
-+ (instancetype)createPlayerWithDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
 
 /**
- * 局域网设备创建播放器接口
- *
- * @param userId 用户id，登录局域网设备后获取
- * @param cameraNo 通道号
- * @param streamType 码流类型 1:主码流 2:子码流
- *
- * @return EZPlayer对象
+ 局域网设备创建播放器接口
+
+ @param userId 用户id，登录局域网设备后获取
+ @param cameraNo 通道号
+ @param streamType 码流类型 1:主码流 2:子码流
+ @return EZPlayer对象
  */
 + (instancetype)createPlayerWithUserId:(NSInteger)userId cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
 
 /**
+ *  @since 4.19.2
  *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
  *
  *  @param deviceSerial 设备序列号
@@ -200,13 +187,39 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)destoryPlayer;
 
 /**
+ *  设置使用硬件解码器优先，需在startRealPlay之前调用
+ *
+ *  @param HDPriority 是否硬解优先
+ */
+- (void)setHDPriority:(BOOL)HDPriority;
+
+/**
+ 获取当前的软硬解情况，在码流正常播放后调用
+ 
+ @return 1：软解 2：硬解 0：出错
+ */
+- (int)getHDPriorityStatus;
+
+/**
+ *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
+ *
+ *  @param bizType 类型       国标为 bizType='GB28181'
+ */
+- (void)setBizType:(NSString *)bizType;
+
+/**
+ *  平台id 国标设备使用
+ *
+ *  @param platformId 类型
+*/
+-(void)setPlatformId:(NSString *)platformId;
+
+/**
  *  设置播放器的view
  *
  *  @param playerView 播放器view
  */
 - (void)setPlayerView:(UIView *)playerView;
-
-#pragma mark - 预览
 
 /**
  *  是否静音播放，startRealPlay之前调用
@@ -251,42 +264,40 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)closeSound;
 
 /**
- * 预览时开始本地录像预录制功能，异步方法
- *
- * @param path 文件存储路径
- *
- * @return YES/NO
+ 获取播放组件内部的播放库的port
+ 
+ @return 播放库的port,可能为-1（无效值）
  */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
-
-/** 测试排查问题用，开发者勿使用，以后版本会删除 */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
+- (int)getInnerPlayerPort;
 
 /**
- * 结束本地录像预录制，并生成mp4录制文件，异步方法
- *
- * @param complete 操作是否成功 YES/NO
+ 获取当前已播放的总流量，单位字节
+ eg.计算每秒的流量：
+ NSInteger a = [self getStreamFlow];
+ //1s后调用
+ NSInteger b = [self getStreamFlow];
+ NSInteger perSecondFlow = b - a;
+ 
+ @return 流量值
  */
-- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
-
-#pragma mark - 对讲
+- (NSInteger)getStreamFlow;
 
 /**
- *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
+ *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
  *
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalk;
 
 /**
- *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
+ *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表播放成功
  *  针对于NVR对讲使用
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalkNeedVoiceChannel:(BOOL)needVoiceChannel;
 
 /**
- *  开始Qos对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
+ *  开始Qos对讲，异步接口，返回值只是表示操作成功，不代表播放成功
  *
  *  @return YES/NO
  */
@@ -300,12 +311,21 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopVoiceTalk;
 
 /**
- *  对讲变声，对讲成功后开启，需要设备开通变声服务后才生效（只支持国内，海外不支持）
- *
- *  @param voiceChangeType 变声类型
- *  @param complete 操作是否成功
+ 预览时开始本地录像预录制功能，异步方法
+ 
+ @param path 文件存储路径
+ @return YES/NO
  */
-- (void)startVoiceChange:(EZVoiceChangeType)voiceChangeType complete:(void (^)(BOOL ret, NSError *error))complete;
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
+
+
+/**
+ 结束本地录像预录制，并生成mp4录制文件，异步方法
+ 
+ @param complete 操作是否成功 YES/NO
+ */
+- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
+
 
 /**
  *  半双工对讲专用接口，是否切换到听说状态
@@ -315,22 +335,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  @return YES/NO
  */
 - (BOOL)audioTalkPressed:(BOOL)isPressed;
-
-/**
- * 设置全双工对讲时的模式,对讲成功后调用
- *
- * @param routeToSpeaker YES:使用扬声器 NO:使用听筒
- */
-- (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
-
-/**
- * 设置采集和播放的AGC放大的参数，在对讲发起前设置
- * @param maxGain 最大db数，范围[5,90]，萤石当前默认值15
- * @param gain 目标幅值，取值[0,30]，萤石当前默认值21
- */
-- (void)setAGCParam:(NSInteger)maxGain gainLevel:(NSInteger)gain;
-
-#pragma mark - 回放
 
 /**
  *  开始云存储远程回放，异步接口，返回值只是表示操作成功，不代表播放成功
@@ -348,15 +352,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  @return YES/NO
  */
 - (BOOL)startPlaybackFromDevice:(EZDeviceRecordFile *)deviceFile;
-
-/**
- *  开始远程SD卡AI回放，异步接口，返回值只是表示操作成功，不代表播放成功（专供华住私有云，其他不支持）
- *
- *  @param deviceFile SD卡文件信息
- *
- *  @return YES/NO
- */
-- (BOOL)startAIPlaybackFromDevice:(EZDeviceRecordFile *)deviceFile;
 
 /**
  *  暂停远程回放播放
@@ -388,7 +383,30 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopPlayback;
 
 /**
-sd卡及云存储倍速回放接口（不能在player:didReceivedMessage:方法中调用此方法，因为setPlaybackRate也会触发player:didReceivedMessage:方法，会陷入死循环导致回放卡顿）
+ *  直播画面抓图
+ *
+ *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
+ *
+ *  @return image
+ */
+- (UIImage *)capturePicture:(NSInteger)quality;
+
+/**
+ 获取内部播放器句柄。建议每次使用播放器句柄时均调用此方法获取，并进行有效性判断。
+
+ @return 小于0为无效值，大于等于0为有效值
+ */
+- (int)getPlayPort;
+
+/**
+ 获取当前取流方式：
+
+ @return 当前取流类型
+ */
+- (int)getStreamFetchType;
+
+/**
+sd卡及云存储倍速回放接口
 1.支持抽帧快放的设备最高支持16倍速快放（所有取流方式，包括P2P）
 2.不支持抽帧快放的设备，仅支持内外网直连快放，最高支持8倍
 3.HCNetSDK取流没有快放概念，全速推流，只改变播放库速率
@@ -404,83 +422,15 @@ sd卡及云存储倍速回放接口（不能在player:didReceivedMessage:方法�
  */
 - (BOOL)setPlaybackRate:(EZPlaybackRate) rate mode:(NSUInteger)mode;
 
-#pragma mark - 其他方法
-
 /**
- *  设置使用硬件解码器优先，需在startRealPlay之前调用
- *
- *  @param HDPriority 是否硬解优先
+ 设置全双工对讲时的模式,对讲成功后调用
+ 
+ @param routeToSpeaker YES:使用扬声器 NO:使用听筒
  */
-- (void)setHDPriority:(BOOL)HDPriority;
+- (void)changeTalkingRouteMode:(BOOL)routeToSpeaker;
 
-/**
- * 获取当前的软硬解情况，在码流正常播放后调用
- *
- * @return 1：软解 2：硬解 0：出错
- */
-- (int)getHDPriorityStatus;
-
-/**
- *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
- *
- *  @param bizType 类型       国标为 bizType='GB28181'
- */
-- (void)setBizType:(NSString *)bizType;
-
-/**
- *  平台id 国标设备使用
- *
- *  @param platformId 类型
-*/
-- (void)setPlatformId:(NSString *)platformId;
-
-/**
- * 获取播放组件内部的播放库的port
- *
- * @return 播放库的port,可能为-1（无效值）
- */
-- (int)getInnerPlayerPort;
-
-/**
- * 获取内部播放器句柄。建议每次使用播放器句柄时均调用此方法获取，并进行有效性判断。
- *
- * @return 小于0为无效值，大于等于0为有效值
- */
-- (int)getPlayPort;
-
-/**
- *  直播画面抓图
- *
- *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
- *
- *  @return image
- */
-- (UIImage *)capturePicture:(NSInteger)quality;
-
-/**
- * 获取当前取流方式：
- *
- * @return 当前取流类型
- */
-- (int)getStreamFetchType;
-
-/**
- * 获取当前已播放的总流量，单位字节
- eg.计算每秒的流量：
- NSInteger a = [self getStreamFlow];
- //1s后调用
- NSInteger b = [self getStreamFlow];
- NSInteger perSecondFlow = b - a;
- *
- * @return 流量值
- */
-- (NSInteger)getStreamFlow;
-
-/**
- * 扩展参数 UIKit专用
- *
- * @param exParamInfo EZPlayerExParamInfo
- */
+/// //扩展参数 UIKit专用
+/// @param exParamInfo EZPlayerExParamInfo
 - (void)setExParamInfo:(EZPlayerExParamInfo *)exParamInfo;
 
 /**
@@ -491,58 +441,6 @@ sd卡及云存储倍速回放接口（不能在player:didReceivedMessage:方法�
  * @return 返回状态
  */
 - (BOOL)setIntelAnalysis:(BOOL)enable;
-
-/**
- * 全局p2p开启的情况下，该播放器禁用p2p取流。startRealPlay之前调用
- */
-- (void)setPlayerDisableP2P;
-
-/**
- * 设置客户Saas服务器的token，取流用
- *
- * @param saasToken  客户Saas服务器的token
- */
-- (void)setStreamSaasToken:(NSString *)saasToken;
-
-#pragma mark - 鱼眼矫正模式
-
-/**
- * 设置鱼眼播放视图
- */
-- (void)setFecPlayViews:(NSArray<UIView *> *)fecPlayViews;
-
-/**
- * 打开鱼眼矫正
- *
- * @param fecCorrectType 矫正模式
- * @param fecPlaceType     安装模式
- */
-- (void)openFecCorrect:(EZFecCorrectType)fecCorrectType fecPlaceType:(EZFecPlaceType)fecPlaceType;
-
-/**
- * 鱼眼设备 - 移动手势操作
- *
- * @param state 手势状态
- * @param point 坐标
- * @param gestureRecognizer 手势
- */
-- (void)panGestureWith:(UIGestureRecognizerState)state point:(CGPoint)point gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer;
-
-/**
- * 鱼眼设备 - 缩放手势操作
- * 
- * @param state 手势状态
- * @param zoomAccuracy 缩放精度
- * @param gestureRecognizer 手势
- */
-- (void)pinGestureWith:(UIGestureRecognizerState)state zoom:(float)zoomAccuracy gestureRecognizer:(UIPinchGestureRecognizer *)gestureRecognizer;
-
-/**
- * 鱼眼设备 - 点击手势操作
- *
- * @param gestureRecognizer 手势
- */
-- (BOOL)tapGestureWith:(UITapGestureRecognizer *)gestureRecognizer;
 
 @end
 

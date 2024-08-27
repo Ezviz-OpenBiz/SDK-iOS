@@ -166,11 +166,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 是否开启辅流，辅流分辨率更低、码率更小
 /// @param enable 是否开启
-- (void)enableLocalSmallVideo:(BOOL)enable;
+- (NSInteger)enableLocalSmallVideo:(BOOL)enable;
 
 /// 本地麦克风开启/关闭接口
 /// @param enable 是否开启麦克风
-- (void)enableLocalAudio:(BOOL)enable;
+/// @param block 主线程回调结果
+- (void)enableLocalAudio:(BOOL)enable withResultBlock:(EZAudioOpenResultBlock)block;
 
 /// 开启屏幕共享
 /// @param name 共享名称
@@ -187,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 设置远程窗口，1.必须在拿到远端客户端加入的消息后设置，2.必须在主线程调用
 /// @param window 播放窗口
-/// @param userID 用户自定义ID
+/// @param clientID 加入的客户端的ID
 /// @param streamType 1视频 2音频 4小流
 - (int32_t)setRemoteView:(nullable UIView *)window ofUser:(NSString *)userID withStream:(NSInteger)streamType;
 

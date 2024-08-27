@@ -30,7 +30,6 @@
 #import <EZOpenSDKFramework/EZRecordDownloader.h>
 #import <EZOpenSDKFramework/EZRecordDownloadTask.h>
 #import <EZOpenSDKFramework/EZStorageInfo.h>
-#import <EZOpenSDKFramework/EZSubDeviceInfo.h>
 #import <EZOpenSDKFramework/EZTokenKit.h>
 #import <EZOpenSDKFramework/EZUserInfo.h>
 #import <EZOpenSDKFramework/EZVideoQualityInfo.h>

@@ -14,19 +14,14 @@
 
 //如果编码的目标宽高为0，则编码输出为输入的原始宽高
 @property (nonatomic, assign) NSInteger pixelWidth;
-@property (nonatomic, assign) NSInteger pixelHeight;
-//可选参数，帧率
+@property (nonatomic, assign) NSInteger pixelHeigth;
 @property (nonatomic, assign) NSInteger fps;
-//必填参数，码率，单位 bps
 @property (nonatomic, assign) NSInteger averageBPS;
-//只读参数
 @property (nonatomic, assign, readonly) NSInteger maxBPS;
-//可选参数，I帧间隔，单位秒
-@property (nonatomic, assign) NSInteger encodeKeyFrameInterval;
+@property (nonatomic, assign) NSInteger encodeKeyFrameInterval;//I帧间隔，单位秒
 
 //+ (EZRTCVideoEncodeParam *)encodeParamFromVideoParam:(EZRTCCameraParam *)videoParam;
 + (EZRTCVideoEncodeParam *)defaultEncodeParam;
-+ (EZRTCVideoEncodeParam *)defaultSmallEncParam;
 + (EZRTCVideoEncodeParam *)deviceWatchParam;
 + (EZRTCVideoEncodeParam *)deviceBabyRobotParam;
 + (EZRTCVideoEncodeParam *)encodeParamForScreenShare;

@@ -31,8 +31,6 @@
 @property (nonatomic) NSInteger supportAP;
 /// 是否支持声波配置,0-不支持，1-支持
 @property (nonatomic) NSInteger supportSoundWave;
-/// 是否支持EZlink配网,0-不支持，1-支持
-@property (nonatomic) NSInteger supportAPLink;
 /// 是否支持云存储，0-不支持，1-支持
 @property (nonatomic) NSInteger supportCloud;
 /// 设备协议版本
@@ -45,7 +43,5 @@
 @property (nonatomic) NSInteger relatedDeviceCount;
 /// 能力集
 @property (nonatomic, copy) NSString *supportExt;
-
-@property (nonatomic, readonly) NSDictionary *abilitiesExt; //设备能力集扩展
 
 @end

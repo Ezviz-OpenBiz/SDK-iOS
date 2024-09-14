@@ -75,7 +75,7 @@ typedef enum : NSUInteger {
                                 failed:(void(^)(NSError *error))failed;
 
 /**
- 设置下载进度回调
+ 设置下载进度回调（云存储录像下载支持，SD卡录像不支持）
  
  @param downloading 下载文件大小回调
  */

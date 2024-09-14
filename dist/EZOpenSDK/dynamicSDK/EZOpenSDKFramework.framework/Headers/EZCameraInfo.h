@@ -32,4 +32,8 @@
 @property (nonatomic) BOOL isEncrypt;
 /// 设备状态，1-在线，2-不在线
 @property (nonatomic) NSInteger status;
+
+/** 是否是视频类设备 */
+- (BOOL)isCamera;
+
 @end

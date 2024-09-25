@@ -21,7 +21,7 @@
 @property (nonatomic) NSInteger isShared;
 /// 通道封面
 @property (nonatomic, copy) NSString *cameraCover;
-/// 视频质量，0-流畅，1-均衡，2-高清，3-超清
+/// 视频质量，0-流畅，1-均衡，2-高清，3-超清，4-极清，5-3K，6-4K
 @property (nonatomic) NSInteger videoLevel;
 //权限
 @property (nonatomic) NSInteger permission;

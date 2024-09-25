@@ -629,7 +629,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
- *  @param videoLevel   通道清晰度，0-流畅，1-均衡，2-高清，3-超清
+ *  @param videoLevel   通道清晰度，0-流畅，1-均衡，2-高清，3-超清，4-极清，5-3K，6-4K
  *  @param completion   回调block，无error表示设置成功
  *  @see 如果是正在播放时调用该接口，设置清晰度成功以后必须让EZPlayer调用stopRealPlay再调用startRealPlay重新取流才成完成画面清晰度的切换。
  *

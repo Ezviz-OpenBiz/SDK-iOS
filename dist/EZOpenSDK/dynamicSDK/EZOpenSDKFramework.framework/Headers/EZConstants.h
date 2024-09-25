@@ -200,7 +200,10 @@ typedef NS_ENUM(NSInteger, EZVideoLevelType) {
     EZVideoLevelLow       = 0,  //流畅
     EZVideoLevelMiddle    = 1,  //均衡
     EZVideoLevelHigh      = 2,  //高清
-    EZVideoLevelSuperHigh = 3   //超清
+    EZVideoLevelSuperHigh = 3,  //超清
+    EZVideoLevelExtremeHigh = 4,//极清
+    EZVideoLevel3K = 5,         //3K
+    EZVideoLevel4K = 6          //4K
 };
 
 /* 录像类型 */

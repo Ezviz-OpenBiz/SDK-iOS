@@ -266,6 +266,10 @@ typedef NS_ENUM(NSInteger, EZVoiceChangeType) {
     EZVoiceChangeTypeClown = 7   // 小丑音
 };
 
+/* 权限类型 */
+static NSString * const EZPermisionTypeReal = @"Real";
+static NSString * const EZPermisionTypeReplay = @"Replay";
+
 /// 开放平台常量类
 @interface EZConstants : NSObject
 

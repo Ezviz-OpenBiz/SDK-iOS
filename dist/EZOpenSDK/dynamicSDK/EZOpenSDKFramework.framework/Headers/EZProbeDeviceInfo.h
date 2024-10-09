@@ -29,6 +29,8 @@
 @property (nonatomic) NSInteger supportWifi;
 /// 是否支持AP配网，2-支持AP，其他值为不支持AP配网
 @property (nonatomic) NSInteger supportAP;
+/// AP配网协议类型，1-HTTP 2-NETSDK
+@property (nonatomic) NSInteger supportAPType;
 /// 是否支持声波配置,0-不支持，1-支持
 @property (nonatomic) NSInteger supportSoundWave;
 /// 是否支持EZlink配网,0-不支持，1-支持

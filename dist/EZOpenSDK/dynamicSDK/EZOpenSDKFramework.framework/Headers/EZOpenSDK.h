@@ -654,7 +654,7 @@ NS_ASSUME_NONNULL_BEGIN
                           completion:(void (^)(NSError * __nullable error))completion;
 
 /**
- *  刷新设备详细缓存信息（修改验证码后调用）
+ *  刷新设备详细缓存信息（修改验证码后调用 或 取流前调用，减少出画面耗时）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号

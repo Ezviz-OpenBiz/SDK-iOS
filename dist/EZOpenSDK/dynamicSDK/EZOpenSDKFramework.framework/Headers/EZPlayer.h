@@ -208,6 +208,13 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 + (instancetype)createPlayerWithUserId:(NSInteger)userId cameraNo:(NSInteger)cameraNo streamType:(NSInteger)streamType;
 
 /**
+ * EZPlayer存在的时候，切换至其他设备进行取流，不需要重新创建
+ * @param deviceSerial 设备序列号
+ * @param cameraNo     虚拟通道号
+ */
+- (void)resetDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo;
+
+/**
  *  销毁EZPlayer
  *
  *  @return YES/NO;

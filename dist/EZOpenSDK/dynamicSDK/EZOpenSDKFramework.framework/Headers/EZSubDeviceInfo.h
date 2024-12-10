@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isSupportSDRecordDownload;
 /// 是否支持SD卡录像封面
 @property (nonatomic) BOOL isSupportSdCover;
+/// 是否支持多通道设备
+@property (nonatomic) BOOL isSupportMultiChannel;
 
 /**
  * 根据位数获取设备能力集

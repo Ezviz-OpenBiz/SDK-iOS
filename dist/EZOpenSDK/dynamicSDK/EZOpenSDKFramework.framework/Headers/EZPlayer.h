@@ -228,6 +228,14 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (void)setPlayerView:(UIView *)playerView;
 
+/**
+ *  设置播放器的view
+ *
+ *  @param playerView 播放器view
+ *  @param streamId 双目设备轨道
+ */
+- (void)setPlayerView:(UIView *)playerView streamId:(int)streamId;
+
 #pragma mark - 预览
 
 /**
@@ -481,7 +489,17 @@ sd卡及云存储倍速回放接口
 - (UIImage *)capturePicture:(NSInteger)quality;
 
 /**
- * 获取当前取流方式：
+ *  直播画面抓图
+ *
+ *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
+ *  @param streamId 双目设备轨道
+ *
+ *  @return image
+ */
+- (UIImage *)capturePicture:(NSInteger)quality streamId:(int)streamId;
+
+/**
+ * 获取当前取流方式（耗时操作，需要在子线程中执行）
  *
  * @return 当前取流类型
  */

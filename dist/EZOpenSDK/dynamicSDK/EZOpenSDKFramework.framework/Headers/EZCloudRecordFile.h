@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /// 此类为云存储录像文件对象
-@interface EZCloudRecordFile : NSObject<NSMutableCopying>
+@interface EZCloudRecordFile : NSObject
 
 /// 设备序列号
 @property (nonatomic, copy) NSString *deviceSerial;
@@ -29,12 +29,8 @@
 @property (nonatomic, copy) NSString *encryption;
 /// 文件大小
 @property (nonatomic, assign) NSUInteger fileSize;
-/// 云存储类别:1 单文件存储模式；2 连续存储模式；3 待定
-@property (nonatomic, assign) int32_t istorageVersion;
-/// 云存储录像类型，默认为0，表示不属于云存储录像
-@property (nonatomic, assign) int32_t videoType;
 
-/// 空间ID，SDK云录制 字段
-@property (nonatomic, assign) long spaceId;
+@property (nonatomic, assign) int32_t istorageVersion; //云存储类别:1 单文件存储模式；2 连续存储模式；3 待定
+@property (nonatomic, assign) int32_t videoType;//云存储录像类型，默认为0，表示不属于云存储录像
 
 @end

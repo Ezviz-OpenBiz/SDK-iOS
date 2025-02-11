@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return 单例
  */
-+ (instancetype)shareInstane;
++ (instancetype) shareInstane;
 
 /**
  添加下载任务，并开始下载
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param task 下载任务
  @return 是否加入队列成功  0 开始下载 -1 任务为空   -2 任务已在下载 
  */
-- (int)addDownloadTask:(EZRecordDownloadTask *)task;
+- (int) addDownloadTask:(EZRecordDownloadTask *)task;
 
 /**
  停止下载任务，并清除下载列表中的任务。下载结束或失败均要执行，清理资源
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param task 下载任务
  @return 是否移除队列成功
  */
-- (int)stopDownloadTask:(EZRecordDownloadTask *)task;
+- (int) stopDownloadTask:(EZRecordDownloadTask *)task;
 
 @end
 

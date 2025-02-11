@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /// 此类为设备录像文件信息（包含SD卡、后端关联设备的录像）
-@interface EZDeviceRecordFile : NSObject<NSMutableCopying>
+@interface EZDeviceRecordFile : NSObject
 
 /// 设备录像文件的开始时间
 @property (nonatomic, strong) NSDate *startTime;

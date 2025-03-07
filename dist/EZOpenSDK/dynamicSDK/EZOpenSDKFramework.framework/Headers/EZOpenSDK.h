@@ -670,6 +670,23 @@ NS_ASSUME_NONNULL_BEGIN
                              completion:(void (^)(NSError * __nullable error))completion;
 
 /**
+ *  设置设备通道的清晰度(非强制，两个及以上客户端同时在取流时无法设置，会返回失败)
+ *  录制过程中不能调用此接口，否则会导致录制视频异常
+ *
+ *  @param deviceSerial 设备序列号
+ *  @param cameraNo     通道号
+ *  @param videoLevel   通道清晰度，0-流畅，1-均衡，2-高清，3-超清，4-极清，5-3K，6-4K
+ *  @param completion   回调block，无error表示设置成功
+ *  @see 如果是正在播放时调用该接口，设置清晰度成功以后必须让EZPlayer调用stopRealPlay再调用startRealPlay重新取流才成完成画面清晰度的切换。
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)setVideoLevelAuto:(NSString *)deviceSerial
+                                   cameraNo:(NSInteger)cameraNo
+                                 videoLevel:(EZVideoLevelType)videoLevel
+                                 completion:(void (^)(NSError * __nullable error))completion;
+
+/**
  *  设备设置布防状态，兼容A1和IPC设备的布防
  *
  *  @param defence      布防状态, IPC布防状态只有0和1，A1有0:睡眠 8:在家 16:外出
@@ -813,7 +830,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSData *)decryptData:(NSData *)data verifyCode:(NSString *)verifyCode;
 
 /**
- *  告警图片解密方法，设备加密
+ *  告警图片解密方法，需指定设备加密 或 平台加密
  *
  *  @param data       需要解密的数据
  *  @param verifyCode 设备验证码

@@ -195,6 +195,13 @@ typedef NS_ENUM(NSInteger, EZDefenceStatus) {
     EZDefenceStatusOuter          = 16, //A1外出模式
 };
 
+/* 视频质量 */
+typedef NS_ENUM(NSInteger, EZVideoQualityType) {
+    EZVideoQualityTypeNone                = 0,  //默认值
+    EZVideoQualityTypePerformancePriority = 1,  //性能优先
+    EZVideoQualityTypeQualityPriority     = 2   //质量优先
+};
+
 /* 通道清晰度，请注意不是所有设备都有这些清晰度的，请根据实际场景使用 */
 typedef NS_ENUM(NSInteger, EZVideoLevelType) {
     EZVideoLevelLow       = 0,  //流畅

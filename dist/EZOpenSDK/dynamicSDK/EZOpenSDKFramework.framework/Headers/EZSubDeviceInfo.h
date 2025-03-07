@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isSupportSdCover;
 /// 是否支持多通道设备
 @property (nonatomic) BOOL isSupportMultiChannel;
+/// 是否支持自动清晰度
+@property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
 
 /**
  * 根据位数获取设备能力集

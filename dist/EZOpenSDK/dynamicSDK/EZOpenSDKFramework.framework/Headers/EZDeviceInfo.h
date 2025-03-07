@@ -61,6 +61,8 @@
 @property (nonatomic) BOOL isSupportSdCover;
 /// 是否支持多通道设备
 @property (nonatomic) BOOL isSupportMultiChannel;
+/// 是否支持自动清晰度
+@property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
 /// 设备大类
 @property (nonatomic, copy) NSString *category;
 /// 添加时间

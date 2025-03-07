@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, EZMessageCode) {
     PLAYER_NO_NETWORK = 22,           //播放器检测到无网络
     PLAYER_CLOUD_IFRAME_CHANGED = 23, //云存储快放时，由全帧快放切换到抽帧快放的提示回调
     PLAYER_PLAYSPEED_LOWER = 24,      //云存储快放时的降速通知(存在两次降速：当前倍速大于4倍速时，降到4倍速；当前为4倍速时，降为1倍速)
+    PLAYER_VIDEO_LEVEL_AUTO_IMPROVE = 25,//预览自动清晰度提升消息
+    PLAYER_VIDEO_LEVEL_AUTO_REDUCE = 26, //预览自动清晰度降低消息
 };
 
 
@@ -338,7 +340,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (void)startVoiceChange:(EZVoiceChangeType)voiceChangeType complete:(void (^)(BOOL ret, NSError *error))complete;
 
 /**
- *  半双工对讲专用接口，是否切换到听说状态
+ *  半双工对讲专用接口，是否切换到听说状态，startVoiceTalk对讲开启成功后才能调用
  *
  *  @param isPressed 是否只说状态
  *
@@ -425,7 +427,7 @@ sd卡及云存储倍速回放接口
 3.HCNetSDK取流没有快放概念，全速推流，只改变播放库速率
 4.注意区别：
    老SD卡回放以及HCNetSDK回放，设置完通过返回值返回成功还是失败，没有其他消息
-   新协议的云存储回放以及支持seek、continue的设备d新SD卡回放，设置完通过返回值返回成功还是失败，如果成功，
+   新协议的云存储回放以及支持seek、continue的设备的新SD卡回放，设置完通过返回值返回成功还是失败，如果成功，
    则后续还有一条EZVideoPlayerMessageStart异步消息表示成功再次取流
    返回其他错误码表示失败 (新协议云存储和新SD卡回放返回EZ_ERROR_NEED_RETRY 表示需要重试）
 
@@ -546,7 +548,22 @@ sd卡及云存储倍速回放接口
 - (void)setPlayerDisableP2P;
 
 /**
- * `EZOpenSDK.enableSDKWithTKToken`开启后，需要设置取流小权限token
+ * 是否开启自动清晰度网络检测开关；此api未调用时，不会回调以下消息 
+ * EZPlayer - EZMessageCode - PLAYER_VIDEO_LEVEL_AUTO_IMPROVE  网络好，会回调此消息，建议切换高一级清晰度
+ * EZPlayer - EZMessageCode - PLAYER_VIDEO_LEVEL_AUTO_REDUCE    网络差，会回调此消息，建议切换低一级清晰度
+ */
+- (void)enableDeviceAutoVideoLevel;
+
+/**
+ * 设置性能优先或画质优先，startRealPlay之前调用，播放前会先设置清晰度再发起取流，会增加首帧画面耗时
+ * 因为涉及到清晰度切换，取流成功后必须设置下清晰度UI
+ *
+ * @param videoQuality  视频质量，指定性能优先或画质优先
+ */
+- (void)setVideoQuality:(EZVideoQualityType)videoQuality;
+
+/**
+ * `EZOpenSDK.enableSDKWithTKToken`开启后，需要设置取流小权限token，startRealPlay之前调用
  * 注意：IPC设备对讲使用的是0通道，对讲streamToken生成请使用0通道
  *
  * @param streamToken  取流小权限token

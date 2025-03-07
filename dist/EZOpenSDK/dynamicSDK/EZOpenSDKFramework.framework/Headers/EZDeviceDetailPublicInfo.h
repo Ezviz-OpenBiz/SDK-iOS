@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 通道支持的视频质量信息 EZVideoQualityInfo 对象数组
 @property (nonatomic, strong) NSArray *videoQualityInfos;
+/// 设备当前清晰度
+@property (nonatomic, assign) NSInteger videoLevel;
 
 
 /// 是否是设备拥有者 1:设备拥有者 -1:不是设备拥有者，需要鉴权

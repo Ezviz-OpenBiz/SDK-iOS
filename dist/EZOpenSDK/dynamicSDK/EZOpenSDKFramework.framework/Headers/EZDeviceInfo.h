@@ -63,6 +63,8 @@
 @property (nonatomic) BOOL isSupportMultiChannel;
 /// 是否支持自动清晰度
 @property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
+/// 是否支持视频会议
+@property (nonatomic) BOOL isSupportVideoMeeting;
 /// 设备大类
 @property (nonatomic, copy) NSString *category;
 /// 添加时间

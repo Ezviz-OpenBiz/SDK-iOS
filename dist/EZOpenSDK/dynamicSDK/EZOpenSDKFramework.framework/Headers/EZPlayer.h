@@ -570,6 +570,13 @@ sd卡及云存储倍速回放接口
  */
 - (void)setStreamToken:(NSString *)streamToken;
 
+/**
+ * 设置电子放大区域
+ * @param rect 电子放大区域
+ * @param streamId 双目设备轨道
+ */
+- (void)setDisplayRegionEx:(CGRect *)rect streamId:(int)streamId;
+
 #pragma mark - 鱼眼矫正模式
 
 /**

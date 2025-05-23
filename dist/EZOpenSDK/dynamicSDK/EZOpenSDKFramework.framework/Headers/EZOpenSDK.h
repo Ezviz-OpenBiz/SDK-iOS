@@ -161,8 +161,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  `EZOpenSDK - setHttpToken:` 设置非设备类小权限token（入参不含设备序列号、通道号的接口会使用httpToken）
  *  `EZOpenSDK - setDeviceTokenForDeviceSerial:deviceToken:` 设置设备类小权限token（入参含设备序列号、不包含通道号的接口会使用deviceToken）
  *  `EZOpenSDK - setDeviceTokenForDeviceSerial:cameraNo:deviceGlobalToken:deviceVideoToken:` 设置设备类通道级小权限token（入参包含设备序列号、通道号的接口会使用deviceGlobalToken 和 deviceVideoToken）
- *  `EZPlayer - setStreamToken:` 预览、对讲、回放设置取流小权限token
- *  `EZDeviceRecordDownloadTask - setStreamToken:`下载设置取流小权限token
+ *  `EZPlayer - setStreamToken:` 预览、对讲、SD卡录像回放设置取流小权限token；云存储录像回放使用的是ticket认证方式，SDK内部实现，无需设置小权限token
+ *  `EZDeviceRecordDownloadTask - setStreamToken:` SD卡录像下载设置取流小权限token
  *
  *  此开关打开后，以下接口不能使用
  *  `EZOpenSDK - setAccessToken:`
@@ -236,7 +236,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  一个页面存在多个视频使用最小的码流，没有子码流的话还是使用主码流
  *
  *  @param deviceSerial 设备序列号
- *  @param cameraNo     虚拟通道
+ *  @param cameraNo     通道号
  *  @param useSubStream   是否使用子码流
  *
  *  @return EZPlayer对象
@@ -265,6 +265,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)releasePlayer:(EZPlayer *)player;
 
 #pragma mark - 取流相关Api
+
+/**
+ *  设置是否支持内网直连取流，默认是支持的
+ *  内网直连取流可以降低转发取流的比例，当客户端和设备处于同一局域网下时，优先走内网直连
+ *
+ *  @param enable 内网直连是否开启
+ */
++ (void)enableDirectInner:(BOOL)enable;
 
 /**
  *  设置是否支持P2P取流，默认是不支持的
@@ -639,7 +647,7 @@ NS_ASSUME_NONNULL_BEGIN
                              completion:(void (^)(NSError * __nullable error))completion;
 
 /**
- *  获取抓取摄像头图片的url接口
+ *  获取抓取摄像头图片的url接口，需要设备支持，萤石设备一般都能支持此协议。(该功能和萤石云视频app首页刷新封面的功能一致)
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
@@ -931,6 +939,68 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSOperation *)getLeaveMessageData:(EZLeaveMessage *)message
                           completion:(void (^)(NSData *data, NSInteger resultCode))completion DEPRECATED_MSG_ATTRIBUTE("service has been paused and cannot be used");
+
+#pragma mark - VideoTalk视频通话相关Api
+
+/**
+ *  呼叫设备进入房间进行视频通话
+ *  @param appId                                  ERTC AppId，不是AppKey
+ *  @param ertcToken                         ERTC 资源token
+ *  @param roomId                                房间号
+ *  @param deviceSerial                  设备序列号
+ *  @param cameraNo                           通道号
+ *  @param account                             联系人
+ *  @param completion                       回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)inviteDeviceEnterMeeting:(NSString *)appId
+                                         ertcToken:(NSString *)ertcToken
+                                            roomId:(NSString *)roomId
+                                      deviceSerial:(NSString *)deviceSerial
+                                          cameraNo:(NSInteger)cameraNo
+                                           account:(NSString *)account
+                                        completion:(void (^)(NSError *error))completion;
+
+/**
+ *  取消呼叫设备进入房间进行视频通话
+ *  @param appId                                  ERTC AppId，不是AppKey
+ *  @param ertcToken                         ERTC 资源token
+ *  @param roomId                                房间号
+ *  @param deviceSerial                  设备序列号
+ *  @param cameraNo                           通道号
+ *  @param account                             联系人
+ *  @param completion                       回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)cancelInviteDeviceEnterMeeting:(NSString *)appId
+                                               ertcToken:(NSString *)ertcToken
+                                                  roomId:(NSString *)roomId
+                                            deviceSerial:(NSString *)deviceSerial
+                                                cameraNo:(NSInteger)cameraNo
+                                                 account:(NSString *)account
+                                              completion:(void (^)(NSError *error))completion;
+
+/**
+ *  拒绝接听设备的视频通话请求
+ *  @param appId                                  ERTC AppId，不是AppKey
+ *  @param ertcToken                         ERTC 资源token
+ *  @param roomId                                房间号
+ *  @param deviceSerial                  设备序列号
+ *  @param cameraNo                           通道号
+ *  @param account                             联系人
+ *  @param completion                       回调block
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)rejectVideoCallReqFromDevice:(NSString *)appId
+                                             ertcToken:(NSString *)ertcToken
+                                                roomId:(NSString *)roomId
+                                          deviceSerial:(NSString *)deviceSerial
+                                              cameraNo:(NSInteger)cameraNo
+                                               account:(NSString *)account
+                                            completion:(void (^)(NSError *error))completion;
 
 #pragma mark - WiFi配网相关Api
 

@@ -21,6 +21,7 @@
 @class EZHiddnsDeviceInfo;
 @class EZDeviceCloudServiceInfo;
 @class EZWiFiItemInfo, EZAPDevInfo, EZConfigTokenInfo;
+@class EZBandWidthAddressInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -891,30 +892,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)stopAPConfigWifi;
 
-#pragma mark - EZLink配网相关Api
-
-/**
- * EZLink配网接口
- *
- * @param ssid WiFi的ssid
- * @param password WiFi的密码
- * @param deviceSerial 设备序列号
- * @param verifyCode 设备验证码
- * @param statusBlock 结果回调，返回配网过程中的各种状态
- *
- * @return 成功或失败
- */
-+ (BOOL)startAPLinkConfigWifiWithSsid:(NSString *)ssid
-                             password:(NSString *)password
-                         deviceSerial:(NSString *)deviceSerial
-                           verifyCode:(NSString *)verifyCode
-                         deviceStatus:(void (^)(EZWifiConfigStatus status, NSString *deviceSerial))statusBlock;
-
-/**
- * 停止EZLink配网
- */
-+ (void)stopAPLinkConfigWifi;
-
 #pragma mark - 接触式配网 New AP Config
 
 /**
@@ -971,6 +948,23 @@ NS_ASSUME_NONNULL_BEGIN
  * @param devRouteDomain 设备网关地址
  */
 + (void)setDevRouteDomain:(NSString *)devRouteDomain;
+
+#pragma mark - 带宽检测
+
+/**
+ * 获取客户端/设备端带宽检测地址【仅支持海外，国内暂不支持】
+ * @param deviceSerial 设备序列号
+ * @param cameraNo 通道号
+ * @param bandWidthType 端上下行类型
+ * @param checkTime 最大带宽测试时长、取值区间【10s~30s】
+ * @param expireTime 过期时长，单位秒，最小30秒，最大720天，默认1天
+ */
+//+ (NSURLSessionDataTask *)getBandWidthAddress:(NSString *)deviceSerial
+//                                     cameraNo:(NSInteger)cameraNo
+//                                bandWidthType:(EZBandWidthType)bandWidthType
+//                                    checkTime:(NSInteger)checkTime
+//                                   expireTime:(NSInteger)expireTime
+//                                   completion:(void (^)(EZBandWidthAddressInfo *addressInfo, NSError *error))completion;
 
 #pragma mark - 用户相关Api
 

@@ -273,9 +273,21 @@ typedef NS_ENUM(NSInteger, EZVoiceChangeType) {
     EZVoiceChangeTypeClown = 7   // 小丑音
 };
 
-/* 权限类型 */
-static NSString * const EZPermisionTypeReal = @"Real";
-static NSString * const EZPermisionTypeReplay = @"Replay";
+// 客户端/设备端带宽检测类型
+typedef NS_ENUM(NSUInteger, EZBandWidthType) {
+    EZBandWidthTypeClientUpward = 1, // 客户端上行
+    EZBandWidthTypeClientDownward,   // 客户端下行
+    EZBandWidthTypeDeviceUpward,     // 设备端上行
+    EZBandWidthTypeDeviceDownward    // 设备端下行
+};
+
+// 播放画面旋转角度
+typedef NS_ENUM(NSUInteger, EZPlayerViewRotationAngle) {
+    EZPlayerViewRotationAngle0 = 0,     // 默认画面，未旋转
+    EZPlayerViewRotationAngle90 = 90,   // 旋转90°
+    EZPlayerViewRotationAngle180 = 180, // 旋转180°
+    EZPlayerViewRotationAngle270 = 270  // 旋转270°
+};
 
 /// 开放平台常量类
 @interface EZConstants : NSObject

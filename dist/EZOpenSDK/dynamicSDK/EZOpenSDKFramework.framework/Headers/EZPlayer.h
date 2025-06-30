@@ -129,6 +129,18 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (void)player:(EZPlayer *)player playPrivateTokenInfo:(EZPMPlayPrivateTokenInfo *)tokenInfo;
 
+/**
+ * 对讲时采集时的音频大小，必须调用`EZPlayer.setVoiceTalkLoudnessInterval`设置回调时间间隔后才会有回调
+ * 注意：回调的音量单位为分贝，均为负数。在数字音频处理中，音量通常以dBFS（分贝满刻度）为单位来表示。
+ * 0dBFS表示信号的最大可能幅度，即满量程刻度。由于有效的信号数值通常小于这个最大值，取对数后得到的值通常是负数。
+ * 建议：(-90, -40)音量显示1格，[-40, -35)音量显示2格，[-35, -30)音量显示3格，[-30, -20)音量显示4格，[-20, 0)音量显示5格
+ * 如需其他层级的音量显示效果，需开发者自行调试
+ *
+ * @param player 播放器对象
+ * @param loudness 音频大小 [-90 ，0]
+ */
+- (void)player:(EZPlayer *)player didReceivedVoiceTalkLoudness:(float)loudness;
+
 @end
 
 /// 此类为萤石播放器类
@@ -330,6 +342,15 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  @return YES/NO
  */
 - (BOOL)stopVoiceTalk;
+
+/**
+ * 设置对讲本地采集音量大小回调时间间隔；默认为0，响度不回调
+ * 在调用startVoiceTalk前生效
+ * 设置后会通过`-player:didReceivedVoiceTalkLoudness:`代理方法进行回调
+ *
+ * @param interval 回调时间间隔
+ */
+- (void)setVoiceTalkLoudnessInterval:(float)interval;
 
 /**
  *  对讲变声，对讲成功后开启，需要设备开通变声服务后才生效（只支持国内，海外不支持）
@@ -571,7 +592,15 @@ sd卡及云存储倍速回放接口
 - (void)setStreamToken:(NSString *)streamToken;
 
 /**
+ * 设置播放画面的旋转角度
+ *
+ * @param rotationAngle  旋转角度
+ */
+- (BOOL)setPlayerViewRotation:(EZPlayerViewRotationAngle)rotationAngle;
+
+/**
  * 设置电子放大区域
+ * 
  * @param rect 电子放大区域
  * @param streamId 双目设备轨道
  */

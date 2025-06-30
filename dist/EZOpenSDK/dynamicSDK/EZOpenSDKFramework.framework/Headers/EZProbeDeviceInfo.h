@@ -33,8 +33,6 @@
 @property (nonatomic) NSInteger supportAPType;
 /// 是否支持声波配置，0-不支持，1-支持
 @property (nonatomic) NSInteger supportSoundWave;
-/// 是否支持EZlink配网，0-不支持，1-支持
-@property (nonatomic) NSInteger supportAPLink;
 /// 设备热点前缀标识，0-EZVIZ，1-SoftAP，2-CAMGO
 @property (nonatomic) NSInteger deviceHotSpot;
 /// 是否支持云存储，0-不支持，1-支持

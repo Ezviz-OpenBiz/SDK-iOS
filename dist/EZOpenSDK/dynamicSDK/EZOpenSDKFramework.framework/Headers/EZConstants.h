@@ -148,8 +148,10 @@ typedef NS_OPTIONS(NSUInteger, EZPTZCommand) {
     EZPTZCommandRight           = 1 << 1, //向右旋转
     EZPTZCommandUp              = 1 << 2, //向上旋转
     EZPTZCommandDown            = 1 << 3, //向下旋转
-    EZPTZCommandZoomIn          = 1 << 4, //镜头拉进
+    EZPTZCommandZoomIn          = 1 << 4, //镜头拉近
     EZPTZCommandZoomOut         = 1 << 5, //镜头拉远
+    EZPTZCommandFocusNear       = 1 << 6, //焦距调近
+    EZPTZCommandFocusFar        = 1 << 7, //焦距调远
 };
 
 /*

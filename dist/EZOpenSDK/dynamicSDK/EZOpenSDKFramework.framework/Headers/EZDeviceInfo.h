@@ -45,6 +45,8 @@
 @property (nonatomic) BOOL isSupportPTZ;
 /// 是否支持放大
 @property (nonatomic) BOOL isSupportZoom;
+/// 是否支持云台焦距
+@property (nonatomic) BOOL isSupportPTZFocus;
 ///是否支持提示音开关
 @property (nonatomic) BOOL isSupportAudioOnOff;
 /// 是否支持中心镜像翻转

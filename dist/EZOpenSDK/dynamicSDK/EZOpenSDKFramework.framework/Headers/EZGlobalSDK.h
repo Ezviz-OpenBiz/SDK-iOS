@@ -68,6 +68,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)setDebugLogEnable:(BOOL)enable;
 
 /**
+ *  设置SDK中的XLog是否可用，需在初始化sdk之前调用
+ *
+ *  @param enable 是否可用，默认可用
+ *
+ *  @return YES/NO
+ */
++ (BOOL)setXLogEnable:(BOOL)enable;
+
+/**
  *  设置debug日志回调,需在初始化sdk之前调用
  *
  *  @param logCallback 日志回调

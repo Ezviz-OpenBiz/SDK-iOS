@@ -246,7 +246,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  *  设置播放器的view
  *
  *  @param playerView 播放器view
- *  @param streamId 双目设备轨道
+ *  @param streamId 双目设备轨道 0：广角镜头画面轨道 1：云台镜头画面轨道
  */
 - (void)setPlayerView:(UIView *)playerView streamId:(int)streamId;
 
@@ -296,6 +296,9 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 
 /**
  * 预览时开始本地录像预录制功能，异步方法
+ * 注意：如本地录制5秒，网络正常、设备码流正常等理想情况下，生成的mp4文件时长大致5秒左右。以下几种情况生成的mp4文件时间会有出入
+ * 1、网络异常，画面卡住了，此时就无法对码流进行录制了。应用层计时器一直在走，但是码流没有在录制。
+ * 2、设备码流本身异常，存在问题，比如帧丢失、跳帧等情况，无法保证录制的mp4视频时长与录制时长是匹配的。
  *
  * @param path 文件存储路径
  *
@@ -462,6 +465,7 @@ sd卡及云存储倍速回放接口
 
 /**
  *  设置使用硬件解码器优先，需在startRealPlay之前调用；默认软解
+ *  建议开启，提升解密效率。设备出流分辨率越高，硬解速度越快。
  *
  *  @param HDPriority 是否硬解优先
  */
@@ -514,8 +518,8 @@ sd卡及云存储倍速回放接口
 /**
  *  直播画面抓图
  *
- *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
- *  @param streamId 双目设备轨道
+ *  @param quality 无效入参，传100即可
+ *  @param streamId 双目设备轨道，0：广角镜头画面轨道 1：云台镜头画面轨道
  *
  *  @return image
  */
@@ -592,17 +596,19 @@ sd卡及云存储倍速回放接口
 - (void)setStreamToken:(NSString *)streamToken;
 
 /**
- * 设置播放画面的旋转角度
+ * 设置播放画面的旋转角度（只支持单目设备，不支持多目设备）
  *
  * @param rotationAngle  旋转角度
  */
 - (BOOL)setPlayerViewRotation:(EZPlayerViewRotationAngle)rotationAngle;
 
+- (void)setDemuxModel:(NSUInteger)demuxModel;
+
 /**
  * 设置电子放大区域
  * 
  * @param rect 电子放大区域
- * @param streamId 双目设备轨道
+ * @param streamId 双目设备轨道 0：广角镜头画面轨道 1：云台镜头画面轨道
  */
 - (void)setDisplayRegionEx:(CGRect *)rect streamId:(int)streamId;
 

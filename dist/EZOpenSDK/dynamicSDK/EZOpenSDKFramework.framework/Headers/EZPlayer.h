@@ -596,7 +596,7 @@ sd卡及云存储倍速回放接口
 - (void)setStreamToken:(NSString *)streamToken;
 
 /**
- * 设置播放画面的旋转角度（只支持单目设备，不支持多目设备）
+ * 设置播放画面的旋转角度，旋转90°、270°时需调整播放器的尺寸（只支持单目设备，不支持多目设备）
  *
  * @param rotationAngle  旋转角度
  */

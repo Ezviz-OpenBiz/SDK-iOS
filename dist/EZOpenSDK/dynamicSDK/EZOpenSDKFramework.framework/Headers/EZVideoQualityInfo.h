@@ -20,6 +20,4 @@
 /// 该清晰度所使用的码流类型，1为主码流，2为子码流
 @property (nonatomic,assign) NSInteger streamType;
 
-+ (instancetype)initWithVideoQualityName:(NSString *)videoQualityName videoLevel:(NSInteger)videoLevel;
-
 @end

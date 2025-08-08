@@ -16,7 +16,6 @@
 #import <EZOpenSDKFramework/EZCloudRecordFile.h>
 #import <EZOpenSDKFramework/EZDetectorInfo.h>
 #import <EZOpenSDKFramework/EZDeviceCloudServiceInfo.h>
-#import <EZOpenSDKFramework/EZDeviceDetailPublicInfo.h>
 #import <EZOpenSDKFramework/EZDeviceInfo.h>
 #import <EZOpenSDKFramework/EZDevicePtzAngleInfo.h>
 #import <EZOpenSDKFramework/EZDeviceRecordDownloadTask.h>
@@ -28,17 +27,15 @@
 #import <EZOpenSDKFramework/EZLeaveMessage.h>
 #import <EZOpenSDKFramework/EZPlayerExParamInfo.h>
 #import <EZOpenSDKFramework/EZProbeDeviceInfo.h>
-#import <EZOpenSDKFramework/EZRecordCoverFetcherManager.h>
 #import <EZOpenSDKFramework/EZRecordDownloader.h>
 #import <EZOpenSDKFramework/EZRecordDownloadTask.h>
 #import <EZOpenSDKFramework/EZStorageInfo.h>
-#import <EZOpenSDKFramework/EZSubDeviceInfo.h>
 #import <EZOpenSDKFramework/EZTokenKit.h>
 #import <EZOpenSDKFramework/EZUserInfo.h>
 #import <EZOpenSDKFramework/EZVideoQualityInfo.h>
 #import <EZOpenSDKFramework/EZVideoTransformer.h>
 #import <EZOpenSDKFramework/EzvizRecordFileInfo.h>
-#import <EZOpenSDKFramework/EZBandWidthAddressInfo.h>
+#import <EZOpenSDKFramework/EzvizWatchServerInfo.h>
 
 #import <EZOpenSDKFramework/EZSADPDeviceInfo.h>
 #import <EZOpenSDKFramework/EZAPDevInfo.h>

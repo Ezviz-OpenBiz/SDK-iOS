@@ -21,8 +21,6 @@
 @property (nonatomic) NSInteger detectorNum;
 /// 设备关联的探测器信息
 @property (nonatomic, strong) NSArray *detectorInfo;
-/// 设备关联的子设备信息
-@property (nonatomic, strong) NSArray *subDeviceInfo;
 /// 设备图片
 @property (nonatomic, copy) NSString *deviceCover;
 /// 设备名称
@@ -33,7 +31,7 @@
 @property (nonatomic, copy) NSString *deviceType;
 /// 设备版本号
 @property (nonatomic, copy) NSString *deviceVersion;
-/// 设备协议版本号类型  0:非国标 5:国标级联 6:国标
+/// 设备协议版本号类型  0:非国标 6:国标
 @property (nonatomic) NSInteger devProtoEnum;
 /// 设备是否开启加密
 @property (nonatomic) BOOL isEncrypt;
@@ -45,8 +43,6 @@
 @property (nonatomic) BOOL isSupportPTZ;
 /// 是否支持放大
 @property (nonatomic) BOOL isSupportZoom;
-/// 是否支持云台焦距
-@property (nonatomic) BOOL isSupportPTZFocus;
 ///是否支持提示音开关
 @property (nonatomic) BOOL isSupportAudioOnOff;
 /// 是否支持中心镜像翻转
@@ -55,29 +51,11 @@
 @property (nonatomic) BOOL isSupportSoundWave;
 /// 是否支持倍数回放
 @property (nonatomic) BOOL isSupportPlaybackRate;
-/// 内网直连下是否支持倍数回放
-@property (nonatomic) BOOL isSupportDirectInnerRelaySpeed;
 /// 是否支持SD卡录像下载
 @property (nonatomic) BOOL isSupportSDRecordDownload;
-/// 是否支持SD卡录像封面
-@property (nonatomic) BOOL isSupportSdCover;
-/// 是否支持多通道设备
-@property (nonatomic) BOOL isSupportMultiChannel;
-/// 是否支持自动清晰度
-@property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
-/// 是否支持视频会议
-@property (nonatomic) BOOL isSupportVideoMeeting;
 /// 设备大类
-@property (nonatomic, copy) NSString *category;
+@property (nonatomic,copy) NSString *category;
 /// 添加时间
-@property (nonatomic, strong) NSDate *addTime;
-
-/**
- * 根据位数获取设备能力集
- * @param index 位数，必须大于0
- *
- * @return 能力值
- */
-- (int)getSupportInt:(int)index;
+@property (nonatomic,strong) NSDate *addTime;
 
 @end

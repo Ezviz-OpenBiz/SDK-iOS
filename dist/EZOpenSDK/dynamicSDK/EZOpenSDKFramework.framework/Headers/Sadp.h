@@ -42,19 +42,13 @@
 #define SADP_DISK_LOCATE                    18  //坏盘定位
 #define SADP_EHOME_ENABLE                   19  //EHome使能
 #define SADP_SET_USER_MAILBOX               20  //设置用户邮箱
-#define SADP_GET_QR_CODES                   21  //获取邮箱重置密码二维码数据
+#define SADP_GET_QR_CODES                   21  //获取二维码数据
 #define SADP_GET_PASSWORD_RESET_TYPE        27  //获取重置密码方式参数
-#define SADP_SET_EZVIZ_USER_TOKEN           28  //配置萤石用户token
-#define SADP_GET_PHONE_QR_CODES             29  //获取手机扫码重置密码二维码数据
-#define SADP_GET_DEVICE_CODE_V31            30  //v3.1 获取设备码，对应结构体SADP_SAFE_CODE_V31
-#define SADP_GET_ENCRYPT_STRING_V31         31  //v3.1 获取加密串，对应结构体SADP_ENCRYPT_STRING_V31
-#define SADP_GET_GUID_V31                   32  //v3.1 获取GUID，对应结构体SADP_GUID_FILE_V31
-#define SADP_GET_QR_CODES_V31               33  //v3.1 获取二维码数据，对应结构体SADP_QR_CODES_V31
+
 
 
 #define SADP_MAX_VERIFICATION_CODE_LEN  12   //最大验证码长度
 #define MAX_PASS_LEN                    16   //设备最大密码长度
-#define MAX_PASS_LEN_V31                128  //设备最大密码长度
 #define MAX_QUESTION_LIST_LEN           32   //最多问题列表个数
 #define SADP_MAX_BIND_NUM               32   //最大绑定设备个数
 #define MAX_CPU_LEN                     32   //CPU长度
@@ -62,20 +56,15 @@
 #define MAX_USERNAME_LEN                32   //用户名最大长度
 #define SADP_MAX_SERIALNO_LEN           64   //最大设备序列号长度
 #define MAX_DEVICE_CODE                 128  //设备返回码长度，暂定最大128
-#define MAX_DEVICE_CODE_V31             512  //v3.1设备返回码长度
 #define MAX_MAILBOX_LEN                 128  //邮箱长度，暂定最大128
 #define MAX_GUID_LEN                    128  //GUID长度
-#define MAX_GUID_LEN_V31                512  //v3.1 GUID长度
 #define MAX_EXCHANGE_CODE               256  //交换码长度
 #define MAX_ENCRYPT_CODE                256  //设备返回码加密后长度
-#define MAX_ENCRYPT_CODE_V31            1024 //设备返回码加密后长度
 #define MAX_UNLOCK_CODE_KEY             256  //解禁密钥
 #define MAX_QR_CODES                    256  //二维码数据长度，暂定最大256
-#define MAX_QR_CODES_V31                1024 //v3.1 二维码数据长度
 #define MAX_ANSWER_LEN                  256  //最大答案长度
 #define MAX_UNLOCK_CODE_RANDOM_LEN      256  //解禁码随机串
 #define MAX_FILE_PATH_LEN               260  //文件最大路径长度
-#define MAX_TOKEN_LEN                   16   //萤石用户token最大长度
 
 
 
@@ -117,16 +106,7 @@
 #define SADP_EXTED_MAX_BIND_NUM         (SADP_ERROR_BASE+35)  // 超过最大绑定个数
 #define SADP_MAILBOX_NOT_EXIST          (SADP_ERROR_BASE+36)  // 邮箱不存在
 #define SADP_MAILBOX_NOT_SET            (SADP_ERROR_BASE+38)  // [add] <2019/01/08> by yangzheng 邮箱重置密码未设置邮箱
-#define SADP_INVALID_RESET_CODE         (SADP_ERROR_BASE+39)  // 重置密码  重置口令错误
-#define SADP_NO_PERMISSION              (SADP_ERROR_BASE+40)  // 没有权限： 1.Win&Linux下没有管理员权限操作网卡 2.Android IOS没有多播权限
-#define SADP_GET_EXCHANGE_CODE_ERROR    (SADP_ERROR_BASE+41)  // 获取加密用的交换码失败
-#define SADP_CREATE_RSA_KEY_ERROR       (SADP_ERROR_BASE+42)  // 生成RSA公私钥失败
-#define SADP_BASE64_ENCODE_ERROR        (SADP_ERROR_BASE+43)  // BASE64编码错误
-#define SADP_BASE64_DECODE_ERROR        (SADP_ERROR_BASE+44)  // BASE64解码错误
-#define SADP_AES_ENCRYPT_ERROR          (SADP_ERROR_BASE+45)  // AES加密失败
-#define SADP_PHONE_NOT_SET              (SADP_ERROR_BASE+46)  // 手机扫码重置密码未设置安全手机
-#define SADP_NOENOUGH_BUF               (SADP_ERROR_BASE+47)  // 缓冲区长度不足
-#define SADP_INVALID_SUBNET_IP          (SADP_ERROR_BASE+48)  // 无效的网段范围，起始ip大于终止ip或者超过4096个ip
+#define SADP_INVALID_RESET_CODE         (SADP_ERROR_BASE+39)    // 重置密码  重置口令错误
 
 
 //SADP设备过滤规则类型
@@ -246,13 +226,7 @@ typedef struct tagSADP_DEVICE_INFO_V40
     unsigned char   bySupportPasswordResetType; //是否支持获取密码重置方式参数  0-不支持 1-支持
     unsigned char   byEZVIZBindStatus; //设备萤石云绑定状态,0-未知,1-已绑定,2-未绑定
     char            szPhysicalAccessVerification[16]; //设备支持的物理接触式添加方式,1#AP配网传递,2#用户令牌（用户token）绑定,3#物理按键接触,4#扫码绑定（设备token）
-    unsigned short  wHttpsPort; // Https 端口
-    unsigned char   bySupportEzvizUserToken; //是否支持萤石用户token配置  0-不支持 1-支持
-    char            szDevDescEx[64];         //是对SADP_DEVICE_INFO结构体中的szDevDesc字段扩展
-    char            szSerialNOEx[128];        //是对SADP_DEVICE_INFO结构体中的szSerialNO字段扩展
-    char            szManufacturer[32];     //设备厂商信息
-    unsigned char   bySupportResetPwByPhoneNo; //是否支持手机扫码重置设备管理员密码  0-不支持 1-支持
-    unsigned char   byRes[183];
+    unsigned char   byRes[411];
 }SADP_DEVICE_INFO_V40, *LPSADP_DEVICE_INFO_V40;
 
 //待修改的设备网络参数
@@ -280,6 +254,17 @@ typedef struct tagSADP_DEV_RET_NET_PARAM
     unsigned char   byRes[126];
 }SADP_DEV_RET_NET_PARAM, *LPSADP_DEV_RET_NET_PARAM;
 
+// CMS参数
+typedef struct tagSADP_CMS_PARAM
+{
+    char            szPUID[32];         // 预分配的PUID
+    char            szPassword[16];     // 设置的登录密码
+    char            szCmsIPv4[16];      // CMS服务器IPv4地址
+    char            szCmsIPv6[128];     // CMS服务器IPv6地址
+    unsigned short  wCmsPort;           // CMS服务器监听端口
+    unsigned char   byRes[30];
+}SADP_CMS_PARAM, *LPSADP_CMS_PARAM;
+
 //设备安全码，对应配置命令SADP_GET_DEVICE_CODE，接口SADP_GetDeviceConfig
 typedef struct tagSADP_SAFE_CODE
 {
@@ -287,14 +272,6 @@ typedef struct tagSADP_SAFE_CODE
     char            szDeviceCode[MAX_DEVICE_CODE];
     unsigned char   byRes[128];
 }SADP_SAFE_CODE, *LPSADP_SAFE_CODE;
-
-//v3.1设备安全码，对应配置命令SADP_GET_DEVICE_CODE_V31，接口SADP_GetDeviceConfig
-typedef struct tagSADP_SAFE_CODE_V31
-{
-    unsigned int    dwCodeSize;
-    char            szDeviceCode[MAX_DEVICE_CODE_V31];
-    unsigned char   byRes[512];
-}SADP_SAFE_CODE_V31, *LPSADP_SAFE_CODE_V31;
 
 //设备二维码
 typedef struct tagSADP_QR_CODES
@@ -308,18 +285,6 @@ typedef struct tagSADP_QR_CODES
     unsigned char   byRes[128];
 }SADP_QR_CODES, *LPSADP_QR_CODES;
 
-//v3.1 设备二维码
-typedef struct tagSADP_QR_CODES_V31
-{
-    unsigned int    dwCodeSize;
-    unsigned int    dwMailBoxSize;
-    unsigned int    dwServiceMailBoxSize;
-    char            szQrCodes[MAX_QR_CODES_V31];
-    char            szMailBoxAddr[MAX_MAILBOX_LEN];         //要设置的邮箱地址
-    char            szServiceMailBoxAddr[MAX_MAILBOX_LEN];  //服务的邮箱地址
-    unsigned char   byRes[256];
-}SADP_QR_CODES_V31, *LPSADP_QR_CODES_V31;
-
 //加密串结构体，对应配置命令SADP_GET_ENCRYPT_STRING，接口SADP_GetDeviceConfig
 typedef struct tagSADP_ENCRYPT_STRING
 {
@@ -327,15 +292,6 @@ typedef struct tagSADP_ENCRYPT_STRING
     char            szEncryptString[MAX_ENCRYPT_CODE]; //加密串内容
     unsigned char   byRes[128];
 }SADP_ENCRYPT_STRING, *LPSADP_ENCRYPT_STRING;
-
-//加密串结构体，对应配置命令SADP_GET_ENCRYPT_STRING_V31，接口SADP_GetDeviceConfig
-typedef struct tagSADP_ENCRYPT_STRING_V31
-{
-    unsigned int    dwEncryptStringSize;               //加密串长度
-    char            szEncryptString[MAX_ENCRYPT_CODE_V31]; //加密串内容
-    unsigned char   byRes[512];
-}SADP_ENCRYPT_STRING_V31, *LPSADP_ENCRYPT_STRING_V31;
-
 //恢复/重置密码结构体
 typedef struct tagSADP_RESET_PARAM
 {
@@ -411,29 +367,16 @@ typedef struct tagSADP_SECURITY_QUESTION
 typedef struct tagSADP_RESET_PARAM_V40
 {
     unsigned int    dwSize;
-    unsigned char   byResetType;              //密码重置类型 0-保留,1- 通过设备序列号恢复默认密码(已弃用)，2-导入/导出文件重置密码，3-二维码重置，4-GUID，5-安全问题，6-邮箱，7手机扫码
+    unsigned char   byResetType;              //密码重置类型 0-保留,1- 通过设备序列号恢复默认密码，2-导入/导出文件重置密码，3-二维码重置， 4-GUID重置，5-安全问题重置 6-邮箱重置密码
     unsigned char   byEnableSyncIPCPW;        //是否同时将密码启用为NVR同步IPC密码。0 - 不启用， 1- 启用
     unsigned char   byRes2[2];                //保留
     char            szPassword[MAX_PASS_LEN]; //用户密码
-    char            szCode[MAX_ENCRYPT_CODE]; //日期转换过的特殊字符串或加密工具加密后的字符串 - byResetType 为2、3、6、7时有效
+    char            szCode[MAX_ENCRYPT_CODE]; //日期转换过的特殊字符串或加密工具加密后的字符串 - byResetType 为1、3时有效
     char            szAuthFile[MAX_FILE_PATH_LEN];//重置授权文件， byResetType 为2时有效
     char            szGUID[MAX_GUID_LEN];     //GUID, byResetType 为4时有效
     SADP_SECURITY_QUESTION_CFG struSecurityQuestionCfg;//安全问题结构体， byResetType 为5时有效
     unsigned char   byRes[512];
 }SADP_RESET_PARAM_V40, *LPSADP_RESET_PARAM_V40;
-
-typedef struct tagSADP_RESET_PARAM_V50
-{
-    unsigned int    dwSize;
-    char            szPassword[MAX_PASS_LEN_V31];       //用户密码
-    char            szCode[MAX_ENCRYPT_CODE_V31];       //重置口令，byResetType为2、3、6、7时有效
-    char            szAuthFile[MAX_FILE_PATH_LEN];      //重置授权文件， byResetType为2时有效
-    char            szGUID[MAX_GUID_LEN_V31];           //GUID, byResetType为4时有效
-    SADP_SECURITY_QUESTION_CFG struSecurityQuestionCfg; //安全问题结构体， byResetType为5时有效
-    unsigned char   byResetType;                        //密码重置类型 0-保留，1-通过设备序列号恢复默认密码(已弃用)，2-导入/导出文件重置密码，3-二维码重置，4-GUID，5-安全问题，6-邮箱，7手机扫码
-    unsigned char   byEnableSyncIPCPW;                  //是否同时将密码启用为NVR同步IPC密码。0-不启用，1-启用
-    unsigned char   byRes[510];
-}SADP_RESET_PARAM_V50, *LPSADP_RESET_PARAM_V50;
 
 typedef struct tagSADP_RET_RESET_PARAM_V40
 {
@@ -571,133 +514,42 @@ typedef struct tagSADP_PASSWORD_RESET_TYPE_PARAM
     unsigned char   byRes[64];
 }SADP_PASSWORD_RESET_TYPE_PARAM, *LPSADP_PASSWORD_RESET_TYPE_PARAM;
 
-//配置萤石用户token结构体
-typedef struct tagSADP_EZVIZ_USER_TOKEN_PARAM
-{
-    unsigned int    dwSize;
-    char            szToken[MAX_TOKEN_LEN]; //token，8-16字节
-    char            szPassword[MAX_PASS_LEN]; //password，8-16字节
-    unsigned char   byRes[256];
-}SADP_EZVIZ_USER_TOKEN_PARAM, *LPSADP_EZVIZ_USER_TOKEN_PARAM;
 
-//手机扫码重置密码二维码
-typedef struct tagSADP_PHONE_QR_CODES
-{
-    unsigned int    dwSize;
-    char            szDomainName[MAX_QR_CODES];
-    char            szDevModel[32];
-    char            szQrCodes[MAX_QR_CODES_V31];
-    unsigned char   byRes[128];
-}SADP_PHONE_QR_CODES, *LPSADP_PHONE_QR_CODES;
-
-//v3.1 GUID结构体
-typedef struct tagSADP_GUID_FILE_V31
-{
-    unsigned int    dwGUIDSize;
-    char            szGUID[MAX_GUID_LEN_V31];
-    SADP_DEV_LOCK_INFO struDevLockInfo; //设备锁定信息
-    unsigned char   byRes[256];
-}SADP_GUID_FILE_V31, *LPSADP_GUID_FILE_V31;
-
-//网段信息
-typedef struct tagSADP_SUBNET_INFO
-{
-    unsigned int    dwSize;
-    unsigned char   byIPType; //IP类型：0-IPv4 1-IPv6(暂不支持)
-    unsigned char   byRes1[3];
-    char            szStartSubnetIP[48];           //网段起始IP(IP字符串要以\0结束)
-    char            szStopSubnetIP[48];            //网段结束IP(IP字符串要以\0结束)
-    unsigned char   byRes[128];
-}SADP_SUBNET_INFO, *LPSADP_SUBNET_INFO;
-
-//设备信息
-typedef struct tagSADP_SUBNET_DEVICE_INFO
-{
-    unsigned int    dwDeviceType;          //设备类型，具体数值代表的设备型号
-    char            szDevDesc[64];         //设备类型描述 与dwDeviceType对应
-    char            szSerialNO[128];       //设备序列号
-    char            szIPv4Address[16];     //设备IPv4地址
-    char            szIPv4SubnetMask[16];  //设备IPv4子网掩码
-    char            szIPv4Gateway[16];     //IPv4网关
-    char            szIPv6Address[46];     //IPv6地址
-    char            szIPv6Gateway[46];     //IPv6网关
-    unsigned char   byIPv6MaskLen;         //IPv6子网前缀长度
-    unsigned char   bySupportIPv6;         //是否支持IPv6, 0 不支持 1 支持
-    unsigned char   bySupportModifyIPv6;   //是否支持修改IPv6, 0 不支持 1 支持
-    unsigned char   bySupportDhcp;         //是否支持Dhcp, 0 不支持 1 支持
-    unsigned char   byDhcpEnabled;         //Dhcp状态, 0 不启用 1 启用
-    unsigned char   byRes1[3];
-    unsigned char   byRes[1024];
-}SADP_SUBNET_DEVICE_INFO, *LPSADP_SUBNET_DEVICE_INFO;
-
-
-//-----------------------------------------------------------------接口-----------------------------------------------------------------
-
-//回调函数
+// 接口
 typedef void (CALLBACK *PDEVICE_FIND_CALLBACK)(const SADP_DEVICE_INFO *lpDeviceInfo, void *pUserData);
-typedef void (CALLBACK *PDEVICE_FIND_CALLBACK_V40)(const SADP_DEVICE_INFO_V40 *lpDeviceInfo, void *pUserData);
-typedef void (CALLBACK *PSUBNET_DEVICE_FIND_CALLBACK)(const SADP_SUBNET_DEVICE_INFO *lpDeviceInfo, void *pUserData); //跨网段设备信息回调
-
-//服务启动参数
-typedef struct tagSADP_START_PARAM
-{
-    PDEVICE_FIND_CALLBACK_V40 fnDevCB; //同网段设备回调函数（必填）
-    PSUBNET_DEVICE_FIND_CALLBACK fnSubnetDevCB; //跨网段设备回调函数（应用不实现跨网段搜索时可置NULL）
-    void* pUserData; //用户数据
-    unsigned char   byRes[1024];
-}SADP_START_PARAM, *LPSADP_START_PARAM;
-
-//启动sadp服务
 CSADP_API BOOL CALLBACK SADP_Start_V30(PDEVICE_FIND_CALLBACK pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
+typedef void (CALLBACK *PDEVICE_FIND_CALLBACK_V40)(const SADP_DEVICE_INFO_V40 *lpDeviceInfo, void *pUserData);
 CSADP_API BOOL CALLBACK SADP_Start_V40(PDEVICE_FIND_CALLBACK_V40 pDeviceFindCallBack, int bInstallNPF = 0, void* pUserData = NULL);
-CSADP_API BOOL CALLBACK SADP_Start_V50(const LPSADP_START_PARAM pStartParam);
-
-//停止sadp服务
+CSADP_API BOOL CALLBACK SADP_SendInquiry(void);
 CSADP_API BOOL CALLBACK SADP_Stop(void);
-
-//激活设备
-CSADP_API BOOL CALLBACK SADP_ActivateDevice(const char* sDevSerialNO, const char* sCommand);
-
-//修改网络参数 （优先使用SADP_ModifyDeviceNetParam_V40）
 CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam);
-CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam_V40(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam, SADP_DEV_RET_NET_PARAM *lpRetNetParam, unsigned int  dwOutBuffSize);
-
-//重置密码 （优先使用SADP_ResetPasswd_V50）
+CSADP_API unsigned int CALLBACK SADP_GetSadpVersion(void);
+CSADP_API BOOL CALLBACK SADP_SetLogToFile(int nLogLevel=0, char const *strLogDir = NULL, int bAutoDel = 1);		
+CSADP_API unsigned int CALLBACK SADP_GetLastError(void);
 CSADP_API BOOL CALLBACK SADP_ResetDefaultPasswd(const char* sDevSerialNO, const char* sCommand);
-CSADP_API BOOL CALLBACK SADP_ResetPasswd(const char* sDevSerialNO, const SADP_RESET_PARAM *pResetParam);
-CSADP_API BOOL CALLBACK SADP_ResetPasswd_V40(const char* sDevSerialNO, const SADP_RESET_PARAM_V40 *pResetParam, SADP_RET_RESET_PARAM_V40 *pRetResetParam);
-CSADP_API BOOL CALLBACK SADP_ResetPasswd_V50(const char* sDevSerialNO, const SADP_RESET_PARAM_V50 *pResetParam, SADP_DEV_LOCK_INFO *pLockInfo);
+CSADP_API BOOL CALLBACK SADP_SetCMSInfo(const char* sMac, const SADP_CMS_PARAM *lpCmsParam);
+CSADP_API BOOL CALLBACK SADP_Clearup(void);
+CSADP_API void CALLBACK SADP_SetAutoRequestInterval(unsigned int dwInterval); //设置自动搜索时间间隔(单位秒，为0则不自动请求，默认60s)
 
-//参数配置
 CSADP_API BOOL CALLBACK SADP_GetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
 CSADP_API BOOL CALLBACK SADP_SetDeviceConfig(const char* sDevSerialNO, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwInBuffSize, void* lpOutBuffer, unsigned int  dwOutBuffSize);
 CSADP_API BOOL CALLBACK SADP_GetDeviceConfigByMAC(const char* sDevMAC, unsigned int dwCommand, void* lpInBuffer, unsigned int  dwinBuffSize, void *lpOutBuffer, unsigned int  dwOutBuffSize);
+//激活设备
+CSADP_API BOOL CALLBACK SADP_ActivateDevice(const char* sDevSerialNO, const char* sCommand);
 
-//设置SDK内部自动搜索间隔
-CSADP_API void CALLBACK SADP_SetAutoRequestInterval(unsigned int dwInterval); //设置自动搜索时间间隔(单位秒，为0则不自动请求，默认60s)
+//重置密码接口，兼容之前的恢复默认密码接口
+CSADP_API BOOL CALLBACK SADP_ResetPasswd(const char* sDevSerialNO, const SADP_RESET_PARAM *pResetParam);
+//重置密码接口V40，兼容之前的SADP_ResetPasswd
+CSADP_API BOOL CALLBACK SADP_ResetPasswd_V40(const char* sDevSerialNO, const SADP_RESET_PARAM_V40 *pResetParam, SADP_RET_RESET_PARAM_V40 *pRetResetParam);
 
-//触发一次局域网搜索
-CSADP_API BOOL CALLBACK SADP_SendInquiry(void);
-//触发一次跨网段搜索
-CSADP_API BOOL CALLBACK SADP_InquirySpecificSubnet(const SADP_SUBNET_INFO *pSubnetInfo);
-
-//清理SDK内部设备缓存列表
-CSADP_API BOOL CALLBACK SADP_Clearup(void);
 
 //设置设备过滤规则
 //dwFilterRule,按位表示，为1表示过滤，全0表示不过滤;0x01:过滤萤石设备;0x02:过滤OEM设备;0x03:过滤萤和OEM设备;0xfffffffe:仅显示萤石设备;0xfffffffd:仅显示OEM设备
 CSADP_API BOOL CALLBACK SADP_SetDeviceFilterRule( unsigned int dwFilterRule, const void *lpInBuff, unsigned int dwInBuffLen);
-
-//获取SDK版本
-CSADP_API unsigned int CALLBACK SADP_GetSadpVersion(void);
-
-//开启SDK日志
-CSADP_API BOOL CALLBACK SADP_SetLogToFile(int nLogLevel=0, char const *strLogDir = NULL, int bAutoDel = 1);
-
-//获取错误码
-CSADP_API unsigned int CALLBACK SADP_GetLastError(void);
-
-
+//修改网络参数V40
+CSADP_API BOOL CALLBACK SADP_ModifyDeviceNetParam_V40(const char* sMAC, const char* sPassword, const SADP_DEV_NET_PARAM *lpNetParam, SADP_DEV_RET_NET_PARAM *lpRetNetParam, unsigned int  dwOutBuffSize);
+//点灯
+CSADP_API BOOL CALLBACK SADP_SendLamp(const char* sMAC, unsigned int dwCommand);
 #endif
 
 

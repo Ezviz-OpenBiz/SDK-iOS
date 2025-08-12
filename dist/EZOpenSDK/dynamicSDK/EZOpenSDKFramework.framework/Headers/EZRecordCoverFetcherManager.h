@@ -60,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * 跟设备请求SD卡录像封面（国内支持，海外不支持）
+ * 只支持主账号，不支持子账号和托管账号
  */
 - (void)requestRecordCover:(NSArray<EZDeviceRecordFile *> *)recordFiles;
 

@@ -43,7 +43,7 @@
 @property (nonatomic) BOOL isRead;
 /// 存储类型，0-无存储，1-萤石，2-百度，4-sd卡存储，5-萤石和sd卡，6-百度和sd卡
 @property (nonatomic) NSInteger recState;
-/// 告警录像结束时间时间延后偏移量，通过alarmStartTime加上延后偏移量获得告警录像的具体结束时间
+/// 告警录像结束时间延后偏移量，通过alarmStartTime加上延后偏移量获得告警录像的具体结束时间
 @property (nonatomic) NSInteger delayTime;
 /// 告警录像开始时间提前偏移量，通过alarmStartTime减去提前偏移量获得告警录像的具体开始时间
 @property (nonatomic) NSInteger preTime;

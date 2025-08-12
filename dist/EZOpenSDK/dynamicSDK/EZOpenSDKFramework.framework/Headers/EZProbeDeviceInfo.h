@@ -27,10 +27,16 @@
 @property (nonatomic, copy) NSString *defaultPicPath;
 /// 是否支持wifi，0-不支持，1-支持，2-支持带userId的新的wifi配置方式，3-支持smartwifi
 @property (nonatomic) NSInteger supportWifi;
+/// 是否支持5G无线频段
+@property (nonatomic) BOOL support5GWiFi;
 /// 是否支持AP配网，2-支持AP，其他值为不支持AP配网
 @property (nonatomic) NSInteger supportAP;
-/// 是否支持声波配置,0-不支持，1-支持
+/// AP配网协议类型，1-HTTP 2-NETSDK
+@property (nonatomic) NSInteger supportAPType;
+/// 是否支持声波配置，0-不支持，1-支持
 @property (nonatomic) NSInteger supportSoundWave;
+/// 设备热点前缀标识，0-EZVIZ，1-SoftAP，2-CAMGO
+@property (nonatomic) NSInteger deviceHotSpot;
 /// 是否支持云存储，0-不支持，1-支持
 @property (nonatomic) NSInteger supportCloud;
 /// 设备协议版本
@@ -43,5 +49,7 @@
 @property (nonatomic) NSInteger relatedDeviceCount;
 /// 能力集
 @property (nonatomic, copy) NSString *supportExt;
+
+@property (nonatomic, readonly) NSDictionary *abilitiesExt; //设备能力集扩展
 
 @end

@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, EZMessageCode) {
     PLAYER_PLAYSPEED_LOWER = 24,      //云存储快放时的降速通知(存在两次降速：当前倍速大于4倍速时，降到4倍速；当前为4倍速时，降为1倍速)
     PLAYER_VIDEO_LEVEL_AUTO_IMPROVE = 25,//预览自动清晰度提升消息
     PLAYER_VIDEO_LEVEL_AUTO_REDUCE = 26, //预览自动清晰度降低消息
+    PLAYER_PREPARED = 27,             //播放库已创建
 };
 
 
@@ -393,6 +394,19 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  * @param gain 目标幅值，取值[0,30]，萤石当前默认值21
  */
 - (void)setAGCParam:(NSInteger)maxGain gainLevel:(NSInteger)gain;
+
+/**
+ * 设置对讲呼叫id。设备端发起一键呼叫时，App端会通过长链接接到callingId，startVoiceTalk之前调用
+ * 具体链路如下：
+ * 1、设备端一键呼叫
+ * 2、设备端会生成一个callingId透传给萤石开放平台服务
+ * 3、萤石开放平台服务将callingId透传给客户后端服务
+ * 4、客户后端服务通过与客户App端的长链接，callingId将透传给App
+ * 5、客户App调用此api设置callingId后，再调用startVoiceTalk发起对讲
+ *
+ * @callingId 对讲呼叫id
+ */
+- (void)setVoiceTalkCallingId:(NSString *)callingId;
 
 #pragma mark - 回放
 

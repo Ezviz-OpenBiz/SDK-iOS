@@ -38,6 +38,7 @@
 #import <EZOpenSDKFramework/EZVideoQualityInfo.h>
 #import <EZOpenSDKFramework/EZVideoTransformer.h>
 #import <EZOpenSDKFramework/EzvizRecordFileInfo.h>
+#import <EZOpenSDKFramework/EZPlayWaterMarkConfig.h>
 #import <EZOpenSDKFramework/EZBandWidthAddressInfo.h>
 
 #import <EZOpenSDKFramework/EZSADPDeviceInfo.h>

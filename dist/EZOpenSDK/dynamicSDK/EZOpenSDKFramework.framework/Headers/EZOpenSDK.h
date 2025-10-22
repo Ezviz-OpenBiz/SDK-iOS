@@ -67,15 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)setDebugLogEnable:(BOOL)enable;
 
 /**
- *  设置SDK中的XLog是否可用，需在初始化sdk之前调用
- *
- *  @param enable 是否可用，默认可用
- *
- *  @return YES/NO
- */
-+ (BOOL)setXLogEnable:(BOOL)enable;
-
-/**
  *  设置debug日志回调，需在初始化sdk之前调用
  *
  *  @param logCallback 日志回调
@@ -1213,6 +1204,24 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion 回调block
  */
 + (void)uploadSDKCloudRecordImage:(NSData *)imageData completion:(void (^)(NSString *storageId, NSError *error))completion;
+
+#pragma mark - 海康互联专用Api
+
+/**
+ *  设置SDK中的XLog是否可用，需在初始化sdk之前调用
+ *
+ *  @param enable 是否可用，默认可用
+ *
+ *  @return YES/NO
+ */
++ (BOOL)setXLogEnable:(BOOL)enable;
+
+/**
+ *  设置研究院播放库日志级别，需在初始化sdk之前调用；默认为2:INFO
+ *
+ *  @param logLevel 日志级别  1:DEBUG  2:INFO：3:WARN：4:ERROR
+ */
++ (void)setPlayCtrlLogLevel:(int)logLevel;
 
 @end
 

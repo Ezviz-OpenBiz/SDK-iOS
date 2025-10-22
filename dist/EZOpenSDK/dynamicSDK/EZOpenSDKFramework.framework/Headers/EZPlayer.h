@@ -16,6 +16,7 @@
 @class EZDevicePtzAngleInfo;
 @class EZPMPlayPrivateTokenInfo;
 @class EZDeviceDetailPublicInfo;
+@class EZPlayWaterMarkConfig;
 
 /**
  *  预览清晰度
@@ -295,28 +296,6 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (BOOL)closeSound;
 
-/**
- * 预览时开始本地录像预录制功能，异步方法
- * 注意：如本地录制5秒，网络正常、设备码流正常等理想情况下，生成的mp4文件时长大致5秒左右。以下几种情况生成的mp4文件时间会有出入
- * 1、网络异常，画面卡住了，此时就无法对码流进行录制了。应用层计时器一直在走，但是码流没有在录制。
- * 2、设备码流本身异常，存在问题，比如帧丢失、跳帧等情况，无法保证录制的mp4视频时长与录制时长是匹配的。
- *
- * @param path 文件存储路径
- *
- * @return YES/NO
- */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
-
-/** 测试排查问题用，开发者勿使用，以后版本会删除 */
-- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
-
-/**
- * 结束本地录像预录制，并生成mp4录制文件，异步方法
- *
- * @param complete 操作是否成功 YES/NO
- */
-- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
-
 #pragma mark - 对讲
 
 /**
@@ -348,7 +327,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)stopVoiceTalk;
 
 /**
- * 设置对讲本地采集音量大小回调时间间隔；默认为0，响度不回调
+ * 设置对讲本地采集音量大小回调时间间隔；默认为0，响度不回调；单位：秒
  * 在调用startVoiceTalk前生效
  * 设置后会通过`-player:didReceivedVoiceTalkLoudness:`代理方法进行回调
  *
@@ -477,10 +456,76 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
    返回其他错误码表示失败 (新协议云存储和新SD卡回放返回EZ_ERROR_NEED_RETRY 表示需要重试）
 
 @param rate    回放速度，具体参考 EZ_PLAY_BACK_RATE
-@param mode 回放时的抽帧控制，当前仅云存储支持。0： 4倍速全帧，8倍速以上抽帧   1：抽帧   2：全帧  （如设备回放当前不支持，传入0即可）
+@param mode    回放时的抽帧控制，当前仅云存储支持。0： 4倍速全帧，8倍速以上抽帧   1：抽帧   2：全帧  （如设备回放当前不支持，传入0即可）
 @return YES/NO
  */
 - (BOOL)setPlaybackRate:(EZPlaybackRate)rate mode:(NSUInteger)mode;
+
+#pragma mark - 普通录制
+
+/**
+ * 预览时开始本地录像预录制功能，异步方法
+ * 注意：如本地录制5秒，网络正常、设备码流正常等理想情况下，生成的mp4文件时长大致5秒左右。以下几种情况生成的mp4文件时间会有出入
+ * 1、网络异常，画面卡住了，此时就无法对码流进行录制了。应用层计时器一直在走，但是码流没有在录制。
+ * 2、设备码流本身异常，存在问题，比如帧丢失、跳帧等情况，无法保证录制的mp4视频时长与录制时长是匹配的。
+ *
+ * @param path 文件存储路径
+ *
+ * @return YES/NO
+ */
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path;
+
+/** 测试排查问题用，开发者勿使用，以后版本会删除 */
+- (BOOL)startLocalRecordWithPathExt:(NSString *)path psPath:(NSString *)psPath;
+
+/**
+ * 结束本地录像预录制，并生成mp4录制文件，异步方法
+ *
+ * @param complete 操作是否成功 YES/NO
+ */
+- (void)stopLocalRecordExt:(void (^)(BOOL ret))complete;
+
+#pragma mark - 水印，仅支持单目设备，不支持多目设备
+
+/**
+ * 设置渲染水印信息，新设置的waterMarkConfig会覆盖之前设置的waterMarkConfig，仅支持单目设备，不支持多目设备
+ * 预览、回放取流成功后才能调用
+ *
+ * @param waterMarkConfig 水印信息配置
+ * @return YES/NO
+ */
+- (BOOL)setWaterMarkFont:(EZPlayWaterMarkConfig *)waterMarkConfig;
+
+/**
+ * 清除水印文字，仅支持单目设备，不支持多目设备
+ * 该方法用于移除当前播放器上设置的所有水印文字
+ */
+- (void)clearWaterMarkFont;
+
+/**
+ * 水印截图，仅支持单目设备，不支持多目设备
+ *
+ * @param width 截图宽度
+ * @param height 截图高度
+ *
+ * @return 抓取的图片
+ */
+- (UIImage *)captureRenderPictureWithWidth:(int)width height:(int)height;
+
+/**
+ * 开始渲染录制文件，仅支持单目设备，不支持多目设备
+ * 该方法用于开始渲染指定的录制文件
+ *
+ * @param path 文件存储路径
+ * @return YES 表示成功，NO 表示失败
+ */
+- (BOOL)startRenderRecordWithPath:(NSString *)path;
+
+/**
+ * 停止渲染录制，仅支持单目设备，不支持多目设备
+ * 该方法用于停止当前的录制文件渲染
+ */
+- (void)stopRenderRecord:(void (^)(BOOL ret))complete;
 
 #pragma mark - 其他方法
 

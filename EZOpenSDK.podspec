@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name     = 'EZOpenSDK'
-  s.version  = '5.25.2'
+  s.version  = '5.25.3'
   s.license  = 'MIT'
   s.summary  = 'A EZVIZ SDK'
   s.homepage = 'https://github.com/Ezviz-OpenBiz/SDK-iOS'
   s.authors  = {'ezviz-LinYong' => 'linyong3@hikvision.com'}
   s.source   = {:git => 'https://github.com/Ezviz-OpenBiz/SDK-iOS.git',:tag => s.version,:submodules => true}
   s.requires_arc = true
-  s.platform = :ios,'11.0'
+  s.platform = :ios,'12.0'
   s.frameworks = 'AudioToolbox', 'CoreMedia', 'ExternalAccessory', 'GLKit', 'MobileCoreServices', 'NetworkExtension', 'OpenAL', 'SystemConfiguration', 'VideoToolbox', 'AVFoundation'
   s.libraries = 'bz2', 'c++', 'iconv', 'sqlite3.0', 'z'
   s.vendored_frameworks = 'dist/EZOpenSDK/dynamicSDK/*.framework'

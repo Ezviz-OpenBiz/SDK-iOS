@@ -291,6 +291,13 @@ typedef NS_ENUM(NSUInteger, EZPlayerViewRotationAngle) {
     EZPlayerViewRotationAngle270 = 270  // 旋转270°
 };
 
+// 平滑播放模式
+typedef NS_ENUM(NSUInteger, EZSmoothPlayMode) {
+    EZSmoothPlayModeAutoAdjustLatency = 0,   // 自动调节时延模式
+    EZSmoothPlayModeAutoIncrementalLatency,  // 自动递增时延模式
+    EZSmoothPlayModeStaticLatency            // 固定时延模式
+};
+
 /// 开放平台常量类
 @interface EZConstants : NSObject
 

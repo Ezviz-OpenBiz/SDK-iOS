@@ -668,8 +668,6 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
  */
 - (BOOL)setPlayerViewRotation:(EZPlayerViewRotationAngle)rotationAngle;
 
-- (void)setDemuxModel:(NSUInteger)demuxModel;
-
 /**
  * 设置电子放大区域
  * 
@@ -677,6 +675,27 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
  * @param streamId 双目设备轨道 0：广角镜头画面轨道 1：云台镜头画面轨道
  */
 - (void)setDisplayRegionEx:(CGRect *)rect streamId:(int)streamId;
+
+#pragma mark - 海康互联专用接口
+
+/**
+ * 设置解析输出模式
+ *
+ * @param demuxModel 设置的模式，默认0；= 0 使用封装层断帧, = 1 设置编码层断帧, = 2 设置I帧前输出, = 3 同时设置编码层断帧和I帧前输出
+ * 0：默认
+ * 1：设置编码层断帧（使用场景：封装层断帧有异常的场景下可以使用编码层断帧）
+ * 2：设置I帧前输出（使用场景：一般在纯音频场景下使用）
+ * 3：同时设置编码层断帧和I帧前输出（使用场景：上述两种模式同时开启）
+ */
+- (void)setDemuxModel:(NSUInteger)demuxModel;
+
+/**
+ * 开启平滑播放，仅支持单目；若外部配置为硬解，也会切成软解
+ * 在调用startRealPlay前设置生效
+ *
+ * @param smoothPlayMode 平滑播放模式
+ */
+- (void)enableSmoothPlay:(EZSmoothPlayMode)smoothPlayMode;
 
 #pragma mark - 鱼眼矫正模式
 

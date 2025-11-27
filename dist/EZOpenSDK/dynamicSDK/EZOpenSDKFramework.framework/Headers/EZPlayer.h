@@ -426,7 +426,8 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 - (BOOL)resumePlayback;
 
 /**
- *  根据偏移时间播放
+ *  根据偏移时间播放，播放过程中才能调用
+ *  拖动进度条时调用此接口，调用前需判断下录像是否在播放中。如果录像不在播放中，需要return，不要调用此接口。
  *
  *  @param offsetTime 录像偏移时间
  */

@@ -276,11 +276,9 @@ typedef NS_ENUM(NSInteger, EZVoiceChangeType) {
 };
 
 // 客户端/设备端带宽检测类型
-typedef NS_ENUM(NSUInteger, EZBandWidthType) {
-    EZBandWidthTypeClientUpward = 1, // 客户端上行
-    EZBandWidthTypeClientDownward,   // 客户端下行
-    EZBandWidthTypeDeviceUpward,     // 设备端上行
-    EZBandWidthTypeDeviceDownward    // 设备端下行
+typedef NS_ENUM(NSUInteger, EZBWCheckType) {
+    EZBWCheckClientUpward = 1 << 0,  // 客户端上行
+    EZBWCheckClientDownward = 1 << 1 // 客户端下行
 };
 
 // 播放画面旋转角度

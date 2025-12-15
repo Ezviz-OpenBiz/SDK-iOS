@@ -39,7 +39,6 @@
 #import <EZOpenSDKFramework/EZVideoTransformer.h>
 #import <EZOpenSDKFramework/EzvizRecordFileInfo.h>
 #import <EZOpenSDKFramework/EZPlayWaterMarkConfig.h>
-#import <EZOpenSDKFramework/EZBandWidthAddressInfo.h>
 
 #import <EZOpenSDKFramework/EZSADPDeviceInfo.h>
 #import <EZOpenSDKFramework/EZAPDevInfo.h>
@@ -54,5 +53,8 @@
 #import <EZOpenSDKFramework/EZHCNetDeviceSDK.h>
 #import <EZOpenSDKFramework/EZPlayer.h>
 #import <EZOpenSDKFramework/EZStreamPlayer.h>
+
+#import <EZOpenSDKFramework/EZBWCheckManager.h>
+#import <EZOpenSDKFramework/EZBWCheckResult.h>
 
 #endif /* EZOpenSDKFramework_h */

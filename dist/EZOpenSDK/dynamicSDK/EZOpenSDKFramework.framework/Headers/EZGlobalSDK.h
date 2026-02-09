@@ -299,13 +299,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  获取指定时间内的所有录像文件
  *
  *  @param deviceSerial 设备序列号
- *  @param cameraNo     通道号，传入<=0的值则为默认值
- *  @param beginTime    开始时间，传入nil则为当天00:00:00
- *  @param endTime      结束时间，传入nil则为当天23:59:59
- *  @param rectype      回放源，0-系统自动选择，1-云存储，2-本地录像。非必选，默认为0，传入负值则为默认值
- *  @param bizType       设备归属业务来源
- *  @param platFormId  平台ID
- *  @param completion   回调block records:EzvizRecordFileInfo的数组
+ *  @param cameraNo          通道号，传入<=0的值则为默认值
+ *  @param beginTime        开始时间，传入nil则为当天00:00:00
+ *  @param endTime            结束时间，传入nil则为当天23:59:59
+ *  @param rectype            回放源，0-系统自动选择，1-云存储，2-本地录像。非必选，默认为0，传入负值则为默认值
+ *  @param bizType            设备归属业务来源
+ *  @param platFormId      平台ID
+ *  @param completion      回调block，正常时返回EzvizRecordFileInfo的对象数组，错误时返回错误码
  *
  *  @return operation
  */

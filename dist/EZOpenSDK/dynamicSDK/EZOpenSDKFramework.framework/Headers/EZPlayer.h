@@ -125,6 +125,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 
 /**
  * 取流数据中获取开门token回调
+ * 如果门锁设备没有回调开门token的话，请确认该设备的远程开锁开关是否打开。萤石云视频App入口：设备设置-开锁设置-远程开锁-开启远程开锁
  *
  * @param player 播放器对象
  * @param tokenInfo token对象
@@ -547,20 +548,6 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 - (int)getHDPriorityStatus;
 
 /**
- *  设置设备归属业务来源，需要在预览回放前调用  国标设备使用
- *
- *  @param bizType 类型       国标为 bizType='GB28181'
- */
-- (void)setBizType:(NSString *)bizType;
-
-/**
- *  平台id 国标设备使用
- *
- *  @param platformId 类型
-*/
-- (void)setPlatformId:(NSString *)platformId;
-
-/**
  * 获取播放组件内部的播放库的port
  *
  * @return 播放库的port,可能为-1（无效值）
@@ -698,6 +685,14 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
  * @param smoothPlayMode 平滑播放模式
  */
 - (void)enableSmoothPlay:(EZSmoothPlayMode)smoothPlayMode;
+
+/**
+ * 设置该录像是否是从IPC SD卡中直查的，默认NO。YES：回放会从IPC进行取流，NO：回放会从NVR进行取流
+ * 在调用startPlayback前设置
+ *
+ * @param isIPCRecordDirectQuery 是否是IPC直查录像
+ */
+- (void)setIPCRecordDirectQuery:(BOOL)isIPCRecordDirectQuery;
 
 #pragma mark - 鱼眼矫正模式
 

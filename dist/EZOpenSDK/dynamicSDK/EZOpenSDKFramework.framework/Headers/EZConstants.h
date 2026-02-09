@@ -234,6 +234,12 @@ typedef NS_ENUM(NSUInteger, EZVideoRecordTypeEx) {
     EZVideoRecordTypeExComPressManual   // 手动浓缩录像
 };
 
+// 类型
+typedef NS_ENUM(NSUInteger, EZVideoRecordLocation) {
+    EZVideoRecordLocationLocal = 1, // 本地录像检索
+    EZVideoRecordLocationCVR        // CVR中心录像检索
+};
+
 /* 云存储录像类型 */
 typedef NS_ENUM(NSInteger, EZCloudVideoType) {
     EZCloudVideoTypeAll = -1,   // 全部录像

@@ -12,6 +12,7 @@
 
 @class EZPlayer;
 @class EZDeviceInfo;
+@class EZDeviceRecordInfo;
 @class EZAccessToken;
 @class EZCameraInfo;
 @class EZDeviceVersion;
@@ -417,13 +418,38 @@ NS_ASSUME_NONNULL_BEGIN
                                             completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
+ *  查询远程SD卡存储录像信息列表接口
+ *
+ *  @param deviceSerial                   设备序列号
+ *  @param cameraNo                            通道号
+ *  @param beginTime                          查询时间范围开始时间
+ *  @param endTime                              查询时间范围结束时间
+ *  @param videoRecordTypeEx        录像类型扩展，一般传EZVideoRecordTypeExNone
+ *  @param isQueryFromNvr               当IPC设备绑定NVR后，是否反查NVR录像，YES：查询NVR录像，NO：不反查。一般传YES即可
+ *  @param videoRecordLocation    录像位置，一般传EZVideoRecordLocationLocal
+ *  @param pageSize                            分页的页面大小，最大200
+ *  @param completion                        回调block，正常时返回EZDeviceRecordInfo对象，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFileFromDeviceEx:(NSString *)deviceSerial
+                                              cameraNo:(NSInteger)cameraNo
+                                             beginTime:(NSDate *)beginTime
+                                               endTime:(NSDate *)endTime
+                                     videoRecordTypeEx:(EZVideoRecordTypeEx)videoRecordTypeEx
+                                        isQueryFromNvr:(BOOL)isQueryFromNvr
+                                   videoRecordLocation:(EZVideoRecordLocation)videoRecordLocation
+                                              pageSize:(NSInteger)pageSize
+                                            completion:(void (^)(EZDeviceRecordInfo *deviceRecordInfo, NSError * __nullable error))completion;
+
+/**
  *  查询CVR中心录像信息列表接口
  *
  *  @param deviceSerial 设备序列号
- *  @param cameraNo     通道号
- *  @param beginTime    查询时间范围开始时间
- *  @param endTime      查询时间范围结束时间
- *  @param completion   回调block，正常时返回EZDeviceRecordFile的对象数组，错误时返回错误码
+ *  @param cameraNo          通道号
+ *  @param beginTime        查询时间范围开始时间
+ *  @param endTime            查询时间范围结束时间
+ *  @param completion     回调block，正常时返回EZDeviceRecordFile的对象数组，错误时返回错误码
  *
  *  @return operation
  */
@@ -437,11 +463,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  查询设备SDK云录制录像信息列表接口
  *
  *  @param deviceSerial 设备序列号
- *  @param cameraNo     通道号，传入<=0的值则为默认值
- *  @param beginTime    开始时间，传入nil则为当天00:00:00
- *  @param endTime      结束时间，传入nil则为当天23:59:59
- *  @param spaceId      录像空间
- *  @param completion   回调block records:EzvizRecordFileInfo的数组
+ *  @param cameraNo          通道号，传入<=0的值则为默认值
+ *  @param beginTime        查询时间范围开始时间
+ *  @param endTime            结束时间，传入nil则为当天23:59:59
+ *  @param spaceId            录像空间
+ *  @param completion     回调block，正常时返回EZCloudRecordFile的对象数组，错误时返回错误码
  *
  *  @return operation
  */
@@ -456,13 +482,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  获取指定时间内的所有录像文件
  *
  *  @param deviceSerial 设备序列号
- *  @param cameraNo     通道号，传入<=0的值则为默认值
- *  @param beginTime    开始时间，传入nil则为当天00:00:00
- *  @param endTime      结束时间，传入nil则为当天23:59:59
- *  @param rectype      回放源，0-系统自动选择，1-云存储，2-本地录像，5-sdk。非必选，默认为0，传入负值则为默认值
- *  @param bizType       设备归属业务来源
- *  @param platFormId  平台ID
- *  @param completion   回调block records:EzvizRecordFileInfo的数组
+ *  @param cameraNo          通道号，传入<=0的值则为默认值
+ *  @param beginTime        查询时间范围开始时间
+ *  @param endTime            查询时间范围结束时间
+ *  @param rectype            回放源，0-系统自动选择，1-云存储，2-本地录像，5-sdk。非必选，默认为0，传入负值则为默认值
+ *  @param bizType            设备归属业务来源
+ *  @param platFormId      平台ID
+ *  @param completion      回调block，正常时返回EzvizRecordFileInfo的对象数组，错误时返回错误码
  *
  *  @return operation
  */

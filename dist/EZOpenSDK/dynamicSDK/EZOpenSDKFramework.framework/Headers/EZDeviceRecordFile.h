@@ -19,6 +19,9 @@
 @property (nonatomic, assign) int type;
 @property (nonatomic, copy) NSString *channelType;
 
+/// 当该设备绑定在NVR下时，该值为true，表示该录像是IPC SD卡下直接查询到的；该值为false，表示该录像是NVR通道下查询到的；
+/// 当该设备未绑定NVR时，该值无意义
+@property (nonatomic, assign) BOOL isIPCRecordDirectQuery;
 
 @property (nonatomic, assign) int seq;
 @property (nonatomic, strong) NSData *imageData;///< 

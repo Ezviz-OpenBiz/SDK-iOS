@@ -80,4 +80,12 @@
  */
 - (int)getSupportInt:(int)index;
 
+/**
+ * 根据位数获取设备能力集
+ * @param index 位数，必须大于0
+ *
+ * @return 能力值
+ */
+- (NSString *)getSupportString:(int)index;
+
 @end

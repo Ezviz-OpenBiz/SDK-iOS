@@ -50,6 +50,9 @@
 #define SADP_GET_ENCRYPT_STRING_V31         31  //v3.1 获取加密串，对应结构体SADP_ENCRYPT_STRING_V31
 #define SADP_GET_GUID_V31                   32  //v3.1 获取GUID，对应结构体SADP_GUID_FILE_V31
 #define SADP_GET_QR_CODES_V31               33  //v3.1 获取二维码数据，对应结构体SADP_QR_CODES_V31
+#define SADP_GET_MANAGER_PHONE_NUMBER       34  //获取管理员手机号，对应结构体SADP_PHONE_NUMBER_PARAM
+#define SADP_SET_MANAGER_PHONE_NUMBER       35  //设置管理员手机号，对应结构体SADP_PHONE_NUMBER_PARAM
+#define SADP_SET_PLC_CFG                    36  //设置PLC（电力线通信）
 
 
 #define SADP_MAX_VERIFICATION_CODE_LEN  12   //最大验证码长度
@@ -76,6 +79,7 @@
 #define MAX_UNLOCK_CODE_RANDOM_LEN      256  //解禁码随机串
 #define MAX_FILE_PATH_LEN               260  //文件最大路径长度
 #define MAX_TOKEN_LEN                   16   //萤石用户token最大长度
+#define MAX_PHONE_NUMBER_LEN            16   //手机号最大长度
 
 
 
@@ -127,7 +131,9 @@
 #define SADP_PHONE_NOT_SET              (SADP_ERROR_BASE+46)  // 手机扫码重置密码未设置安全手机
 #define SADP_NOENOUGH_BUF               (SADP_ERROR_BASE+47)  // 缓冲区长度不足
 #define SADP_INVALID_SUBNET_IP          (SADP_ERROR_BASE+48)  // 无效的网段范围，起始ip大于终止ip或者超过4096个ip
-
+#define SADP_NO_DEVICE                  (SADP_ERROR_BASE+49)  // SDK内部设备列表缓存中查找不到接口指定的设备
+#define SADP_PROBE_RESOURCES_BUSY       (SADP_ERROR_BASE+50)  // 探测资源忙
+#define SADP_ETHERNET_NOT_SUPPORT       (SADP_ERROR_BASE+51)  // 链路协议设备不支持该操作
 
 //SADP设备过滤规则类型
 //按位表示，为1表示过滤，0表示不过滤;
@@ -432,7 +438,8 @@ typedef struct tagSADP_RESET_PARAM_V50
     SADP_SECURITY_QUESTION_CFG struSecurityQuestionCfg; //安全问题结构体， byResetType为5时有效
     unsigned char   byResetType;                        //密码重置类型 0-保留，1-通过设备序列号恢复默认密码(已弃用)，2-导入/导出文件重置密码，3-二维码重置，4-GUID，5-安全问题，6-邮箱，7手机扫码
     unsigned char   byEnableSyncIPCPW;                  //是否同时将密码启用为NVR同步IPC密码。0-不启用，1-启用
-    unsigned char   byRes[510];
+    unsigned short  wGUIDLen;                           //输入的GUID长度。为0时，sadp使用字符串规则计算GUID长度（\0结束）；非0时，作为GUID的真实长度
+    unsigned char   byRes[508];
 }SADP_RESET_PARAM_V50, *LPSADP_RESET_PARAM_V50;
 
 typedef struct tagSADP_RET_RESET_PARAM_V40
@@ -580,14 +587,26 @@ typedef struct tagSADP_EZVIZ_USER_TOKEN_PARAM
     unsigned char   byRes[256];
 }SADP_EZVIZ_USER_TOKEN_PARAM, *LPSADP_EZVIZ_USER_TOKEN_PARAM;
 
+//管理员手机号参数
+typedef struct tagSADP_PHONE_NUMBER_PARAM
+{
+    unsigned int    dwSize;
+    char            szPassword[MAX_PASS_LEN];//密码
+    char            szPhoneNo[MAX_PHONE_NUMBER_LEN]; //手机号
+    SADP_DEV_LOCK_INFO struLockInfo; //获取时有效
+    unsigned char   byRes[128];
+}SADP_PHONE_NUMBER_PARAM, *LPSADP_PHONE_NUMBER_PARAM;
+
 //手机扫码重置密码二维码
 typedef struct tagSADP_PHONE_QR_CODES
 {
     unsigned int    dwSize;
-    char            szDomainName[MAX_QR_CODES];
-    char            szDevModel[32];
-    char            szQrCodes[MAX_QR_CODES_V31];
-    unsigned char   byRes[128];
+    char            szDomainName[MAX_QR_CODES]; //域名
+    char            szDevModel[32];//设备型号
+    char            szQrCodes[MAX_QR_CODES_V31];//二维码（应用层需要拼接域名和设备型号）
+    char            szPhoneNo[MAX_PHONE_NUMBER_LEN]; //手机号
+    unsigned int    dwValidTime; //二维码剩余有效时间，单位：秒
+    unsigned char   byRes[108];
 }SADP_PHONE_QR_CODES, *LPSADP_PHONE_QR_CODES;
 
 //v3.1 GUID结构体
@@ -624,11 +643,81 @@ typedef struct tagSADP_SUBNET_DEVICE_INFO
     unsigned char   byIPv6MaskLen;         //IPv6子网前缀长度
     unsigned char   bySupportIPv6;         //是否支持IPv6, 0 不支持 1 支持
     unsigned char   bySupportModifyIPv6;   //是否支持修改IPv6, 0 不支持 1 支持
-    unsigned char   bySupportDhcp;         //是否支持Dhcp, 0 不支持 1 支持
-    unsigned char   byDhcpEnabled;         //Dhcp状态, 0 不启用 1 启用
+    unsigned char   bySupportDhcp;         //IPv4 是否支持Dhcp, 0 不支持 1 支持
+    unsigned char   byDhcpEnabled;         //IPv4 Dhcp状态, 0 不启用 1 启用
     unsigned char   byRes1[3];
-    unsigned char   byRes[1024];
+    unsigned int    dwCommandPort;         //私有协议命令端口号(默认8000)
+    unsigned int    dwSDKOverTLSPort;      //私有协议中 SDK Over TLS 命令端口
+    unsigned int    dwHttpPort;            //http端口
+    unsigned int    dwHttpsPort;           //https端口
+    unsigned char   byRes[1008];
 }SADP_SUBNET_DEVICE_INFO, *LPSADP_SUBNET_DEVICE_INFO;
+
+//设备信息
+typedef struct tagSADP_SUBNET_DEVICE_INFO_V20
+{
+    unsigned char byProtocolType; //探测协议, 0-私有协议，1-ISAPI协议，2-OTAP协议
+    unsigned char byRes1[7];
+    char szIPv4Address[16]; //设备IPv4地址
+    unsigned int dwPort; //端口号
+    unsigned char byRes[996];
+}SADP_SUBNET_DEVICE_INFO_V20, *LPSADP_SUBNET_DEVICE_INFO_V20;
+
+//跨网段搜索存量设备参数
+typedef struct tagSADP_SUBNET_INFO_V20
+{
+    unsigned int    dwSize;
+    unsigned char   byIPType;                   //IP类型：0-IPv4 1-IPv6(暂不支持)
+    unsigned char   byIPProbeEnable;            //控制本次探测是否启用IP探测：0-关闭，1-开启。（Android、iOS、harmony由于无法拿到root权限，所有不支持IP探测）（Linux，mac，arm需要root权限才能IP探测）
+    unsigned char   byPortProbeEnable;          //控制本次探测是否启用Port探测：0-只探测四个特殊端口(wSDKPort、wSDKOverTlsPort、wHttpPort、wHttpsPort) 1-探测四个特殊端口(wSDKPort、wSDKOverTlsPort、wHttpPort、wHttpsPort) + 端口段
+    unsigned char   byRes2;
+    unsigned short  wSDKPort;                   //私有协议端口（默认8000），优先探测
+    unsigned short  wSDKOverTlsPort;            //私有协议端口（默认8443），优先探测。只有windows支持其他系统不支持
+    unsigned short  wHttpPort;                  //HTTP端口（默认80），优先探测
+    unsigned short  wHttpsPort;                 //HTTPS端口（默认443），优先探测。只有windows支持其他系统不支持
+    unsigned short  wStartPort;                 //端口段起始端口（默认1024）
+    unsigned short  wStopPort;                  //端口段结束端口（默认65535）
+    unsigned char   byRes1[4];
+    char            szStartSubnetIP[48];        //网段起始IP(IP字符串要以\0结束)
+    char            szStopSubnetIP[48];         //网段结束IP(IP字符串要以\0结束)
+    unsigned int    dwIPProbeThreadNum;         //指定并发IP探测线程数量：默认256，[1,1024]
+    unsigned int    dwPortProbeThreadNum;       //指定并发端口探测线程数量：默认256，[1,1024]
+    unsigned int    dwIPProbeInterval;          //指定IP探测间隔（单位ms），默认0，[0,1000]
+    unsigned int    dwPortProbeInterval;        //指定端口探测间隔（大批量的端口探测，可能会被防火墙认为是攻击行为）（单位ms），默认0，[0,1000]
+    unsigned int    dwIPProbeTimeout;           //指定ICMP超时时间（单位ms），有效值{0, [50, 5000]} ，当为0时，表示使用SDK的全局超时参数（默认为1000ms）
+    unsigned int    dwPortProbeConnectTimeout;  //指定建立TCP连接超时时间（单位ms），有效值{0, [100, 75000]} ，当为0时，表示使用SDK的全局超时参数（默认为200ms）
+                                                //机制：当TCP连接失败时，连接的耗时就是该超时时间
+                                                //影响：超时设置越大，探测耗时越久，探测结果越准确；超时设置越小，探测耗时越短，可能会出现探测不到设备的情况
+                                                //建议：上层应用将该超时交由用户设置。根据现场网络情况分别设置不同的值：1.高速网络100~300ms 2.中速网络300~5000ms 3.低速网络5000~75000
+    unsigned int    dwProtocolProbeTimeout;     //指定协议交互超时时间（单位ms），有效值{0, [500, 15000]} ，当为0时，表示使用SDK的全局超时参数（默认为5000ms）
+    unsigned char   byRes[128];
+}SADP_SUBNET_INFO_V20, *LPSADP_SUBNET_INFO_V20;
+
+//跨网段搜索状态
+typedef enum enumSADP_SUBNET_STATUS_TYPE
+{
+    SADP_SUBNET_STATUS_TYPE_SEARCHING = 1, //搜索中
+    SADP_SUBNET_STATUS_TYPE_FINISH = 2//搜索完成
+};
+
+
+//跨网段搜索存量设备状态
+typedef struct tagSADP_SUBNET_STATUS
+{
+    unsigned int  dwSize;
+    unsigned char byStatus; //详见enumSADP_SUBNET_STATUS_TYPE
+    unsigned char byProgress; //搜索进度
+    unsigned char byRes[6];
+}SADP_SUBNET_STATUS, *LPSADP_SUBNET_STATUS;
+
+
+
+typedef struct tagSADP_PLC_CFG
+{
+    unsigned int    dwSize;
+    char            szKey[64];              //设备秘钥
+    unsigned char   byRes[124];
+}SADP_PLC_CFG, *LPSADP_PLC_CFG;
 
 
 //-----------------------------------------------------------------接口-----------------------------------------------------------------
@@ -637,6 +726,7 @@ typedef struct tagSADP_SUBNET_DEVICE_INFO
 typedef void (CALLBACK *PDEVICE_FIND_CALLBACK)(const SADP_DEVICE_INFO *lpDeviceInfo, void *pUserData);
 typedef void (CALLBACK *PDEVICE_FIND_CALLBACK_V40)(const SADP_DEVICE_INFO_V40 *lpDeviceInfo, void *pUserData);
 typedef void (CALLBACK *PSUBNET_DEVICE_FIND_CALLBACK)(const SADP_SUBNET_DEVICE_INFO *lpDeviceInfo, void *pUserData); //跨网段设备信息回调
+typedef void (CALLBACK *PSUBNET_DEVICE_FIND_CALLBACK_V20)(const SADP_SUBNET_DEVICE_INFO_V20 *lpDeviceInfo, void *pUserData); //存量设备跨网段设备信息回调V20
 
 //服务启动参数
 typedef struct tagSADP_START_PARAM
@@ -644,7 +734,10 @@ typedef struct tagSADP_START_PARAM
     PDEVICE_FIND_CALLBACK_V40 fnDevCB; //同网段设备回调函数（必填）
     PSUBNET_DEVICE_FIND_CALLBACK fnSubnetDevCB; //跨网段设备回调函数（应用不实现跨网段搜索时可置NULL）
     void* pUserData; //用户数据
-    unsigned char   byRes[1024];
+    unsigned char   byAdapterMode; //数据发送模式: 0-默认， 1-所有网卡发送，  2-单网卡发送
+    unsigned char   byRes1[7];
+    PSUBNET_DEVICE_FIND_CALLBACK_V20 fnSubnetDevCBV20;//跨网段设备回调函数V20（应用不实现存量设备跨网段搜索时可置NULL）
+    unsigned char   byRes[1012];
 }SADP_START_PARAM, *LPSADP_START_PARAM;
 
 //启动sadp服务
@@ -678,8 +771,14 @@ CSADP_API void CALLBACK SADP_SetAutoRequestInterval(unsigned int dwInterval); //
 
 //触发一次局域网搜索
 CSADP_API BOOL CALLBACK SADP_SendInquiry(void);
-//触发一次跨网段搜索
+//触发一次Sadp协议的跨网段搜索
 CSADP_API BOOL CALLBACK SADP_InquirySpecificSubnet(const SADP_SUBNET_INFO *pSubnetInfo);
+//触发一次存量设备的跨网段搜索
+CSADP_API BOOL CALLBACK SADP_InquirySpecificSubnetAllDevice(const SADP_SUBNET_INFO_V20 *pSubnetInfoV20);
+//获取存量设备的跨网段搜索状态
+CSADP_API BOOL CALLBACK SADP_GetInquirySpecificSubnetAllDeviceStatus(SADP_SUBNET_STATUS *pStatus);
+//停止存量设备的跨网段搜索
+CSADP_API BOOL CALLBACK SADP_StopInquirySpecificSubnetAllDevice();
 
 //清理SDK内部设备缓存列表
 CSADP_API BOOL CALLBACK SADP_Clearup(void);

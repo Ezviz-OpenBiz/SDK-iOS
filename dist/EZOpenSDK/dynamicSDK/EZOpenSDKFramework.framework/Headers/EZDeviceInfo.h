@@ -86,6 +86,6 @@
  *
  * @return 能力值
  */
-- (NSString *)getSupportString:(int)index;
+- (NSString *)getSupportValue:(int)index;
 
 @end

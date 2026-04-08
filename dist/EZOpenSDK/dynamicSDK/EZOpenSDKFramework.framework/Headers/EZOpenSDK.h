@@ -1260,7 +1260,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)uploadSDKCloudRecordImage:(NSData *)imageData completion:(void (^)(NSString *storageId, NSError *error))completion;
 
-#pragma mark - 海康互联专用Api
+#pragma mark - 海康专用Api
 
 /**
  *  设置SDK中的XLog是否可用，需在初始化sdk之前调用

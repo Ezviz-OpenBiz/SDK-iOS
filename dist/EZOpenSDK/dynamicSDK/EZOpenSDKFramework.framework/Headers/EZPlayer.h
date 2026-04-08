@@ -227,7 +227,7 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 /**
  * EZPlayer存在的时候，切换至其他设备进行取流，不需要重新创建
  * @param deviceSerial 设备序列号
- * @param cameraNo     虚拟通道号
+ * @param cameraNo  通道号
  */
 - (void)resetDeviceSerial:(NSString *)deviceSerial cameraNo:(NSInteger)cameraNo;
 
@@ -507,6 +507,7 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 
 /**
  * 水印截图，仅支持单目设备，不支持多目设备
+ * 耗时操作，需要在子线程中执行
  *
  * @param width 截图宽度
  * @param height 截图高度
@@ -563,6 +564,7 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 
 /**
  *  直播画面抓图
+ *  耗时操作，需要在子线程中执行
  *
  *  @param quality 抓图质量（0～100）,数值越大图片质量越好，图片大小越大
  *
@@ -572,6 +574,7 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 
 /**
  *  直播画面抓图
+ *  耗时操作，需要在子线程中执行
  *
  *  @param quality 无效入参，传100即可
  *  @param streamId 双目设备轨道，0：广角镜头画面轨道 1：云台镜头画面轨道
@@ -644,7 +647,9 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 
 /**
  * `EZOpenSDK.enableSDKWithTKToken`开启后，需要设置取流小权限token，startRealPlay之前调用
- * 注意：IPC设备对讲使用的是0通道，对讲streamToken生成请使用0通道
+ * 注意：
+ * 1、IPC设备对讲使用的是0通道，对讲streamToken生成请使用0通道
+ * 2、双目设备取流使用的是0通道，取流streamToken生成请使用0通道
  *
  * @param streamToken  取流小权限token
  */
@@ -665,10 +670,11 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
  */
 - (void)setDisplayRegionEx:(CGRect *)rect streamId:(int)streamId;
 
-#pragma mark - 海康互联专用接口
+#pragma mark - 海康专用接口
 
 /**
  * 设置解析输出模式
+ * 在调用startRealPlay之前设置生效
  *
  * @param demuxModel 设置的模式，默认0；= 0 使用封装层断帧, = 1 设置编码层断帧, = 2 设置I帧前输出, = 3 同时设置编码层断帧和I帧前输出
  * 0：默认
@@ -679,16 +685,22 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 - (void)setDemuxModel:(NSUInteger)demuxModel;
 
 /**
- * 开启平滑播放，仅支持单目；若外部配置为硬解，也会切成软解
- * 在调用startRealPlay前设置生效
+ * 开启平滑播放，仅支持单目
+ * 在调用startRealPlay之前设置生效
  *
  * @param smoothPlayMode 平滑播放模式
  */
 - (void)enableSmoothPlay:(EZSmoothPlayMode)smoothPlayMode;
 
 /**
+ * 开启纯音频播放，开启后不显示视频，仅播放音频
+ * 在调用startPlayback之前设置生效
+ */
+- (void)enablePureAudio;
+
+/**
  * 设置该录像是否是从IPC SD卡中直查的，默认NO。YES：回放会从IPC进行取流，NO：回放会从NVR进行取流
- * 在调用startPlayback前设置
+ * 在调用startPlayback之前设置
  *
  * @param isIPCRecordDirectQuery 是否是IPC直查录像
  */

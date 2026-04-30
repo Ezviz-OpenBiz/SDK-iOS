@@ -693,8 +693,8 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 - (void)enableSmoothPlay:(EZSmoothPlayMode)smoothPlayMode;
 
 /**
- * 开启纯音频播放，开启后不显示视频，仅播放音频
- * 在调用startPlayback之前设置生效
+ * 开启纯音频播放，开启后不显示视频，仅播放音频。非可视报警盒设备专用
+ * 在调用startPlayback之前设置生效，且需要在接收到PLAYER_PREPARED消息后开启播放器声音
  */
 - (void)enablePureAudio;
 

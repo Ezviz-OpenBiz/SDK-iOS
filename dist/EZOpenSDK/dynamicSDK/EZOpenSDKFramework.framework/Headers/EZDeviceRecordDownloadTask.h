@@ -71,6 +71,12 @@ isIPCRecordDirectQuery:(BOOL)isIPCRecordDirectQuery
  */
 - (void)setStreamToken:(NSString *)streamToken;
 
+/**
+ * 设置录像下载超时时间，默认10000ms
+ * @param streamDownloadTimeOut 录像下载超时时间，单位为毫秒
+ */
+- (void)setStreamDownloadTimeOut:(NSInteger)streamDownloadTimeOut;
+
 @end
 
 NS_ASSUME_NONNULL_END

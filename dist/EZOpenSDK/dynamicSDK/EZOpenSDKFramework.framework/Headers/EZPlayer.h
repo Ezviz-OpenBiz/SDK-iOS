@@ -309,6 +309,9 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
 /**
  *  开始TTS对讲，异步接口，返回值只是表示操作成功，不代表对讲成功
  *  针对于NVR对讲使用
+ *
+ *  @param needVoiceChannel YES:与NVR设备绑定的IPC进行对讲 NO:与NVR设备对讲
+ *
  *  @return YES/NO
  */
 - (BOOL)startVoiceTalkNeedVoiceChannel:(BOOL)needVoiceChannel;

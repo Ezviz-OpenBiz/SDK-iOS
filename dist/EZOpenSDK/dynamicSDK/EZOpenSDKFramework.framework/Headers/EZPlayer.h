@@ -634,7 +634,7 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
 - (void)setPlayerDisableP2P;
 
 /**
- * 是否开启自动清晰度网络检测开关；此api未调用时，不会回调以下消息 
+ * 是否开启自动清晰度网络检测开关，startRealPlay之前调用；此api未调用时，不会回调以下消息 
  * EZPlayer - EZMessageCode - PLAYER_VIDEO_LEVEL_AUTO_IMPROVE  网络好，会回调此消息，建议切换高一级清晰度
  * EZPlayer - EZMessageCode - PLAYER_VIDEO_LEVEL_AUTO_REDUCE    网络差，会回调此消息，建议切换低一级清晰度
  */

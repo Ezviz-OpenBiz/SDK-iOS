@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isSupportSoundWave;
 /// 是否支持倍数回放
 @property (nonatomic) BOOL isSupportPlaybackRate;
+/// 是否支持回放慢速(0.5倍、2倍)
+@property (nonatomic) BOOL isSupportPlaybackSmallSpeed;
+/// 回放最大倍速，=1代表最大倍速=1(不支持倍速)，=2代表最大倍速=2(可渲染: 2倍)，=4代表最大倍速=4(可渲染: 2、4倍)，=8代表最大倍速=8(可渲染: 2、4、8倍)，=16代表最大倍速=16(可渲染: 2、4、8、16倍)
+@property (nonatomic) int playbackMaxSpeed;
 /// 内网直连下是否支持倍数回放
 @property (nonatomic) BOOL isSupportDirectInnerRelaySpeed;
 /// 是否支持SD卡录像下载

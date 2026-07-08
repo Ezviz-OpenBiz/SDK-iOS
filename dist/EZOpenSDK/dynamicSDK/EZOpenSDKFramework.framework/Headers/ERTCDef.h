@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 
-
+#define ERTC_SDK_VERSION @"V1.6.2"
 #define NetworkQualityDescs (@[@"未知", @"非常好", @"比较好", @"一般", @"较差", @"很差", @"不可用", @"无法检测", @"检测中"])
 
 typedef NS_ENUM(NSInteger, ERTCVideoStreamType) {

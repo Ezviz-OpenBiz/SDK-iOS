@@ -5,6 +5,7 @@
 //  Created by JuneCheng on 2022/7/18.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "EZConstants.h"
 #import "EZConstants_Auth.h"
@@ -22,6 +23,7 @@
 @class EZLeaveMessage;
 @class EZWiFiItemInfo, EZAPDevInfo, EZConfigTokenInfo;
 @class EZBWCheckResult;
+@class EZAICloudStorageView;
 
 NS_ASSUME_NONNULL_BEGIN
 

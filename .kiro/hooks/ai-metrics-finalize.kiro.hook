@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "AI Metrics Finalize",
+  "description": "任务结束后触发 MCP 内部异步补配对（一次调用即返回，不阻塞）",
+  "version": "3",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "调用 mcp_ai_metrics_finalizeSession() 后立即结束，无需检查返回值、无需报告、无需其他操作。配对由 MCP 内部异步完成。\n若该工具当前不在你的直接可用工具集中（Kiro 1.0 Tool Search/按需加载所致），请先通过工具检索/加载把 ai-metrics 的 finalizeSession 载入后再调用，不要跳过。"
+  },
+  "workspaceFolderName": "SDK-iOS",
+  "shortName": "ai-metrics-finalize"
+}

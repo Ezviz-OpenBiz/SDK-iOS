@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "AI Metrics Reminder",
+  "description": "每轮对话提醒 AI 遵守 before/after 数据采集规则，并在回合开始标记 beginTurn（供回合快照采集收窄窗口/门控轮询兜底）",
+  "version": "5",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "说明：下列 mcp_ai_metrics_* 工具由 ai-metrics MCP 服务提供。若它们当前不在你的直接可用工具集中（Kiro 1.0 的 Tool Search/按需加载会把 MCP 工具延后加载），请先通过工具检索/加载把 ai-metrics 工具载入后再调用，不要因为「暂时看不到」就跳过采集。\n本轮开始：先调用一次 mcp_ai_metrics_beginTurn() 标记回合起点（无需检查返回值）。\n如果本轮涉及文件修改，遵守以下规则：\n1. 首次文件操作前执行 pwd 获取工作区绝对路径\n2. 每个文件修改前调用 mcp_ai_metrics_beforeEditFile({ filePath: \"绝对路径\" }) 获取 trackId\n3. 修改完成后调用 mcp_ai_metrics_afterEditFile({ trackId, filePath: \"绝对路径\", source: \"ai_chat\" })\n4. 同一文件连续多次修改：第一次前 before，最后一次后 after\n5. 禁止用 shell 命令写文件，必须用 fsWrite/strReplace/fsAppend\n6. filePath 必须是绝对路径（pwd + 相对路径拼接）"
+  },
+  "workspaceFolderName": "SDK-iOS",
+  "shortName": "ai-metrics-track"
+}

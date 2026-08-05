@@ -1,4 +1,6 @@
 .DS_Store
 .build/
+.kiro/
+.swiftpm/
 *.xcframework
 *.xcframework.zip

@@ -12,13 +12,6 @@ let package = Package(
             name: "EZOpenSDKWrapper",
             dependencies: ["EZOpenSDKFramework"],
             path: "Sources/EZOpenSDKWrapper",
-            resources: [
-                .copy("Resources/CNN_SR_X2_fp16_ios_w1472xh828.bin"),
-                .copy("Resources/CNN_SR_X2_fp16_ios_w828xh1472.bin"),
-                .copy("Resources/CNN_SR_X4_fp16_ios_w432xh768.bin"),
-                .copy("Resources/CNN_SR_X4_fp16_ios_w768xh432.bin"),
-                .copy("Resources/com.hri.hpc.mobile.ios.player.metallib"),
-            ],
             linkerSettings: [
                 .linkedFramework("AudioToolbox"),
                 .linkedFramework("CoreMedia"),
@@ -39,7 +32,7 @@ let package = Package(
         .binaryTarget(
             name: "EZOpenSDKFramework",
             url: "https://github.com/Ezviz-OpenBiz/SDK-iOS/releases/download/5.30.2/EZOpenSDKFramework.xcframework.zip",
-            checksum: "564415be9bdb6441306319f7d8b33fb92d907836025a7ed645fcc721ba8bad86"
+            checksum: "a6c7048e7be505884bb9ab42692dd3f24fd0fbfac41b81f4d66373c6792f4492"
         ),
     ]
 )

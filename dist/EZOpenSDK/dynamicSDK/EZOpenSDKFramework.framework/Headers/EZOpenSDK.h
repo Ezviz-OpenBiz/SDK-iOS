@@ -348,7 +348,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 录像查询Api
 
 /**
- *  查询云存储录像信息列表接口
+ *  查询云存储录像信息列表接口（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
@@ -365,7 +365,7 @@ NS_ASSUME_NONNULL_BEGIN
                                          completion:(void (^)(NSArray *couldRecords, NSError * __nullable error))completion;
 
 /**
- *  查询远程SD卡存储录像信息列表接口
+ *  查询远程SD卡存储录像信息列表接口（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
@@ -382,7 +382,7 @@ NS_ASSUME_NONNULL_BEGIN
                                           completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
- *  查询远程SD卡存储录像信息列表接口，同一个录像可以同时是定时录像和事件录像
+ *  查询远程SD卡存储录像信息列表接口，同一个录像可以同时是定时录像和事件录像（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
@@ -401,7 +401,7 @@ NS_ASSUME_NONNULL_BEGIN
                                           completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
- *  查询远程SD卡存储录像信息列表接口（接口支持获取浓缩录像）
+ *  查询远程SD卡存储录像信息列表接口（接口支持获取浓缩录像）（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo     通道号
@@ -420,7 +420,7 @@ NS_ASSUME_NONNULL_BEGIN
                                             completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
 
 /**
- *  查询远程SD卡存储录像信息列表接口
+ *  查询远程SD卡存储录像信息列表接口（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial                   设备序列号
  *  @param cameraNo                            通道号
@@ -445,7 +445,7 @@ NS_ASSUME_NONNULL_BEGIN
                                             completion:(void (^)(EZDeviceRecordInfo *deviceRecordInfo, NSError * __nullable error))completion;
 
 /**
- *  查询CVR中心录像信息列表接口
+ *  查询CVR中心录像信息列表接口（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo          通道号
@@ -462,7 +462,7 @@ NS_ASSUME_NONNULL_BEGIN
                                        completion:(void (^)(NSArray *cvrRecords, NSError * __nullable error))completion;
 
 /**
- *  查询设备SDK云录制录像信息列表接口
+ *  查询设备SDK云录制录像信息列表接口（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo          通道号，传入<=0的值则为默认值
@@ -481,7 +481,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                   completion:(void (^)(id records, NSError * __nullable error))completion;
 
 /**
- *  获取指定时间内的所有录像文件
+ *  获取指定时间内的所有录像文件（开始时间、结束时间须为同一天，不能跨天）
  *
  *  @param deviceSerial 设备序列号
  *  @param cameraNo          通道号，传入<=0的值则为默认值
@@ -502,6 +502,24 @@ NS_ASSUME_NONNULL_BEGIN
                                    bizType:(NSString *)bizType
                                 platFormId:(NSString *)platFormId
                                 completion:(void (^)(id records, NSError * __nullable error))completion;
+
+#pragma mark - AI云存储Api
+
+/**
+ *  展示AI云存储面板，嵌入到指定容器中
+ *  调用方需在回放页面预留一个UIView容器
+ *
+ *  @param containerView 父级容器（预留的UIView）
+ *  @param deviceSerial  设备序列号
+ *  @param cameraNo      通道号
+ *  @param verifyCode    设备验证码（可为 nil，传入后可直接加载加密封面）
+ *
+ *  @return AI云存储视图管理器，可用于后续 hide/release 操作
+ */
++ (EZAICloudStorageView *)showAICloudStorage:(UIView *)containerView
+                                deviceSerial:(NSString *)deviceSerial
+                                    cameraNo:(NSInteger)cameraNo
+                                  verifyCode:(nullable NSString *)verifyCode;
 
 #pragma mark - 设备相关Api
 

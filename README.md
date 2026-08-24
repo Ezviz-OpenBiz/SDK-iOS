@@ -36,6 +36,8 @@
   - `CNN_SR_X2_fp16_ios_w828xh1472.bin`
   - `CNN_SR_X4_fp16_ios_w432xh768.bin`
   - `CNN_SR_X4_fp16_ios_w768xh432.bin`
+  - `Ezviz_Audio_Enhance_Model_Up_16K.bin`
+  - `EZAICloud.bundle`
 
   确认这些文件出现在 target 的 **Build Phases → Copy Bundle Resources** 中。
 

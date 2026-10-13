@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isSupportMultiChannel;
 /// 是否支持自动清晰度
 @property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
+/// 是否支持SD卡回放/SD卡录像下载切换主子码流
+@property (nonatomic) BOOL isSupportRecordStreamType;
 
 /**
  * 根据位数获取设备能力集

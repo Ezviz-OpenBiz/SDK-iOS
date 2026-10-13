@@ -23,6 +23,12 @@
 /// 当该设备未绑定NVR时，该值无意义
 @property (nonatomic, assign) BOOL isIPCRecordDirectQuery;
 
+/// 码流类型，1-主码流，2-子码流
+@property (nonatomic, assign) NSInteger streamType;
+
+/// 录像来源：1-本地SD卡录像检索，2-CVR中心录像检索
+@property (nonatomic, assign) NSInteger recordLocation;
+
 @property (nonatomic, assign) int seq;
 @property (nonatomic, strong) NSData *imageData;///< 
 

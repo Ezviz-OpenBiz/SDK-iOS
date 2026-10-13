@@ -240,6 +240,15 @@ typedef NS_ENUM(NSUInteger, EZVideoRecordLocation) {
     EZVideoRecordLocationCVR        // CVR中心录像检索
 };
 
+/* 回放子类型，用于取流埋点上报 */
+typedef NS_ENUM(NSInteger, EZPlaybackType) {
+    EZPlaybackTypeNone = 0,          // 默认（预览等非回放场景）
+    EZPlaybackTypeLocalRecord = 1,   // 卡录像回放
+    EZPlaybackTypeCloudRecord = 2,   // 云录像回放
+    EZPlaybackTypeSDKCloudRecord = 3,// 云录制回放
+    EZPlaybackTypeCVRRecord = 5      // CVR录像回放
+};
+
 /* 云存储录像类型 */
 typedef NS_ENUM(NSInteger, EZCloudVideoType) {
     EZCloudVideoTypeAll = -1,   // 全部录像

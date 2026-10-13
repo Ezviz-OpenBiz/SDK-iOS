@@ -22,6 +22,7 @@
 @class EZDeviceCloudServiceInfo;
 @class EZWiFiItemInfo, EZAPDevInfo, EZConfigTokenInfo;
 @class EZBWCheckAddressInfo;
+@class EZDeviceRecordInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -294,6 +295,34 @@ NS_ASSUME_NONNULL_BEGIN
                                                endTime:(NSDate *)endTime
                                      videoRecordTypeEx:(EZVideoRecordTypeEx)videoRecordTypeEx
                                             completion:(void (^)(NSArray *deviceRecords, NSError * __nullable error))completion;
+
+/**
+ *  查询远程SD卡存储录像信息列表接口（支持指定码流类型）（开始时间、结束时间须为同一天，不能跨天）
+ *  注意：只有支持切换主子码流能力集（EZDeviceInfo.isSupportRecordStreamType）的设备，streamType才有意义，其他设备传1即可
+ *
+ *  @param deviceSerial                   设备序列号
+ *  @param cameraNo                            通道号
+ *  @param beginTime                          查询时间范围开始时间
+ *  @param endTime                              查询时间范围结束时间
+ *  @param streamType                        码流类型，1-主码流，2-子码流
+ *  @param videoRecordTypeEx        录像类型扩展，一般传EZVideoRecordTypeExNone
+ *  @param isQueryFromNvr               当IPC设备绑定NVR后，是否反查NVR录像，YES：查询NVR录像，NO：不反查。一般传YES即可
+ *  @param videoRecordLocation    录像位置，一般传EZVideoRecordLocationLocal
+ *  @param pageSize                            分页的页面大小，最大200
+ *  @param completion                        回调block，正常时返回EZDeviceRecordInfo对象，错误时返回错误码
+ *
+ *  @return operation
+ */
++ (NSURLSessionDataTask *)searchRecordFileFromDeviceEx:(NSString *)deviceSerial
+                                              cameraNo:(NSInteger)cameraNo
+                                             beginTime:(NSDate *)beginTime
+                                               endTime:(NSDate *)endTime
+                                            streamType:(NSInteger)streamType
+                                     videoRecordTypeEx:(EZVideoRecordTypeEx)videoRecordTypeEx
+                                        isQueryFromNvr:(BOOL)isQueryFromNvr
+                                   videoRecordLocation:(EZVideoRecordLocation)videoRecordLocation
+                                              pageSize:(NSInteger)pageSize
+                                            completion:(void (^)(EZDeviceRecordInfo *deviceRecordInfo, NSError * __nullable error))completion;
 
 /**
  *  获取指定时间内的所有录像文件

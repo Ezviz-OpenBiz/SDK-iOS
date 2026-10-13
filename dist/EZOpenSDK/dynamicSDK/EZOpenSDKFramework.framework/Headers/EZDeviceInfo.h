@@ -71,6 +71,8 @@
 @property (nonatomic) BOOL isSupportDeviceAutoVideolevel;
 /// 是否支持视频会议
 @property (nonatomic) BOOL isSupportVideoMeeting;
+/// 是否支持SD卡回放/SD卡录像下载切换主子码流
+@property (nonatomic) BOOL isSupportRecordStreamType;
 /// 设备大类
 @property (nonatomic, copy) NSString *category;
 /// 添加时间

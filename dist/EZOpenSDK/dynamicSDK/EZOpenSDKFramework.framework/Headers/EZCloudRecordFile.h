@@ -29,6 +29,8 @@
 @property (nonatomic, copy) NSString *encryption;
 /// 文件大小
 @property (nonatomic, assign) NSUInteger fileSize;
+/// 云类型:0 未知；1 武汉云存储；2 七牛云存储
+@property (nonatomic, assign) int32_t cloudType;
 /// 云存储类别:1 单文件存储模式；2 连续存储模式；3 待定
 @property (nonatomic, assign) int32_t istorageVersion;
 /// 云存储录像类型，默认为0，表示不属于云存储录像

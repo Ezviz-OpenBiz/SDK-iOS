@@ -20,6 +20,8 @@ typedef enum {
 
 /**
  * 本地PS文件转换为MP4文件
+ * 耗时操作，需要在子线程中执行
+ * 
  * @param psPath ps文件路径
  * @param targetPath mp4文件路径
  * @param type 转换类型
@@ -38,6 +40,8 @@ typedef enum {
 
 /**
  * 本地PS文件转换为MP4文件
+ * 耗时操作，需要在子线程中执行
+ * 
  * @param psPath ps文件路径
  * @param targetPath mp4文件路径
  * @param type 转换类型

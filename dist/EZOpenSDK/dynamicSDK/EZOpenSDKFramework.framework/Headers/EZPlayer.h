@@ -144,6 +144,23 @@ typedef NS_ENUM(NSInteger, EZPlaybackRate) {
  */
 - (void)player:(EZPlayer *)player didReceivedVoiceTalkLoudness:(float)loudness;
 
+/**
+ * 实时帧率回调，必须在startRealPlay/startPlaybackFromDevice/startPlaybackFromCloud之前调用`EZPlayer.enableRealTimeFrameRateCallback`开启后才会有回调
+ * 预览和1倍速回放时每秒回调一次，回放暂停及非1倍速回放时不回调；在主线程回调
+ *
+ * @param player 播放器对象
+ * @param frameRate 实时帧率（fps）
+ */
+- (void)player:(EZPlayer *)player didReceivedRealTimeFrameRate:(NSInteger)frameRate;
+
+/**
+ * 播放卡顿回调，预览/回放过程中画面卡顿时回调一次，回放seek过程中不回调；在主线程回调
+ *
+ * @param player 播放器对象
+ * @param delayInMS 卡顿时长（毫秒）
+ */
+- (void)player:(EZPlayer *)player didReceivedPlayDelay:(NSInteger)delayInMS;
+
 @end
 
 /// 此类为萤石播放器类
@@ -644,6 +661,13 @@ sd卡及云存储倍速回放接口（倍数后播放没有声音，这个是正
  * 关闭自动清晰度网络检测回调，可在播放过程中调用；调用后不再回调升降档消息
  */
 - (void)disableDeviceAutoVideoLevel;
+
+/**
+ * 开启实时帧率回调，startRealPlay/startPlaybackFromDevice/startPlaybackFromCloud之前调用，播放过程中调用不生效；此api未调用时，不会回调以下代理方法
+ * 预览和1倍速回放时每秒回调一次，回放暂停及非1倍速回放时不回调
+ * EZPlayerDelegate - player:didReceivedRealTimeFrameRate:
+ */
+- (void)enableRealTimeFrameRateCallback;
 
 /**
  * 设置性能优先(最低清晰度)或画质优先(最高清晰度)，startRealPlay之前调用，播放前会先设置清晰度再发起取流，会增加首帧画面耗时

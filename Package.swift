@@ -31,8 +31,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "EZOpenSDKFramework",
-            url: "https://github.com/Ezviz-OpenBiz/SDK-iOS/releases/download/5.33/EZOpenSDKFramework.xcframework.zip",
-            checksum: "8bd42754da0e864030f0a8bfda7e01632d946b1904a645e7836c13369ed94758"
+            url: "https://github.com/Ezviz-OpenBiz/SDK-iOS/releases/download/5.34/EZOpenSDKFramework.xcframework.zip",
+            checksum: "f7d9043c781910cab519b5cb89508917d849a094f1df11507eec02d495e2742d"
         ),
     ]
 )
